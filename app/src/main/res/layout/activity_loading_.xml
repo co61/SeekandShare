@@ -20,6 +20,7 @@
     >
 
 
+
         <ImageView
             android:id="@+id/loading_logo"
             android:src="@drawable/grand_logo"
@@ -79,3 +80,4 @@
 
 
 </RelativeLayout>
+
