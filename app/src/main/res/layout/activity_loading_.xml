@@ -1,80 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
     tools:context=".Loading_Activity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
-        android:orientation="vertical"
-    >
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/round_icon_s" />
 
-        <ImageView
-            android:id="@+id/loading_logo"
-            android:src="@drawable/grand_logo"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight=".25"
-            android:layout_gravity="center_horizontal"
-            app:layout_constraintVertical_bias="0.0" />
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.17"/>
+        />
 
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.3"
-            android:layout_gravity="center"
-            app:srcCompat="@drawable/round_icon_s"
-            />
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.15"/>
-
-        <TextView
-            android:id="@+id/loading_text_view1"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_weight="0.05"
-            android:autoSizeMaxTextSize="35dp"
-            android:autoSizeTextType="uniform"
-            android:fontFamily="@font/aclonica"
-            android:text="@string/loading_text1"
-            android:textAlignment="center" />
-
-        <TextView
-            android:id="@+id/loading_text_view2"
-            android:fontFamily="@font/aclonica"
-            android:text="@string/loading_text2"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.15"
-            android:textAlignment="center"
-            android:autoSizeTextType="uniform"
-            android:layout_gravity="center_horizontal"
-            android:autoSizeMaxTextSize="20dp"/>
-
-    </LinearLayout>
-
-
-
-
-
-</RelativeLayout>
-
+</LinearLayout>
