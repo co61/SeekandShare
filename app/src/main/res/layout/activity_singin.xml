@@ -27,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="0.15"
-            android:background="@drawable/google_signIn"
+            android:background="@drawable/google_signin"
             android:elevation="8dp"
             android:textColor="#fff" />
 
