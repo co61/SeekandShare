@@ -40,7 +40,8 @@ public class SignInActivity extends AppCompatActivity {
         if(user!=null){
             Intent intent = new Intent(getApplicationContext(),MainActivity.class);
             startActivity(intent);
-
+            overridePendingTransition(R.anim.slide_in_bottom,R.anim.slide_out_top);
+            finish();
         }
 
 
@@ -128,7 +129,8 @@ public class SignInActivity extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
                             Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                             startActivity(intent);
-
+                            overridePendingTransition(R.anim.slide_in_bottom,R.anim.slide_out_top);
+                            finish();
 
                         } else {
                             Toast.makeText(SignInActivity.this, "Sorry auth failed.", Toast.LENGTH_SHORT).show();

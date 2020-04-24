@@ -74,12 +74,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else {
             if (selectedFragment instanceof HomeFragment) {
                 super.onBackPressed();
+                finish();
             } else {
                 //a changer
                 previousSelectedItemId.setChecked(true);
                 selectedFragment = previousFragment;
                 selectedItemId=previousSelectedItemId;
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
+
             }
         }
     }
