@@ -7,15 +7,16 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.annotation.IdRes;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.GridLayout;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+
+import java.util.Set;
 
 import static android.widget.Toast.LENGTH_SHORT;
 
@@ -28,16 +29,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     MenuItem selectedItemId;
     MenuItem previousSelectedItemId;
 
+    Intent launchIntent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        selectedFragment = null;
+        selectedFragment = new HomeFragment();
         previousFragment = new HomeFragment();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        toolbar.setTitle("SeekandShare");
 
         mDrawerLayout = findViewById(R.id.drawer);
 
@@ -52,7 +56,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.open, R.string.close);
         mDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
-        Toast.makeText(this,"test"+selectedItemId, LENGTH_SHORT).show();
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
@@ -62,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-    //open the menu on the right when toolbar click
+     //open the menu on the right when toolbar click
     @Override
     public void onBackPressed() {
         if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
@@ -71,9 +74,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             if (selectedFragment instanceof HomeFragment) {
                 super.onBackPressed();
             } else {
-                selectedFragment = previousFragment;
-
+                //a changer
                 previousSelectedItemId.setChecked(true);
+                selectedFragment = previousFragment;
                 selectedItemId=previousSelectedItemId;
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
             }
@@ -117,22 +120,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         //saving previous state for onbaxk pressed
         previousFragment = selectedFragment;
-        bottomNav.setSelected(false);
         //switching fragment
         switch (menuItem.getItemId()) {
             case R.id.nav_favorite:
-                selectedFragment = new FavoriteFragment();
+                launchIntent= new  Intent(this,FavoriteActivity.class);
                 break;
             case R.id.nav_announce:
-                selectedFragment = new AnnouceFragment();
+                launchIntent= new Intent(this, AnnounceActivity.class);
                 break;
             case R.id.nav_settings:
-                selectedFragment = new SettingsFragment();
+                launchIntent= new Intent(this,SettingsActivity.class);
                 break;
         }
-
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
         mDrawerLayout.closeDrawer(GravityCompat.START);
+        selectedFragment = new HomeFragment();
+        startActivity( launchIntent);
         return true;
     }
 

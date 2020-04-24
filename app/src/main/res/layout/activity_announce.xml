@@ -2,13 +2,40 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/holo_blue_light">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/light_grey"
+    tools:context=".AnnounceActivity">
 
     <TextView
+        android:id="@+id/a"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Mes annonces"
+        android:text="..."
+        android:textSize="30sp"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/b"/>
+    <TextView
+        android:id="@+id/b"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="..."
         android:textSize="30sp"
         android:layout_centerInParent="true"/>
-    
+    <TextView
+        android:id="@+id/c"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="..."
+        android:textSize="30sp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/b"/>
+    <TextView
+        android:id="@+id/d"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="..."
+        android:textSize="30sp"
+        android:layout_below="@+id/c"
+        android:layout_centerHorizontal="true"/>
+
 </RelativeLayout>

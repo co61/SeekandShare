@@ -1,6 +1,7 @@
 package fr.c7regne.seekandsharedrawer;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
@@ -20,6 +21,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -41,8 +44,10 @@ public class PubAnnounceFragment extends Fragment implements View.OnClickListene
     //database
     PostSaveStruct postsave;
     DatabaseReference reff;
-    long maxid;
+    int maxid;
     TextView caractnb;
+    String name, email, id;
+
 
     View v;
 
@@ -57,10 +62,15 @@ public class PubAnnounceFragment extends Fragment implements View.OnClickListene
         radioGroup1 = (RadioGroup) v.findViewById(R.id.post_SP_radioGroup);
         radioGroup2 = (RadioGroup) v.findViewById(R.id.post_DP_radioGroup);
         caractnb = (TextView) v.findViewById(R.id.caractnb);
-        //database init and develop struct
-        postsave = new PostSaveStruct();
-        reff = FirebaseDatabase.getInstance().getReference().child("Posts");
 
+        //get information on user
+        GoogleSignInAccount signInAccount= GoogleSignIn.getLastSignedInAccount(getContext());
+        if(signInAccount != null){
+            name=signInAccount.getDisplayName();
+            email=signInAccount.getEmail();
+            id=signInAccount.getId();
+        }
+        reff = FirebaseDatabase.getInstance().getReference().child("Posts").child(id);
         title_announce.requestFocus();
 
         //increment carct_count of the announce content
@@ -72,16 +82,27 @@ public class PubAnnounceFragment extends Fragment implements View.OnClickListene
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 inputContent = content_announce.getText().toString();
                 if (inputContent.length() <= 50) {
-                    caractnb.setText("Caractères : " + String.valueOf(inputContent.length()) + "/100");
+                    caractnb.setText("Caractères : " + String.valueOf(inputContent.length()) + "/50");
                 }else {
-                    caractnb.setText("Caractères : 100/100");
+                    caractnb.setText("Caractères : 50/50");
                 }
             }
             @Override
             public void afterTextChanged(Editable s) {
             }
         });
-
+        //count number of post already in database to increment by one the id of the post
+        reff.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    maxid = (int)dataSnapshot.getChildrenCount();
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
         //validation to push data in FirebaseRealtimedatabase
         postButton.setOnClickListener(this);
 
@@ -94,19 +115,8 @@ public class PubAnnounceFragment extends Fragment implements View.OnClickListene
     @Override
     public void onClick(View view) {
         //Auto increment in database
-        reff.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    maxid = (dataSnapshot.getChildrenCount());
-                }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        });
         //pass to string text enter by user
         inputTitle = title_announce.getText().toString();
         inputContent = content_announce.getText().toString();
@@ -131,20 +141,17 @@ public class PubAnnounceFragment extends Fragment implements View.OnClickListene
             Toast.makeText(getActivity(), getString(R.string.error_post_msg), LENGTH_SHORT).show();
 
         } else {
-            Toast.makeText(getActivity(), "Your title : " + inputTitle + " and your content " + inputContent, LENGTH_SHORT).show();
             //construction struct to send into database with auto increment depending on number of member in this branch
-            postsave.setTitle(inputTitle);
-            postsave.setContent(inputContent);
-            postsave.setDPchoice(radioButton2.getText().toString());
-            postsave.setSPchoice(radioButton1.getText().toString());
-            reff.child(String.valueOf(maxid + 1)).setValue(postsave);
+            postsave= new PostSaveStruct(inputTitle,inputContent,radioButton2.getText().toString(),radioButton1.getText().toString());
+            reff.child(String.valueOf(maxid+1)).setValue(postsave);
+
 
             //confirm to the user that the announce is published
             Toast.makeText(getActivity(), getString(R.string.post_published), LENGTH_SHORT).show();
 
             //switch to Announce Fragment to show the announce published
-            FragmentTransaction transaction = getFragmentManager().beginTransaction();
-            transaction.replace(R.id.fragment_container, new AnnouceFragment()).commit();
+            Intent act = new Intent(getActivity(), AnnounceActivity.class);
+            startActivity(act);
         }
     }
 
