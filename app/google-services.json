@@ -44,6 +44,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "497051639691-2hnssdprk5v4l1aq9umrfg85dufjqqf9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "fr.c7regne.seekandsharedrawer",
+            "certificate_hash": "d9030c9772c9366738acfc216fd1f5835c5adbb5"
+          }
+        },
+        {
           "client_id": "497051639691-9vts7mh9ra5j6o2hlj5c6eqmbe5mlotn.apps.googleusercontent.com",
           "client_type": 3
         }
