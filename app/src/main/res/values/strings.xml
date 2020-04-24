@@ -1,9 +1,11 @@
 <resources>
-    <string name="app_name">SeekandShareDrawer</string>
+    <string name="app_name">SeekandShare</string>
     <string name="open">Ouvrir</string>
     <string name="close">Fermer</string>
     <string name="search_data">Votre sélection</string>
     <string name="error_post_msg">Vous devez renseigner un titre et un contenu (de plus de 50 caractères)</string>
     <string name="post_published">Votre annonce est mise en ligne</string>
     <string name="caract_number">Caractères : 0/50</string>
+    <string name="loading_text1">CPO 2020 ENIB</string>
+    <string name="loading_text2">Corentin, Tanguy et Lénaël</string>
 </resources>
