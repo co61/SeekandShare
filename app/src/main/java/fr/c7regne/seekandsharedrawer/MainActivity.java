@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     Intent launchIntent;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -135,6 +136,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mDrawerLayout.closeDrawer(GravityCompat.START);
         selectedFragment = new HomeFragment();
         startActivity( launchIntent);
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
+
         return true;
     }
 

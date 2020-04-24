@@ -65,7 +65,8 @@ public class AnnounceActivity extends AppCompatActivity {
     //if click onretrun android button then go back to home
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(this, MainActivity.class));
+
+
         finish();
 
     }
