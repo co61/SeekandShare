@@ -8,7 +8,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -30,6 +34,12 @@ public class SignInActivity extends AppCompatActivity {
     private final static int RC_SIGN_IN = 123;
     private FirebaseAuth mAuth;
     Button signbutton;
+
+
+
+    private final int duration = 1900;
+    Animation topAnim, bottomAnim;
+    ImageView cloud1, cloud2, cloud3;
 
     @Override
     protected void onStart() {
@@ -53,6 +63,18 @@ public class SignInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_singin);
+
+
+        topAnim = AnimationUtils.loadAnimation(this,R.anim.top_animation);
+
+        cloud1 = findViewById(R.id.cloud1);
+        cloud2 = findViewById(R.id.cloud2);
+        cloud3 = findViewById(R.id.cloud3);
+
+        cloud1.setAnimation(topAnim);
+        cloud2.setAnimation(AnimationUtils.loadAnimation(this,R.anim.top_animation2));
+        cloud3.setAnimation(AnimationUtils.loadAnimation(this,R.anim.top_animation3));
+
 
         signbutton = (Button) findViewById(R.id.google_signIn) ;
         mAuth = FirebaseAuth.getInstance();
