@@ -48,6 +48,7 @@ public class SettingsActivity extends AppCompatActivity {
         });
     }
 
+
     //if click onretrun android button then go back to home
     @Override
     public void onBackPressed() {
