@@ -44,7 +44,7 @@
 
         <Button
             android:id="@+id/google_signIn"
-            android:layout_width="255dp"
+            android:layout_width="210dp"
             android:layout_height="0dp"
             android:layout_gravity="center"
             android:layout_weight="0.1"
@@ -62,7 +62,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="0.25"
-            android:paddingTop="10dp"
+            android:paddingTop="20dp"
             android:paddingBottom="10dp"
             android:src="@drawable/grand_logo" />
 
