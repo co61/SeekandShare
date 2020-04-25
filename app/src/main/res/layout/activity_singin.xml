@@ -6,7 +6,26 @@
     android:layout_height="match_parent"
     tools:context=".SignInActivity"
     android:orientation="vertical"
-    android:background="@drawable/background">
+    android:background="@drawable/back">
+
+    <ImageView
+        android:id="@+id/cloud1"
+        android:layout_width="match_parent"
+        android:layout_height="265dp"
+        android:layout_marginTop="-40dp"
+        android:src="@drawable/cloud1" />
+    <ImageView
+        android:id="@+id/cloud2"
+        android:layout_width="match_parent"
+        android:layout_height="265dp"
+        android:layout_marginTop="-60dp"
+        android:src="@drawable/cloud2" />
+    <ImageView
+        android:id="@+id/cloud3"
+        android:layout_width="match_parent"
+        android:layout_height="265dp"
+        android:layout_marginTop="-80dp"
+        android:src="@drawable/cloud3" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,16 +36,18 @@
         android:paddingRight="20dp">
 
 
+
         <Space
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.425" />
+            android:layout_weight="0.38" />
 
         <Button
             android:id="@+id/google_signIn"
-            android:layout_width="match_parent"
+            android:layout_width="210dp"
             android:layout_height="0dp"
-            android:layout_weight="0.15"
+            android:layout_gravity="center"
+            android:layout_weight="0.1"
             android:background="@drawable/google_signin"
             android:elevation="8dp"
             android:textColor="#fff" />
@@ -34,14 +55,14 @@
         <Space
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.125" />
+            android:layout_weight="0.135" />
 
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="0.25"
-            android:paddingTop="10dp"
+            android:paddingTop="20dp"
             android:paddingBottom="10dp"
             android:src="@drawable/grand_logo" />
 

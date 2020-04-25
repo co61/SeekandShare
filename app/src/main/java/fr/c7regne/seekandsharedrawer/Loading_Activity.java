@@ -34,11 +34,9 @@ public class Loading_Activity extends AppCompatActivity {
         topAnim = AnimationUtils.loadAnimation(this,R.anim.top_animation);
         bottomAnim = AnimationUtils.loadAnimation(this,R.anim.bottom_animation);
 
-        grandlogo = findViewById(R.id.loading_logo);
         slogan = findViewById(R.id.loading_text_view1);
         noms= findViewById(R.id.loading_text_view2);
 
-        grandlogo.setAnimation(topAnim);
         slogan.setAnimation(bottomAnim);
         noms.setAnimation(bottomAnim);
 
