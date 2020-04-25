@@ -40,13 +40,14 @@
         <Space
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.40" />
+            android:layout_weight="0.38" />
 
         <Button
             android:id="@+id/google_signIn"
-            android:layout_width="match_parent"
+            android:layout_width="255dp"
             android:layout_height="0dp"
-            android:layout_weight="0.15"
+            android:layout_gravity="center"
+            android:layout_weight="0.1"
             android:background="@drawable/google_signin"
             android:elevation="8dp"
             android:textColor="#fff" />
@@ -54,7 +55,7 @@
         <Space
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.125" />
+            android:layout_weight="0.135" />
 
 
         <ImageView
