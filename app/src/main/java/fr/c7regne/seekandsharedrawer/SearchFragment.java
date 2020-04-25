@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+
 public class SearchFragment extends Fragment implements View.OnClickListener {
     //element
     private EditText search_txt;

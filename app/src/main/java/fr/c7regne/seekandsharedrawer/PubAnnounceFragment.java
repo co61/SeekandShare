@@ -1,11 +1,13 @@
 package fr.c7regne.seekandsharedrawer;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -28,6 +31,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.muddzdev.styleabletoast.StyleableToast;
+
+import java.sql.Time;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import static android.widget.Toast.LENGTH_SHORT;
 
@@ -46,11 +56,14 @@ public class PubAnnounceFragment extends Fragment implements View.OnClickListene
     DatabaseReference reff;
     int maxid;
     TextView caractnb;
-    String name, email, id;
+    String userName, userEmail, userId;
+    Calendar calendar;
+    String date, hour, fullDate;
 
 
     View v;
 
+    @SuppressLint("SimpleDateFormat")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -62,15 +75,20 @@ public class PubAnnounceFragment extends Fragment implements View.OnClickListene
         radioGroup1 = (RadioGroup) v.findViewById(R.id.post_SP_radioGroup);
         radioGroup2 = (RadioGroup) v.findViewById(R.id.post_DP_radioGroup);
         caractnb = (TextView) v.findViewById(R.id.caractnb);
+        calendar = Calendar.getInstance();
+        date = DateFormat.getDateInstance(DateFormat.LONG).format(calendar.getTime());
+        fullDate = new SimpleDateFormat("EEEE, dd MMMM yyyy, hh:mm:ss").format(calendar.getTime());
+        hour = new SimpleDateFormat("hh:mm:ss").format(calendar.getTime());
+
 
         //get information on user
-        GoogleSignInAccount signInAccount= GoogleSignIn.getLastSignedInAccount(getContext());
-        if(signInAccount != null){
-            name=signInAccount.getDisplayName();
-            email=signInAccount.getEmail();
-            id=signInAccount.getId();
+        GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(getContext());
+        if (signInAccount != null) {
+            userName = signInAccount.getDisplayName();
+            userEmail = signInAccount.getEmail();
+            userId = signInAccount.getId();
         }
-        reff = FirebaseDatabase.getInstance().getReference().child("Posts").child(id);
+        reff = FirebaseDatabase.getInstance().getReference().child("Posts");
         title_announce.requestFocus();
 
         //increment carct_count of the announce content
@@ -78,15 +96,17 @@ public class PubAnnounceFragment extends Fragment implements View.OnClickListene
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
+
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 inputContent = content_announce.getText().toString();
                 if (inputContent.length() <= 50) {
                     caractnb.setText("Caractères : " + String.valueOf(inputContent.length()) + "/50");
-                }else {
+                } else {
                     caractnb.setText("Caractères : 50/50");
                 }
             }
+
             @Override
             public void afterTextChanged(Editable s) {
             }
@@ -96,9 +116,21 @@ public class PubAnnounceFragment extends Fragment implements View.OnClickListene
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    maxid = (int)dataSnapshot.getChildrenCount();
+                    maxid = (int) dataSnapshot.getChildrenCount();
+                    Log.i("Ourther", String.valueOf(maxid));
+                    Log.i("Our VAALUE", String.valueOf(dataSnapshot.child(String.valueOf(maxid + 1)).getValue()));
+                    while (String.valueOf(dataSnapshot.child(String.valueOf(maxid + 1)).getValue()) != "null") {
+
+                        Log.i("Our VAALUE", "+1");
+                        maxid += 1;
+                        Log.i("Our VAALUE", String.valueOf(dataSnapshot.child(String.valueOf(maxid + 1)).getValue()));
+                        Log.i("Our VAALUE", String.valueOf(maxid));
+
+                    }
+                    Log.i("Our VAALUE", String.valueOf(maxid));
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
@@ -142,12 +174,12 @@ public class PubAnnounceFragment extends Fragment implements View.OnClickListene
 
         } else {
             //construction struct to send into database with auto increment depending on number of member in this branch
-            postsave= new PostSaveStruct(inputTitle,inputContent,radioButton2.getText().toString(),radioButton1.getText().toString());
-            reff.child(String.valueOf(maxid+1)).setValue(postsave);
+            postsave = new PostSaveStruct(userId, userName, inputTitle, inputContent, radioButton2.getText().toString(), radioButton1.getText().toString(), fullDate);
+            reff.child(String.valueOf(maxid + 1)).setValue(postsave);
 
 
             //confirm to the user that the announce is published
-            Toast.makeText(getActivity(), getString(R.string.post_published), LENGTH_SHORT).show();
+            StyleableToast.makeText(getActivity(), getString(R.string.post_published), LENGTH_SHORT, R.style.publishedToast).show();
 
             //switch to Announce Fragment to show the announce published
             Intent act = new Intent(getActivity(), AnnounceActivity.class);
