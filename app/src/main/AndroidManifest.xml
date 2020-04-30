@@ -39,8 +39,7 @@
             android:name=".SearchActivity"
             android:parentActivityName=".MainActivity" />
 
-        <activity android:name=".AffichagePostActivity"
-            android:parentActivityName=".MainActivity" />
+        <activity android:name=".AffichagePostActivity" />
 
         <meta-data
             android:name="preloaded_fonts"
