@@ -37,6 +37,11 @@
         <activity
             android:name=".SettingsActivity"
             android:parentActivityName=".MainActivity" />
+
+        <activity
+            android:name=".SearchActivity"
+            android:parentActivityName=".MainActivity" />
+
         <activity android:name=".AffichagePostActivity" />
 
         <meta-data

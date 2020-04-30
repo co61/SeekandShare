@@ -90,7 +90,7 @@ public class PubAnnounceFragment extends Fragment implements View.OnClickListene
             userEmail = signInAccount.getEmail();
             userId = signInAccount.getId();
         }
-        reff = FirebaseDatabase.getInstance().getReference().child("Posts");
+        reff = FirebaseDatabase.getInstance().getReference().child("Tanguy");
         title_announce.requestFocus();
 
         //increment carct_count of the announce content
@@ -173,7 +173,7 @@ public class PubAnnounceFragment extends Fragment implements View.OnClickListene
         } else {
             //construction struct to send into database with auto increment depending on number of member in this branch
             postsave = new PostSaveStruct(userId, userName, inputTitle, inputContent, inputPlace,radioButton2.getText().toString(), radioButton1.getText().toString(), fullDate);
-            reff.child(String.valueOf(maxid + 1)).setValue(postsave);
+            reff.child(String.valueOf(userId+"-"+inputTitle)).setValue(postsave);
 
 
             //confirm to the user that the announce is published

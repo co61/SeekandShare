@@ -2,7 +2,6 @@ package fr.c7regne.seekandsharedrawer;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.widget.TextView;
@@ -10,7 +9,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.database.DataSnapshot;
@@ -26,7 +24,9 @@ public class AffichagePostActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_affichage_announce);
+
 
         Intent intent = getIntent();
         final String ID = intent.getStringExtra(AnnounceActivity.EXTRA_ID);
@@ -44,6 +44,7 @@ public class AffichagePostActivity extends AppCompatActivity {
         reff.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
                 String title = String.valueOf(dataSnapshot.child(ID).child("title").getValue());
                 String content = String.valueOf(dataSnapshot.child(ID).child("content").getValue());
                 String dpchoice = String.valueOf(dataSnapshot.child(ID).child("dpchoice").getValue());

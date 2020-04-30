@@ -1,16 +1,22 @@
 package fr.c7regne.seekandsharedrawer;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-
+import android.print.PrintAttributes;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextSwitcher;
+import android.widget.TextView;
 import android.widget.Toast;
-
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,10 +31,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class AnnounceActivity extends AppCompatActivity {
+import java.util.Calendar;
 
-    public static final String EXTRA_ID="fr.c7regne.seekandsharedrawer";
 
+public class SearchActivity extends AppCompatActivity {
     int Childnb;
     DatabaseReference reff;
     String currentUserName, currentUserEmail, currentUserId;
@@ -37,10 +43,10 @@ public class AnnounceActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_announce);
+        setContentView(R.layout.activity_search);
 
         //change title action Bar
-        getSupportActionBar().setTitle("Mes annonces");
+        getSupportActionBar().setTitle("Recherches");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //get information on user
@@ -51,21 +57,21 @@ public class AnnounceActivity extends AppCompatActivity {
             currentUserId = signInAccount.getId();
         }
         //reed children posts count
-
         reff=FirebaseDatabase.getInstance().getReference().child("Tanguy");
+
         reff.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
+
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
-                    String key = child.getKey().toString();
-                    String userID = String.valueOf(dataSnapshot.child(key).child("userId").getValue());
+                    if(child.child("title").getValue().toString().contains("marche")){
+                        String key = child.getKey().toString();
+                        String userID = String.valueOf(dataSnapshot.child(key).child("userId").getValue());
 
-                    //get the announce of the current user on the screen
+                        //get the announce of the current user on the screen
 
-                    if(currentUserId.equals(userID)){
-
-                        LinearLayout layout = (LinearLayout) findViewById(R.id.linearlayout_announce_list);
+                        LinearLayout layout = (LinearLayout) findViewById(R.id.linearlayout_search_list);
                         String title = String.valueOf(dataSnapshot.child(key).child("title").getValue());
                         String content = String.valueOf(dataSnapshot.child(key).child("content").getValue());
                         String dpchoice = String.valueOf(dataSnapshot.child(key).child("dpchoice").getValue());
@@ -73,24 +79,14 @@ public class AnnounceActivity extends AppCompatActivity {
                         String publicationDate = String.valueOf(dataSnapshot.child(key).child("publicationDate").getValue());
                         String userName = String.valueOf(dataSnapshot.child(key).child("userName").getValue());
                         //sending to put on screen
-                        LinearLayout Aview =new AddViewListAnnounce().addAnnounceUser(AnnounceActivity.this,title,publicationDate,dpchoice,spchoice,content,userName,userID);
-                        layout.addView(Aview);
-                        final String finalI =  String.valueOf(key);
+                        layout.addView(new AddViewListAnnounce().addAnnounceUser(SearchActivity.this,title,publicationDate,dpchoice,spchoice,content,userName,userID));
 
-                        Aview.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                //switch to Announce Fragment to show the announce published
-                                Intent act = new Intent(v.getContext(), AffichagePostActivity.class);
-                                startActivity(act);
-                                act.putExtra(EXTRA_ID, finalI);
-                                startActivity(act);
-
-                            }
-                        });
                     }
                 }
-            }
+
+
+                }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
@@ -103,7 +99,6 @@ public class AnnounceActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         finish();
-
     }
 
 
