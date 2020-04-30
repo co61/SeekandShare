@@ -29,14 +29,11 @@
             android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".AnnounceActivity"
-            android:parentActivityName=".MainActivity" />
+            android:name=".AnnounceActivity" />
         <activity
-            android:name=".FavoriteActivity"
-            android:parentActivityName=".MainActivity" />
+            android:name=".FavoriteActivity" />
         <activity
-            android:name=".SettingsActivity"
-            android:parentActivityName=".MainActivity" />
+            android:name=".SettingsActivity" />
 
         <activity
             android:name=".SearchActivity"

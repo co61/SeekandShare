@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -82,7 +83,6 @@ public class AnnounceActivity extends AppCompatActivity {
                             public void onClick(View v) {
                                 //switch to Announce Fragment to show the announce published
                                 Intent act = new Intent(v.getContext(), AffichagePostActivity.class);
-                                startActivity(act);
                                 act.putExtra(EXTRA_ID, finalI);
                                 startActivity(act);
 
@@ -97,6 +97,15 @@ public class AnnounceActivity extends AppCompatActivity {
 
         });
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        if(item.getItemId()==android.R.id.home){
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     //if click onretrun android button then go back to home

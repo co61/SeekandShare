@@ -4,8 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.TypedValue;
+import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class AffichagePostActivity extends AppCompatActivity {
+    Toolbar toolbar;
 
     DatabaseReference reff;
 
@@ -26,7 +29,9 @@ public class AffichagePostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_affichage_announce);
-
+        //change title action Bar
+        getSupportActionBar().setTitle("Mes annonces");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
         final String ID = intent.getStringExtra(AnnounceActivity.EXTRA_ID);
@@ -40,11 +45,10 @@ public class AffichagePostActivity extends AppCompatActivity {
 
 
 
-        reff = FirebaseDatabase.getInstance().getReference().child("Posts");
+        reff = FirebaseDatabase.getInstance().getReference().child("Tanguy");
         reff.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
                 String title = String.valueOf(dataSnapshot.child(ID).child("title").getValue());
                 String content = String.valueOf(dataSnapshot.child(ID).child("content").getValue());
                 String dpchoice = String.valueOf(dataSnapshot.child(ID).child("dpchoice").getValue());
@@ -66,10 +70,17 @@ public class AffichagePostActivity extends AppCompatActivity {
             }
         });
 
-        //change title action Bar
-        getSupportActionBar().setTitle("Mes annonces");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        if(item.getItemId()==android.R.id.home){
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     //if click onretrun android button then go back to home
