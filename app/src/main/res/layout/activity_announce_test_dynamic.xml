@@ -2,50 +2,73 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
-    >
+    android:background="@android:color/white">
 
     <LinearLayout
         android:id="@+id/linearlayout_announce_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        >
 
         <LinearLayout
-            android:layout_margin="15dp"
-            android:padding="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="15dp"
             android:background="@color/ic_launcher_background"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="10dp">
 
 
             <TextView
+                android:id="@+id/a"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Title"
-                android:textSize="24sp"
                 android:background="@android:color/white"
+                android:text="Title"
                 android:textColor="@color/black"
-                />
+                android:textSize="24sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Date"
-                android:textSize="12sp"
+                android:background="@drawable/bottom_border_grey"
                 android:paddingBottom="2dp"
-                android:background="@drawable/bottom_border_grey"/>
+                android:text="Date"
+                android:textSize="12sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bottom_border_grey"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="DP" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="SP" />
+            </LinearLayout>
+
+
             <TextView
+                android:id="@+id/b"
                 android:layout_width="match_parent"
                 android:layout_height="54sp"
-                android:text="content"/>
+                android:text="content" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="username"
                 android:layout_gravity="end"
-                android:textAlignment="viewEnd"/>
+                android:text="username"
+                android:textAlignment="viewEnd" />
         </LinearLayout>
 
 

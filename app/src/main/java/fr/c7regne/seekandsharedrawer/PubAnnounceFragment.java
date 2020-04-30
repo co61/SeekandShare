@@ -44,8 +44,9 @@ import static android.widget.Toast.LENGTH_SHORT;
 public class PubAnnounceFragment extends Fragment implements View.OnClickListener {
     //ellement
     EditText content_announce;
-    EditText title_announce;
+    EditText title_announce,place_announce;
     Button postButton;
+
     //Radiogroups
     RadioGroup radioGroup1;
     RadioGroup radioGroup2;
@@ -71,6 +72,7 @@ public class PubAnnounceFragment extends Fragment implements View.OnClickListene
         //find element
         title_announce = (EditText) v.findViewById(R.id.post_title_txt);
         content_announce = (EditText) v.findViewById(R.id.post_content_txt);
+        place_announce = (EditText) v.findViewById(R.id.post_place_txt);
         postButton = (Button) v.findViewById(R.id.validate_post_button);
         radioGroup1 = (RadioGroup) v.findViewById(R.id.post_SP_radioGroup);
         radioGroup2 = (RadioGroup) v.findViewById(R.id.post_DP_radioGroup);
@@ -117,17 +119,9 @@ public class PubAnnounceFragment extends Fragment implements View.OnClickListene
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     maxid = (int) dataSnapshot.getChildrenCount();
-                    Log.i("Ourther", String.valueOf(maxid));
-                    Log.i("Our VAALUE", String.valueOf(dataSnapshot.child(String.valueOf(maxid + 1)).getValue()));
                     while (String.valueOf(dataSnapshot.child(String.valueOf(maxid + 1)).getValue()) != "null") {
-
-                        Log.i("Our VAALUE", "+1");
                         maxid += 1;
-                        Log.i("Our VAALUE", String.valueOf(dataSnapshot.child(String.valueOf(maxid + 1)).getValue()));
-                        Log.i("Our VAALUE", String.valueOf(maxid));
-
                     }
-                    Log.i("Our VAALUE", String.valueOf(maxid));
                 }
             }
 
@@ -141,8 +135,7 @@ public class PubAnnounceFragment extends Fragment implements View.OnClickListene
         return v;
     }
 
-    String inputTitle;
-    String inputContent;
+    String inputTitle, inputContent,inputPlace;
 
     @Override
     public void onClick(View view) {
@@ -152,6 +145,7 @@ public class PubAnnounceFragment extends Fragment implements View.OnClickListene
         //pass to string text enter by user
         inputTitle = title_announce.getText().toString();
         inputContent = content_announce.getText().toString();
+        inputPlace = place_announce.getText().toString();
         //radiobutton selected
         int radioID1 = radioGroup1.getCheckedRadioButtonId();
         radioButton1 = v.findViewById(radioID1);
@@ -159,10 +153,14 @@ public class PubAnnounceFragment extends Fragment implements View.OnClickListene
         radioButton2 = v.findViewById(radioID2);
 
         //Save in database if something in EditText
-        if (inputTitle.equals("") || inputContent.equals("") || inputContent.length() <= 50) {
+        if (inputTitle.equals("") || inputContent.equals("") || inputContent.length() <= 50 || inputPlace.equals("")) {
 
 
             if (inputTitle.equals("")) {
+                title_announce.setError("Erreur");
+                title_announce.requestFocus();
+            }
+            if (inputPlace.equals("")) {
                 title_announce.setError("Erreur");
                 title_announce.requestFocus();
             }
@@ -174,7 +172,7 @@ public class PubAnnounceFragment extends Fragment implements View.OnClickListene
 
         } else {
             //construction struct to send into database with auto increment depending on number of member in this branch
-            postsave = new PostSaveStruct(userId, userName, inputTitle, inputContent, radioButton2.getText().toString(), radioButton1.getText().toString(), fullDate);
+            postsave = new PostSaveStruct(userId, userName, inputTitle, inputContent, inputPlace,radioButton2.getText().toString(), radioButton1.getText().toString(), fullDate);
             reff.child(String.valueOf(maxid + 1)).setValue(postsave);
 
 

@@ -76,12 +76,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 super.onBackPressed();
                 finish();
             } else {
-                //a changer
-                previousSelectedItemId.setChecked(true);
-                selectedFragment = previousFragment;
-                selectedItemId=previousSelectedItemId;
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
-
+                startActivity( new Intent(this,MainActivity.class));
+                overridePendingTransition(R.anim.slide_no_translation,R.anim.slide_no_translation);
+                finish();
             }
         }
     }
@@ -142,7 +139,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         return true;
     }
-
-    //appel des interfaces
 
 }
