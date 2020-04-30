@@ -44,6 +44,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "497051639691-uhpgtkpnkg6otnmvs8ljd0ta0m1isddm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "fr.c7regne.seekandsharedrawer",
+            "certificate_hash": "2cad16edd29059dabcfea17073109c784a4cddce"
+          }
+        },
+        {
+          "client_id": "497051639691-cdo18iqi0n3t71fbch7hldmbjsllc4la.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "fr.c7regne.seekandsharedrawer",
+            "certificate_hash": "7beb22806bdb05fa839b79ab5a677720848faffc"
+          }
+        },
+        {
           "client_id": "497051639691-2hnssdprk5v4l1aq9umrfg85dufjqqf9.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

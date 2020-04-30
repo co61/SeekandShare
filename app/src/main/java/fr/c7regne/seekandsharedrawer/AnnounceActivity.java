@@ -1,21 +1,13 @@
 package fr.c7regne.seekandsharedrawer;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.print.PrintAttributes;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TextSwitcher;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -31,9 +23,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.Calendar;
-
 public class AnnounceActivity extends AppCompatActivity {
+
+    public static final String EXTRA_ID="fr.c7regne.seekandsharedrawer";
+
+
     int Childnb;
     DatabaseReference reff;
     String currentUserName, currentUserEmail, currentUserId;
@@ -42,7 +36,7 @@ public class AnnounceActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_announce_test_dynamic);
+        setContentView(R.layout.activity_announce);
 
         //change title action Bar
         getSupportActionBar().setTitle("Mes annonces");
@@ -57,10 +51,11 @@ public class AnnounceActivity extends AppCompatActivity {
         }
         //reed children posts count
         reff=FirebaseDatabase.getInstance().getReference().child("Posts");
+
         reff.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
+                Log.i("test",dataSnapshot.getValue().toString());
                 Childnb= (int) dataSnapshot.getChildrenCount();
                 int decalage =0;
                 for (int i=1;i<=Childnb+decalage;i++) {
@@ -80,8 +75,22 @@ public class AnnounceActivity extends AppCompatActivity {
                         String spchoice = String.valueOf(dataSnapshot.child(String.valueOf(i)).child("spchoice").getValue());
                         String publicationDate = String.valueOf(dataSnapshot.child(String.valueOf(i)).child("publicationDate").getValue());
                         String userName = String.valueOf(dataSnapshot.child(String.valueOf(i)).child("userName").getValue());
+
                         //sending to put on screen
-                        layout.addView(new AddViewAnnounce().addAnnounceUser(AnnounceActivity.this,i,title,publicationDate,dpchoice,spchoice,content,userName,userID));
+                        LinearLayout Aview =new AddViewListAnnounce().addAnnounceUser(AnnounceActivity.this,title,publicationDate,dpchoice,spchoice,content,userName,userID);
+                        layout.addView(Aview);
+                        final String finalI =  String.valueOf(i);
+                        Aview.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                //switch to Announce Fragment to show the announce published
+                                Intent act = new Intent(v.getContext(), AffichagePostActivity.class);
+                                startActivity(act);
+                                act.putExtra(EXTRA_ID, finalI);
+                                startActivity(act);
+
+                            }
+                        });
                     }
                 }
             }
@@ -96,7 +105,6 @@ public class AnnounceActivity extends AppCompatActivity {
     //if click onretrun android button then go back to home
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(this, MainActivity.class));
         finish();
 
     }
