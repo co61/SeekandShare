@@ -24,9 +24,7 @@ public class AffichagePostActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.activity_affichage_announce);
-
+        setContentView(R.layout.activity_announce);
 
         Intent intent = getIntent();
         final String ID = intent.getStringExtra(AnnounceActivity.EXTRA_ID);
