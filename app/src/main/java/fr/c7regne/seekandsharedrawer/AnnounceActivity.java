@@ -4,9 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
+
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,6 +26,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class AnnounceActivity extends AppCompatActivity {
+
     public static final String EXTRA_ID="fr.c7regne.seekandsharedrawer";
 
     int Childnb;
@@ -46,11 +51,11 @@ public class AnnounceActivity extends AppCompatActivity {
             currentUserId = signInAccount.getId();
         }
         //reed children posts count
+
         reff=FirebaseDatabase.getInstance().getReference().child("Tanguy");
         reff.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
 
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     String key = child.getKey().toString();
@@ -59,6 +64,7 @@ public class AnnounceActivity extends AppCompatActivity {
                     //get the announce of the current user on the screen
 
                     if(currentUserId.equals(userID)){
+
                         LinearLayout layout = (LinearLayout) findViewById(R.id.linearlayout_announce_list);
                         String title = String.valueOf(dataSnapshot.child(key).child("title").getValue());
                         String content = String.valueOf(dataSnapshot.child(key).child("content").getValue());
@@ -70,6 +76,7 @@ public class AnnounceActivity extends AppCompatActivity {
                         LinearLayout Aview =new AddViewListAnnounce().addAnnounceUser(AnnounceActivity.this,title,publicationDate,dpchoice,spchoice,content,userName,userID);
                         layout.addView(Aview);
                         final String finalI =  String.valueOf(key);
+
                         Aview.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {

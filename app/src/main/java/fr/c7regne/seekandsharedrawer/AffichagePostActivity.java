@@ -24,7 +24,9 @@ public class AffichagePostActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_announce);
+
+        setContentView(R.layout.activity_affichage_announce);
+
 
         Intent intent = getIntent();
         final String ID = intent.getStringExtra(AnnounceActivity.EXTRA_ID);
@@ -42,7 +44,7 @@ public class AffichagePostActivity extends AppCompatActivity {
         reff.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Toast.makeText(getApplicationContext(),"test"+String.valueOf(dataSnapshot.child("1").child("title").getValue()),Toast.LENGTH_SHORT).show();
+
                 String title = String.valueOf(dataSnapshot.child(ID).child("title").getValue());
                 String content = String.valueOf(dataSnapshot.child(ID).child("content").getValue());
                 String dpchoice = String.valueOf(dataSnapshot.child(ID).child("dpchoice").getValue());

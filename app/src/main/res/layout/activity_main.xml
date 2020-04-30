@@ -38,7 +38,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:background="#DDDDDD"
-            app:menu="@menu/bottommenu" />
+            app:menu="@menu/bottommenu"
+            />
     </RelativeLayout>
 
 
