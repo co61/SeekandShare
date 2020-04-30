@@ -49,6 +49,10 @@ public class SearchActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Recherches");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+
+        Intent intent = getIntent();
+        final String input = intent.getStringExtra(SearchFragment.SearchInput);
+
         //get information on user
         GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(this);
         if (signInAccount != null) {
@@ -65,7 +69,7 @@ public class SearchActivity extends AppCompatActivity {
 
 
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
-                    if(child.child("title").getValue().toString().contains("marche")){
+                    if(child.child("content").getValue().toString().contains(input) | child.child("title").getValue().toString().contains(input)){
                         String key = child.getKey().toString();
                         String userID = String.valueOf(dataSnapshot.child(key).child("userId").getValue());
 

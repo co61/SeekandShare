@@ -69,13 +69,12 @@ public class AnnounceActivity extends AppCompatActivity {
                         //sending to put on screen
                         LinearLayout Aview =new AddViewListAnnounce().addAnnounceUser(AnnounceActivity.this,title,publicationDate,dpchoice,spchoice,content,userName,userID);
                         layout.addView(Aview);
-                        final String finalI =  String.valueOf(key);
+                        final String finalI =  key;
                         Aview.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 //switch to Announce Fragment to show the announce published
                                 Intent act = new Intent(v.getContext(), AffichagePostActivity.class);
-                                startActivity(act);
                                 act.putExtra(EXTRA_ID, finalI);
                                 startActivity(act);
 
