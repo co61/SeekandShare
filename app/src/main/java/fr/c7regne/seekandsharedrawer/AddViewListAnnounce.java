@@ -22,10 +22,11 @@ import static fr.c7regne.seekandsharedrawer.AnnounceActivity.spToPx;
 public class AddViewListAnnounce extends AppCompatActivity {
 
 
-
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @SuppressLint("ResourceAsColor")
     public LinearLayout addAnnounceUser(final Context activity,  String Title, String Date, String DP, String SP, String Content, String UserName, String UserId) {
+
+
 
         //linearlayout à empiler
         LinearLayout newLL= new LinearLayout(activity);
