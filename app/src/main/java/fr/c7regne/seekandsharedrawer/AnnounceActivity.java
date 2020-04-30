@@ -82,7 +82,6 @@ public class AnnounceActivity extends AppCompatActivity {
                             public void onClick(View v) {
                                 //switch to Announce Fragment to show the announce published
                                 Intent act = new Intent(v.getContext(), AffichagePostActivity.class);
-                                startActivity(act);
                                 act.putExtra(EXTRA_ID, finalI);
                                 startActivity(act);
 
