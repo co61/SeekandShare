@@ -12,7 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".Loading_Activity"
+        <activity
+            android:name=".Loading_Activity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,24 +21,25 @@
             </intent-filter>
 
         </activity>
-      
+
         <activity
             android:name=".SignInActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".AnnounceActivity"
-            android:parentActivityName=".MainActivity" />
+            android:name=".AnnounceActivity" />
         <activity
-            android:name=".FavoriteActivity"
-            android:parentActivityName=".MainActivity" />
+            android:name=".FavoriteActivity" />
         <activity
-            android:name=".SettingsActivity"
+            android:name=".SettingsActivity" />
+
+        <activity
+            android:name=".SearchActivity"
             android:parentActivityName=".MainActivity" />
+
+        <activity android:name=".AffichagePostActivity" />
 
         <meta-data
             android:name="preloaded_fonts"

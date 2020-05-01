@@ -19,14 +19,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import static fr.c7regne.seekandsharedrawer.AnnounceActivity.dpToPx;
 import static fr.c7regne.seekandsharedrawer.AnnounceActivity.spToPx;
 
-public class AddViewAnnounce extends AppCompatActivity {
-
-    public static final String EXTRA_ID="fr.c7regne.seekandsharedrawer";
+public class AddViewListAnnounce extends AppCompatActivity {
 
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @SuppressLint("ResourceAsColor")
-    public LinearLayout addAnnounceUser(final Context activity, final int postId, String Title, String Date, String DP, String SP, String Content, String UserName, String UserId) {
+    public LinearLayout addAnnounceUser(final Context activity,  String Title, String Date, String DP, String SP, String Content, String UserName, String UserId) {
+
+
 
         //linearlayout à empiler
         LinearLayout newLL= new LinearLayout(activity);
@@ -37,15 +37,7 @@ public class AddViewAnnounce extends AppCompatActivity {
         newLL.setOrientation(LinearLayout.VERTICAL);
         int padding=dpToPx(10,activity.getApplicationContext());
         newLL.setPadding(padding,padding,padding,padding);
-        newLL.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(activity.getApplicationContext(),"ca marche",Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(activity.getApplicationContext(),AffichagePostActivity.class);
-                intent.putExtra(EXTRA_ID,postId);
 
-            }
-        });
 
         //title
         TextView textViewTitle= new TextView(activity);
@@ -124,4 +116,6 @@ public class AddViewAnnounce extends AppCompatActivity {
     public static int spToPx(float sp, Context context) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, context.getResources().getDisplayMetrics());
     }
+
 }
+

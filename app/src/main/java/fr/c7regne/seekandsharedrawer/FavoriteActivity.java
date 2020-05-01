@@ -2,7 +2,9 @@ package fr.c7regne.seekandsharedrawer;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -19,11 +21,17 @@ public class FavoriteActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
+        if(item.getItemId()==android.R.id.home){
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
     //if click onretrun android button then go back to home
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(this, MainActivity.class));
         finish();
 
     }
