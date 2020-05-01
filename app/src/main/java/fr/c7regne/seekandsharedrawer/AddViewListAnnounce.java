@@ -2,7 +2,7 @@ package fr.c7regne.seekandsharedrawer;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
+
 import android.graphics.Color;
 import android.os.Build;
 import android.util.TypedValue;
@@ -10,14 +10,12 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.IdRes;
+
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import static fr.c7regne.seekandsharedrawer.AnnounceActivity.dpToPx;
-import static fr.c7regne.seekandsharedrawer.AnnounceActivity.spToPx;
+
 
 public class AddViewListAnnounce extends AppCompatActivity {
 

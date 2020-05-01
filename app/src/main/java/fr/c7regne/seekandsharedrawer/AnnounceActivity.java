@@ -30,9 +30,8 @@ public class AnnounceActivity extends AppCompatActivity {
 
     public static final String EXTRA_ID="fr.c7regne.seekandsharedrawer";
 
-    int Childnb;
     DatabaseReference reff;
-    String currentUserName, currentUserEmail, currentUserId;
+    String  currentUserId;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
@@ -47,8 +46,6 @@ public class AnnounceActivity extends AppCompatActivity {
         //get information on user
         GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(this);
         if (signInAccount != null) {
-            currentUserName = signInAccount.getDisplayName();
-            currentUserEmail = signInAccount.getEmail();
             currentUserId = signInAccount.getId();
         }
         //reed children posts count
@@ -74,7 +71,7 @@ public class AnnounceActivity extends AppCompatActivity {
                         String publicationDate = String.valueOf(dataSnapshot.child(key).child("publicationDate").getValue());
                         String userName = String.valueOf(dataSnapshot.child(key).child("userName").getValue());
                         //sending to put on screen
-                        LinearLayout Aview =new AddViewListAnnounce().addAnnounceUser(AnnounceActivity.this,title,publicationDate,dpchoice,spchoice,content,userName,userID);
+                        LinearLayout Aview = new AddViewListAnnounce().addAnnounceUser(AnnounceActivity.this,title,publicationDate,dpchoice,spchoice,content,userName,userID);
                         layout.addView(Aview);
                         final String finalI =  String.valueOf(key);
 
@@ -114,16 +111,5 @@ public class AnnounceActivity extends AppCompatActivity {
         finish();
 
     }
-
-
-    public static int dpToPx(float dp, Context context) {
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, context.getResources().getDisplayMetrics());
-    }
-
-    public static int spToPx(float sp, Context context) {
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, context.getResources().getDisplayMetrics());
-    }
-
-
 
 }
