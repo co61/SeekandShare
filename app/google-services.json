@@ -44,16 +44,14 @@
       },
       "oauth_client": [
         {
-
-          "client_id": "497051639691-uhpgtkpnkg6otnmvs8ljd0ta0m1isddm.apps.googleusercontent.com",
+          "client_id": "497051639691-mc11ucf6famcv8eetrtrsju9q7mo60bu.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "fr.c7regne.seekandsharedrawer",
-            "certificate_hash": "2cad16edd29059dabcfea17073109c784a4cddce"
+            "certificate_hash": "46ada3ec8866096addac782031c65dcb8b2e74c1"
           }
         },
         {
-
           "client_id": "497051639691-cdo18iqi0n3t71fbch7hldmbjsllc4la.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

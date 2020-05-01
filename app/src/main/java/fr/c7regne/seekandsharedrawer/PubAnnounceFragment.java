@@ -55,7 +55,6 @@ public class PubAnnounceFragment extends Fragment implements View.OnClickListene
     //database
     PostSaveStruct postsave;
     DatabaseReference reff;
-    int maxid;
     TextView caractnb;
     String userName, userEmail, userId;
     Calendar calendar;
@@ -78,16 +77,16 @@ public class PubAnnounceFragment extends Fragment implements View.OnClickListene
         radioGroup2 = (RadioGroup) v.findViewById(R.id.post_DP_radioGroup);
         caractnb = (TextView) v.findViewById(R.id.caractnb);
         calendar = Calendar.getInstance();
-        date = DateFormat.getDateInstance(DateFormat.LONG).format(calendar.getTime());
+        ///date = DateFormat.getDateInstance(DateFormat.LONG).format(calendar.getTime());
         fullDate = new SimpleDateFormat("EEEE, dd MMMM yyyy, hh:mm:ss").format(calendar.getTime());
-        hour = new SimpleDateFormat("hh:mm:ss").format(calendar.getTime());
+        //hour = new SimpleDateFormat("hh:mm:ss").format(calendar.getTime());
 
 
         //get information on user
         GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(getContext());
         if (signInAccount != null) {
             userName = signInAccount.getDisplayName();
-            userEmail = signInAccount.getEmail();
+            ///userEmail = signInAccount.getEmail();
             userId = signInAccount.getId();
         }
         reff = FirebaseDatabase.getInstance().getReference().child("Tanguy");
@@ -113,22 +112,7 @@ public class PubAnnounceFragment extends Fragment implements View.OnClickListene
             public void afterTextChanged(Editable s) {
             }
         });
-        //count number of post already in database to increment by one the id of the post
-        reff.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    maxid = (int) dataSnapshot.getChildrenCount();
-                    while (String.valueOf(dataSnapshot.child(String.valueOf(maxid + 1)).getValue()) != "null") {
-                        maxid += 1;
-                    }
-                }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        });
         //validation to push data in FirebaseRealtimedatabase
         postButton.setOnClickListener(this);
 
@@ -173,7 +157,7 @@ public class PubAnnounceFragment extends Fragment implements View.OnClickListene
         } else {
             //construction struct to send into database with auto increment depending on number of member in this branch
             postsave = new PostSaveStruct(userId, userName, inputTitle, inputContent, inputPlace,radioButton2.getText().toString(), radioButton1.getText().toString(), fullDate);
-            reff.child(String.valueOf(userId+"-"+inputTitle)).setValue(postsave);
+            reff.child(userId+"-"+inputTitle).setValue(postsave);
 
 
             //confirm to the user that the announce is published

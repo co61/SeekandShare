@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
@@ -20,9 +22,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class AffichagePostActivity extends AppCompatActivity {
-    Toolbar toolbar;
 
     DatabaseReference reff;
+    ImageView addfavoritebtn;
+    CharSequence key;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,6 +52,7 @@ public class AffichagePostActivity extends AppCompatActivity {
         reff.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                key = dataSnapshot.getKey();
                 String title = String.valueOf(dataSnapshot.child(ID).child("title").getValue());
                 String content = String.valueOf(dataSnapshot.child(ID).child("content").getValue());
                 String dpchoice = String.valueOf(dataSnapshot.child(ID).child("dpchoice").getValue());
@@ -67,6 +71,14 @@ public class AffichagePostActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
+            }
+        });
+
+        addfavoritebtn=(ImageView)findViewById(R.id.add_favorite_btn);
+        addfavoritebtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AddFavorite().addToFavorite(AffichagePostActivity.this,key);
             }
         });
 
