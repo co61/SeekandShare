@@ -39,7 +39,7 @@ public class SignInActivity extends AppCompatActivity {
 
 
     private final int duration = 1900;
-    Animation topAnim, bottomAnim;
+    Animation topAnim;
     ImageView cloud1, cloud2, cloud3;
 
     @Override
@@ -51,7 +51,7 @@ public class SignInActivity extends AppCompatActivity {
         if(user!=null){
             Intent intent = new Intent(getApplicationContext(),MainActivity.class);
             startActivity(intent);
-            overridePendingTransition(R.anim.slide_in_bottom,R.anim.slide_out_top);
+            overridePendingTransition(R.anim.slide_in_top,R.anim.slide_out_bottom);
             finish();
         }
 
@@ -152,7 +152,7 @@ public class SignInActivity extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
                             Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                             startActivity(intent);
-                            overridePendingTransition(R.anim.slide_in_bottom,R.anim.slide_out_top);
+                            overridePendingTransition(R.anim.slide_in_top,R.anim.slide_out_bottom);
                             finish();
 
                         } else {
