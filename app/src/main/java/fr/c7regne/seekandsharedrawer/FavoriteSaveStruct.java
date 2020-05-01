@@ -1,13 +1,19 @@
 package fr.c7regne.seekandsharedrawer;
 
 public class FavoriteSaveStruct {
-    private CharSequence Key;
+    private String Key;
 
-
-    public FavoriteSaveStruct(CharSequence k) {
+    public FavoriteSaveStruct(String k) {
 
         this.Key = k;
 
+    }
+    public String getKey() {
+        return Key;
+    }
+
+    public void setKey(String key) {
+        Key = key;
     }
 
 }

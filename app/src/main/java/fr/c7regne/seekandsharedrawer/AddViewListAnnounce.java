@@ -61,8 +61,8 @@ public class AddViewListAnnounce extends AppCompatActivity {
         LLHoriz.setOrientation(LinearLayout.HORIZONTAL);
         //DP
         TextView textViewDP= new TextView(activity);
-        LinearLayout.LayoutParams textViewContentParams2 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        textViewContentParams2.width=0;
+        LinearLayout.LayoutParams textViewContentParams2 = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT);
+        //textViewContentParams2.width=0;
         textViewContentParams2.weight= (float) 0.5;
         textViewDP.setLayoutParams(textViewContentParams2);
         textViewDP.setText(DP);
@@ -80,8 +80,8 @@ public class AddViewListAnnounce extends AppCompatActivity {
 
         //Content
         TextView textViewContent= new TextView(activity);
-        LinearLayout.LayoutParams textViewContentParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        textViewContentParams.height=dpToPx(54,activity.getApplicationContext());
+        LinearLayout.LayoutParams textViewContentParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dpToPx(54,activity.getApplicationContext()));
+        //textViewContentParams.height=dpToPx(54,activity.getApplicationContext());
         textViewContent.setLayoutParams(textViewContentParams);
         textViewContent.setText(Content);
         textViewContent.setTextSize(TypedValue.COMPLEX_UNIT_SP,spToPx(6,activity.getApplicationContext()));

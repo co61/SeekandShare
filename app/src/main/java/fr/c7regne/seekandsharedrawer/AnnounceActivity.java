@@ -56,7 +56,7 @@ public class AnnounceActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
-                    String key = child.getKey().toString();
+                    String key = child.getKey();
                     String userID = String.valueOf(dataSnapshot.child(key).child("userId").getValue());
 
                     //get the announce of the current user on the screen
@@ -73,15 +73,15 @@ public class AnnounceActivity extends AppCompatActivity {
                         //sending to put on screen
                         LinearLayout Aview = new AddViewListAnnounce().addAnnounceUser(AnnounceActivity.this,title,publicationDate,dpchoice,spchoice,content,userName,userID);
                         layout.addView(Aview);
-                        final String finalI =  String.valueOf(key);
+                        final String finalI =  key;
 
-                        Aview.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                //switch to Announce Fragment to show the announce published
-                                Intent act = new Intent(v.getContext(), AffichagePostActivity.class);
-                                act.putExtra(EXTRA_ID, finalI);
-                                startActivity(act);
+                                Aview.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        //switch to Announce Fragment to show the announce published
+                                        Intent act = new Intent(v.getContext(), AffichagePostActivity.class);
+                                        act.putExtra(EXTRA_ID, finalI);
+                                        startActivity(act);
 
                             }
                         });
