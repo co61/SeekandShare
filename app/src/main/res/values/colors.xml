@@ -5,6 +5,12 @@
     <color name="colorAccent">#FDE16F</color>
     <color name="white">#fff</color>
     <color name="black">#000</color>
+
+    <color name="grey">#7C7C61</color>
+    <color name="yellow">#FEE471</color>
+
+
     <color name="ic_launcher_background">#ECFF74</color>
+
     <color name="light_grey">#E1E1E1</color>
 </resources>
