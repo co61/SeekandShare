@@ -5,6 +5,7 @@ import android.content.Context;
 
 import android.graphics.Color;
 import android.os.Build;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -14,6 +15,11 @@ import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 
@@ -114,6 +120,8 @@ public class AddViewListAnnounce extends AppCompatActivity {
     public static int spToPx(float sp, Context context) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, context.getResources().getDisplayMetrics());
     }
+
+
 
 }
 

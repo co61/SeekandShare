@@ -48,7 +48,7 @@ public class AffichagePostActivity extends AppCompatActivity {
 
 
 
-        reff = FirebaseDatabase.getInstance().getReference().child("Tanguy");
+        reff = FirebaseDatabase.getInstance().getReference().child("test");
         reff.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
