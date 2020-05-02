@@ -42,6 +42,7 @@ public class AffichagePostActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         final String ID = intent.getStringExtra(AnnounceActivity.EXTRA_ID);
+        String[] way = ID.split(" ");
 
         //get information on user
         GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
@@ -59,19 +60,18 @@ public class AffichagePostActivity extends AppCompatActivity {
 
 
 
-        reff = FirebaseDatabase.getInstance().getReference().child("test")
-        reff = FirebaseDatabase.getInstance().getReference().child("Tanguy");
+        reff = FirebaseDatabase.getInstance().getReference().child("test").child(way[0]).child(way[1]);
 
         reff.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                String title = String.valueOf(dataSnapshot.child(ID).child("title").getValue());
-                String content = String.valueOf(dataSnapshot.child(ID).child("content").getValue());
-                String dpchoice = String.valueOf(dataSnapshot.child(ID).child("dpchoice").getValue());
-                String spchoice = String.valueOf(dataSnapshot.child(ID).child("spchoice").getValue());
-                String publicationDate = String.valueOf(dataSnapshot.child(ID).child("publicationDate").getValue());
-                String userName = String.valueOf(dataSnapshot.child(ID).child("userName").getValue());
+                DataSnapshot keyContext = dataSnapshot.child(ID.split(" ")[2]);
+                String title = String.valueOf(keyContext.child("title").getValue());
+                String content = String.valueOf(keyContext.child("content").getValue());
+                String dpchoice = String.valueOf(keyContext.child("dpchoice").getValue());
+                String spchoice = String.valueOf(keyContext.child("spchoice").getValue());
+                String publicationDate = String.valueOf(keyContext.child("publicationDate").getValue());
+                String userName = String.valueOf(keyContext.child("userName").getValue());
 
                 titleView.setText(title);
                 dateView.setText(publicationDate);
@@ -79,6 +79,8 @@ public class AffichagePostActivity extends AppCompatActivity {
                 SpView.setText(spchoice);
                 contentView.setText(content);
                 usernameView.setText(userName);
+
+
             }
 
             @Override
@@ -86,6 +88,7 @@ public class AffichagePostActivity extends AppCompatActivity {
 
             }
         });
+
 
         final ImageView addfavoritebtn = (ImageView) findViewById(R.id.add_favorite_btn);
         refffavorite = FirebaseDatabase.getInstance().getReference().child("Favorite");
