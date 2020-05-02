@@ -5,6 +5,7 @@ import android.content.Context;
 
 import android.graphics.Color;
 import android.os.Build;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -14,6 +15,11 @@ import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 public class AddViewListAnnounce extends AppCompatActivity {
@@ -54,9 +60,11 @@ public class AddViewListAnnounce extends AppCompatActivity {
         LLHoriz.setOrientation(LinearLayout.HORIZONTAL);
 
         //DP
+
         TextView textViewDP = new TextView(activity);
         LinearLayout.LayoutParams textViewContentParams2 = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT);
         textViewContentParams2.weight = (float) 0.5;
+
         textViewDP.setLayoutParams(textViewContentParams2);
         textViewDP.setText(DP);
         textViewDP.setTextSize(TypedValue.COMPLEX_UNIT_SP, spToPx(4, activity.getApplicationContext()));
@@ -73,9 +81,11 @@ public class AddViewListAnnounce extends AppCompatActivity {
         LLHoriz.addView(textViewSP);
 
         //Content
+
         TextView textViewContent = new TextView(activity);
         LinearLayout.LayoutParams textViewContentParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dpToPx(54, activity.getApplicationContext()));
         textViewContent.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+
         textViewContent.setLayoutParams(textViewContentParams);
         textViewContent.setText(Content);
         textViewContent.setTextSize(TypedValue.COMPLEX_UNIT_SP, spToPx(6, activity.getApplicationContext()));
@@ -131,6 +141,8 @@ public class AddViewListAnnounce extends AppCompatActivity {
     public static int spToPx(float sp, Context context) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, context.getResources().getDisplayMetrics());
     }
+
+
 
 }
 

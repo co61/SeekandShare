@@ -1,22 +1,13 @@
 package fr.c7regne.seekandsharedrawer;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.print.PrintAttributes;
-import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.TypedValue;
-import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TextSwitcher;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -31,11 +22,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.Calendar;
-
 
 public class SearchActivity extends AppCompatActivity {
     int Childnb;
+    public static final String EXTRA_ID="fr.c7regne.seekandsharedrawer";
     DatabaseReference reff;
     String currentUserName, currentUserEmail, currentUserId;
 
@@ -51,7 +41,7 @@ public class SearchActivity extends AppCompatActivity {
 
 
         Intent intent = getIntent();
-        final String input = intent.getStringExtra(SearchFragment.SearchInput);
+        final String[] input = intent.getStringExtra(SearchFragment.SearchInput).split(" ");
 
         //get information on user
         GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(this);
@@ -61,30 +51,43 @@ public class SearchActivity extends AppCompatActivity {
             currentUserId = signInAccount.getId();
         }
         //reed children posts count
-        reff=FirebaseDatabase.getInstance().getReference().child("Tanguy");
-
+        reff=FirebaseDatabase.getInstance().getReference().child("test").child(input[0]).child(input[1]);
         reff.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-
+                boolean test =false;
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
-                    if(child.child("content").getValue().toString().contains(input) | child.child("title").getValue().toString().contains(input)){
+
+                    test = false;
+
+                    if(input.length > 2 | test){
+                        for(int i = 2; i<(input.length); i++) {
+                            if(child.child("content").getValue().toString().contains(input[i]) | child.child("title").getValue().toString().contains(input[i])){
+                                test = true;}
+                        }
+                    }
+                    else{test = true;}
+
+
+                    if(test){
                         String key = child.getKey().toString();
-                        String userID = String.valueOf(dataSnapshot.child(key).child("userId").getValue());
 
                         //get the announce of the current user on the screen
-
                         LinearLayout layout = (LinearLayout) findViewById(R.id.linearlayout_search_list);
-                        String title = String.valueOf(dataSnapshot.child(key).child("title").getValue());
-                        String content = String.valueOf(dataSnapshot.child(key).child("content").getValue());
-                        String dpchoice = String.valueOf(dataSnapshot.child(key).child("dpchoice").getValue());
-                        String spchoice = String.valueOf(dataSnapshot.child(key).child("spchoice").getValue());
-                        String publicationDate = String.valueOf(dataSnapshot.child(key).child("publicationDate").getValue());
-                        String userName = String.valueOf(dataSnapshot.child(key).child("userName").getValue());
-                        //sending to put on screen
-                        layout.addView(new AddViewListAnnounce().addAnnounceUser(SearchActivity.this,title,publicationDate,dpchoice,spchoice,content,userName,userID));
+                        //take info of the post in a LinearLayout
+                        LinearLayout Aview = Function.takePost(dataSnapshot, key, SearchActivity.this, layout);
+                        final String finalI = dataSnapshot.getRef().getParent().getKey() + " " + dataSnapshot.getKey() + " " +String.valueOf(key);
 
+                        Aview.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                //switch to Announce Fragment to show the announce published
+                                Intent act = new Intent(v.getContext(), AffichagePostActivity.class);
+                                act.putExtra(EXTRA_ID, finalI);
+                                startActivity(act);
+                            }
+                        });
                     }
                 }
 
@@ -99,10 +102,20 @@ public class SearchActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        if(item.getItemId()==android.R.id.home){
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     //if click onretrun android button then go back to home
     @Override
     public void onBackPressed() {
         finish();
+
     }
 
 
