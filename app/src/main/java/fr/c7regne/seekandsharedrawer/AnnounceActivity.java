@@ -1,16 +1,12 @@
 package fr.c7regne.seekandsharedrawer;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
-import android.util.Log;
-import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
@@ -49,53 +45,49 @@ public class AnnounceActivity extends AppCompatActivity {
             currentUserId = signInAccount.getId();
         }
         //reed children posts count
+        reff = FirebaseDatabase.getInstance().getReference().child("test");
+        DatabaseReference[] tabReff = Function.Parcours();
 
-        reff=FirebaseDatabase.getInstance().getReference().child("Tanguy");
-        reff.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+        for (DatabaseReference data : tabReff) {
+            data.addValueEventListener(new ValueEventListener() {
 
-                for (DataSnapshot child : dataSnapshot.getChildren()) {
-                    String key = child.getKey();
-                    String userID = String.valueOf(dataSnapshot.child(key).child("userId").getValue());
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                    //get the announce of the current user on the screen
+                    for (DataSnapshot child : dataSnapshot.getChildren()) {
+                        String key = child.getKey().toString();
+                        String userID = String.valueOf(dataSnapshot.child(key).child("userId").getValue());
 
-                    if(currentUserId.equals(userID)){
+                        //get the announce of the current user on the screen
 
-                        LinearLayout layout = (LinearLayout) findViewById(R.id.linearlayout_announce_list);
-                        String title = String.valueOf(dataSnapshot.child(key).child("title").getValue());
-                        String content = String.valueOf(dataSnapshot.child(key).child("content").getValue());
-                        String dpchoice = String.valueOf(dataSnapshot.child(key).child("dpchoice").getValue());
-                        String spchoice = String.valueOf(dataSnapshot.child(key).child("spchoice").getValue());
-                        String publicationDate = String.valueOf(dataSnapshot.child(key).child("publicationDate").getValue());
-                        String userName = String.valueOf(dataSnapshot.child(key).child("userName").getValue());
-                        //sending to put on screen
-                        LinearLayout Aview = new AddViewListAnnounce().addAnnounceUser(AnnounceActivity.this,title,publicationDate,dpchoice,spchoice,content,userName,userID);
-                        layout.addView(Aview);
-                        final String finalI =  key;
+                        if (currentUserId.equals(userID)) {
 
-                                Aview.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        //switch to Announce Fragment to show the announce published
-                                        Intent act = new Intent(v.getContext(), AffichagePostActivity.class);
-                                        act.putExtra(EXTRA_ID, finalI);
-                                        startActivity(act);
+                            LinearLayout layout = (LinearLayout) findViewById(R.id.linearlayout_announce_list);
+                            LinearLayout Aview = Function.takePost(dataSnapshot, key, AnnounceActivity.this, layout);
+                            final String finalI = String.valueOf(key);
 
-                            }
-                        });
-                    }
+                            Aview.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    //switch to Announce Fragment to show the announce published
+                                    Intent act = new Intent(v.getContext(), AffichagePostActivity.class);
+                                    act.putExtra(EXTRA_ID, finalI);
+                                    startActivity(act);
+
+                                }
+                            });
+                        }
+
                 }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
 
-        });
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                }
 
+            });
+
+        }
     }
-
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
