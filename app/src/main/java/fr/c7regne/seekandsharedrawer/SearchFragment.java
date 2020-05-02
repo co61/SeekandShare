@@ -2,6 +2,7 @@ package fr.c7regne.seekandsharedrawer;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +37,6 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         v=inflater.inflate(R.layout.fragment_search, container, false);
         //find element
-        txtview = (TextView) v.findViewById(R.id.search_results);
         search_txt = (EditText) v.findViewById(R.id.search_txt);
         searchButton = (Button) v.findViewById(R.id.validate_search_button);
         radioGroup1 = (RadioGroup) v.findViewById(R.id.search_DP_radioGroup);
@@ -60,10 +60,13 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
 
 
         launchIntent = new Intent(getContext(),SearchActivity.class);
+        SearchInput = radioButton2.getText().toString()+ " " + radioButton1.getText().toString() + " " + SearchInput;
         launchIntent.putExtra(SearchInput, SearchInput);
         startActivity(launchIntent);
 
 
 
     }
+
+
 }

@@ -57,7 +57,11 @@ public class AffichagePostActivity extends AppCompatActivity {
         final TextView usernameView = (TextView) findViewById(R.id.announce_username);
 
 
+
+
+        reff = FirebaseDatabase.getInstance().getReference().child("test")
         reff = FirebaseDatabase.getInstance().getReference().child("Tanguy");
+
         reff.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

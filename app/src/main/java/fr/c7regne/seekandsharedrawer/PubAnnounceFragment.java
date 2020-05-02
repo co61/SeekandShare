@@ -89,7 +89,7 @@ public class PubAnnounceFragment extends Fragment implements View.OnClickListene
             ///userEmail = signInAccount.getEmail();
             userId = signInAccount.getId();
         }
-        reff = FirebaseDatabase.getInstance().getReference().child("Tanguy");
+        reff = FirebaseDatabase.getInstance().getReference().child("test");
         title_announce.requestFocus();
 
         //increment carct_count of the announce content
@@ -155,9 +155,18 @@ public class PubAnnounceFragment extends Fragment implements View.OnClickListene
             Toast.makeText(getActivity(), getString(R.string.error_post_msg), LENGTH_SHORT).show();
 
         } else {
+
+            reff = FirebaseDatabase.getInstance().getReference().child("test").child(radioButton1.getText().toString()).child(radioButton2.getText().toString());
+
             //construction struct to send into database with auto increment depending on number of member in this branch
             postsave = new PostSaveStruct(userId, userName, inputTitle, inputContent, inputPlace,radioButton2.getText().toString(), radioButton1.getText().toString(), fullDate);
             reff.child(userId+"-"+inputTitle).setValue(postsave);
+
+
+
+
+
+
 
 
             //confirm to the user that the announce is published
@@ -166,6 +175,7 @@ public class PubAnnounceFragment extends Fragment implements View.OnClickListene
             //switch to Announce Fragment to show the announce published
             Intent act = new Intent(getActivity(), AnnounceActivity.class);
             startActivity(act);
+
         }
     }
 
