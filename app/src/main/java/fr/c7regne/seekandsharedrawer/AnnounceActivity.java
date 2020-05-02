@@ -77,7 +77,7 @@ public class AnnounceActivity extends AppCompatActivity {
                                 }
                             });
                         }
-                    }
+
                 }
 
                 @Override
