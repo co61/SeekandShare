@@ -36,8 +36,10 @@ public class HomeFragment extends Fragment {
         final View v = inflater.inflate(R.layout.fragment_home, container, false);
 
         reff = FirebaseDatabase.getInstance().getReference().child("Tanguy");
+        DatabaseReference[] tabReff = Function.Parcours();
 
-        reff.addValueEventListener(new ValueEventListener() {
+        for (DatabaseReference data : tabReff) {
+        data.addValueEventListener(new ValueEventListener() {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -65,7 +67,7 @@ public class HomeFragment extends Fragment {
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });
+        });}
 
         return v;
     }
