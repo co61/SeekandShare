@@ -39,7 +39,7 @@ public class AddFavorite extends AppCompatActivity {
         //construction struct to send into database with auto increment depending on number of member in this branch
         favoritesave = new FavoriteSaveStruct(key);
         //reff.child(currentUserId).setValue(favoritesave);
-        Toast.makeText(activity.getApplicationContext(),"ca marche"+currentUserId,Toast.LENGTH_SHORT).show();
+        Toast.makeText(activity.getApplicationContext(),"ça marche",Toast.LENGTH_SHORT).show();
 
     }
 

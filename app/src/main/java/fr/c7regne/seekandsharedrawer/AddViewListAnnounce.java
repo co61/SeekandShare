@@ -16,94 +16,111 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 
-
 public class AddViewListAnnounce extends AppCompatActivity {
 
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
-    @SuppressLint("ResourceAsColor")
-    public LinearLayout addAnnounceUser(final Context activity,  String Title, String Date, String DP, String SP, String Content, String UserName, String UserId) {
-
+    @SuppressLint({"ResourceAsColor", "SetTextI18n"})
+    public LinearLayout addAnnounceUser(final Context activity, String Title, String Date, String DP, String SP, String Content, String UserName, String UserId) {
 
 
         //linearlayout à empiler
-        LinearLayout newLL= new LinearLayout(activity);
-        LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        int margin=dpToPx(15,activity.getApplicationContext());
-        layoutParams.setMargins( margin,margin,margin,margin);
+        LinearLayout newLL = new LinearLayout(activity);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        int margin = dpToPx(15, activity.getApplicationContext());
+        layoutParams.setMargins(margin, margin, margin, margin);
         newLL.setLayoutParams(layoutParams);
+        newLL.setBackgroundResource(R.color.grey);
         newLL.setOrientation(LinearLayout.VERTICAL);
-        int padding=dpToPx(10,activity.getApplicationContext());
-        newLL.setPadding(padding,padding,padding,padding);
+        int padding = dpToPx(10, activity.getApplicationContext());
+        newLL.setPadding(padding, padding, padding, padding);
 
 
         //title
-        TextView textViewTitle= new TextView(activity);
-        textViewTitle.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        TextView textViewTitle = new TextView(activity);
+        LinearLayout.LayoutParams title_linear = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        textViewTitle.setLayoutParams(title_linear);
+        textViewTitle.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         textViewTitle.setText(Title);
-        textViewTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP,spToPx(9,activity.getApplicationContext()));
-        textViewTitle.setTextColor(Color.BLACK);
-        //Date
-        TextView textViewDate= new TextView(activity);
-        textViewDate.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-        textViewDate.setText(Date);
-        textViewDate.setTextSize(TypedValue.COMPLEX_UNIT_SP, spToPx(4,activity.getApplicationContext()));
-        textViewDate.setPadding( 0 ,0,0, dpToPx(2,activity.getApplicationContext()));
-        textViewDate.setBackgroundResource(R.drawable.bottom_border_grey);
-        textViewDate.setTextColor(Color.BLACK);
+        textViewTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, spToPx(9, activity.getApplicationContext()));
+        textViewTitle.setTextColor(Color.YELLOW);
+
 
         //linearlayout orientation horizontal for textview DP SP
-        LinearLayout LLHoriz= new LinearLayout(activity);
-        LinearLayout.LayoutParams layoutParams2=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        LinearLayout LLHoriz = new LinearLayout(activity);
+        LinearLayout.LayoutParams layoutParams2 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         LLHoriz.setLayoutParams(layoutParams2);
         LLHoriz.setOrientation(LinearLayout.VERTICAL);
-        LLHoriz.setBackgroundResource(R.drawable.bottom_border_grey);
         LLHoriz.setOrientation(LinearLayout.HORIZONTAL);
+
         //DP
-        TextView textViewDP= new TextView(activity);
-        LinearLayout.LayoutParams textViewContentParams2 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        textViewContentParams2.width=0;
-        textViewContentParams2.weight= (float) 0.5;
+        TextView textViewDP = new TextView(activity);
+        LinearLayout.LayoutParams textViewContentParams2 = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT);
+        textViewContentParams2.weight = (float) 0.5;
         textViewDP.setLayoutParams(textViewContentParams2);
         textViewDP.setText(DP);
-        textViewDP.setTextSize(TypedValue.COMPLEX_UNIT_SP,spToPx(4,activity.getApplicationContext()));
-        textViewDP.setTextColor(Color.BLACK);
+        textViewDP.setTextSize(TypedValue.COMPLEX_UNIT_SP, spToPx(4, activity.getApplicationContext()));
+        textViewDP.setTextColor(Color.YELLOW);
+
         //SP
-        TextView textViewSP= new TextView(activity);
+        TextView textViewSP = new TextView(activity);
         textViewSP.setLayoutParams(textViewContentParams2);
         textViewSP.setText(SP);
-        textViewSP.setTextSize(TypedValue.COMPLEX_UNIT_SP,spToPx(4,activity.getApplicationContext()));
-        textViewSP.setTextColor(Color.BLACK);
+        textViewSP.setTextSize(TypedValue.COMPLEX_UNIT_SP, spToPx(4, activity.getApplicationContext()));
+        textViewSP.setTextColor(Color.YELLOW);
         //fin linearLayout
         LLHoriz.addView(textViewDP);
         LLHoriz.addView(textViewSP);
 
         //Content
-        TextView textViewContent= new TextView(activity);
-        LinearLayout.LayoutParams textViewContentParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        textViewContentParams.height=dpToPx(54,activity.getApplicationContext());
+        TextView textViewContent = new TextView(activity);
+        LinearLayout.LayoutParams textViewContentParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dpToPx(54, activity.getApplicationContext()));
+        textViewContent.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         textViewContent.setLayoutParams(textViewContentParams);
         textViewContent.setText(Content);
-        textViewContent.setTextSize(TypedValue.COMPLEX_UNIT_SP,spToPx(6,activity.getApplicationContext()));
-        textViewContent.setTextColor(Color.BLACK);
+        textViewContent.setTextSize(TypedValue.COMPLEX_UNIT_SP, spToPx(6, activity.getApplicationContext()));
+        textViewContent.setTextColor(Color.YELLOW);
+
+        //linearlayout orientation horizontal for textview DP SP
+        LinearLayout LLHoriz2 = new LinearLayout(activity);
+        LinearLayout.LayoutParams layoutParams3 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        LLHoriz.setLayoutParams(layoutParams3);
+        LLHoriz.setOrientation(LinearLayout.VERTICAL);
+        LLHoriz.setOrientation(LinearLayout.HORIZONTAL);
+
+        //Date
+        TextView textViewDate = new TextView(activity);
+        LinearLayout.LayoutParams textViewDate2 = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT);
+        textViewDate2.weight = (float) 0.5;
+        textViewDate.setLayoutParams(textViewDate2);
+        textViewDate.setText(Date);
+        textViewDate.setTextSize(TypedValue.COMPLEX_UNIT_SP, spToPx(4, activity.getApplicationContext()));
+        textViewDate.setPadding(0, 0, 0, dpToPx(2, activity.getApplicationContext()));
+        textViewDate.setTextColor(Color.YELLOW);
+
         //PublisherName
-        TextView textViewPublisherName= new TextView(activity);
-        LinearLayout.LayoutParams textViewPublisherNameParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        textViewPublisherNameParams.gravity= Gravity.END;
-        textViewPublisherName.setLayoutParams(textViewPublisherNameParams);
-        textViewPublisherName.setText("PublisherName  "+UserName);
-        textViewPublisherName.setTextSize(TypedValue.COMPLEX_UNIT_SP,spToPx(4,activity.getApplicationContext()));
+        TextView textViewPublisherName = new TextView(activity);
+        textViewPublisherName.setLayoutParams(textViewDate2);
+        textViewPublisherName.setText(UserName);
         textViewPublisherName.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_END);
-        textViewPublisherName.setTextColor(Color.BLACK);
+        textViewPublisherName.setTextSize(TypedValue.COMPLEX_UNIT_SP, spToPx(4, activity.getApplicationContext()));
+        textViewPublisherName.setTextColor(Color.YELLOW);
+        //fin linearLayout
+
+
+        //fin linearLayout
+        LLHoriz2.addView(textViewDate);
+        LLHoriz2.addView(textViewPublisherName);
+
         //fin LinearLayout
         newLL.addView(textViewTitle);
-        newLL.addView(textViewDate);
         newLL.addView(LLHoriz);
         newLL.addView(textViewContent);
-        newLL.addView(textViewPublisherName);
+        newLL.addView(LLHoriz2);
 
 
         return newLL;
+
 
     }
 
