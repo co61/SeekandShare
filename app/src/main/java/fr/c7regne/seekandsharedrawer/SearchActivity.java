@@ -77,7 +77,7 @@ public class SearchActivity extends AppCompatActivity {
                         LinearLayout layout = (LinearLayout) findViewById(R.id.linearlayout_search_list);
                         //take info of the post in a LinearLayout
                         LinearLayout Aview = Function.takePost(dataSnapshot, key, SearchActivity.this, layout);
-                        final String finalI = String.valueOf(key);
+                        final String finalI = dataSnapshot.getRef().getParent().getKey() + " " + dataSnapshot.getKey() + " " +String.valueOf(key);
 
                         Aview.setOnClickListener(new View.OnClickListener() {
                             @Override
