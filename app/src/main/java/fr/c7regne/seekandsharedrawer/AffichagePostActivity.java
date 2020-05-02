@@ -121,7 +121,7 @@ public class AffichagePostActivity extends AppCompatActivity {
             @Override
 
             public void onClick(View v) {
-àà               final boolean[] check = {false};
+               final boolean[] check = {false};
                 refffavorite.addValueEventListener(new ValueEventListener() {
                     boolean exists = false;
 
