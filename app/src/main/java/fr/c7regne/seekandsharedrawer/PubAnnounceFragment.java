@@ -168,14 +168,14 @@ public class PubAnnounceFragment extends Fragment implements View.OnClickListene
 
 
 
-
+            Log.i("test1", "test1");
             //confirm to the user that the announce is published
             StyleableToast.makeText(getActivity(), getString(R.string.post_published), LENGTH_SHORT, R.style.publishedToast).show();
-
+            Log.i("test2","test2");
             //switch to Announce Fragment to show the announce published
             Intent act = new Intent(getActivity(), AnnounceActivity.class);
-            startActivity(act);
 
+            startActivity(act);
         }
     }
 

@@ -24,6 +24,9 @@ import com.google.firebase.database.ValueEventListener;
 
 public class HomeFragment extends Fragment {
 
+
+    public static final String EXTRA_ID="fr.c7regne.seekandsharedrawer";
+
     private Button search;
     private Button publication;
     DatabaseReference reff;
@@ -33,7 +36,7 @@ public class HomeFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final View v = inflater.inflate(R.layout.fragment_home, container, false);
+        final View v2 = inflater.inflate(R.layout.fragment_home, container, false);
 
         reff = FirebaseDatabase.getInstance().getReference().child("Tanguy");
         DatabaseReference[] tabReff = Function.Parcours();
@@ -46,19 +49,21 @@ public class HomeFragment extends Fragment {
 
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     String key = child.getKey().toString();
-                    String userID = String.valueOf(dataSnapshot.child(key).child("userId").getValue());
 
-                    LinearLayout layout = (LinearLayout) v.findViewById(R.id.home_announce_list);
-                    String title = String.valueOf(dataSnapshot.child(key).child("title").getValue());
-                    String content = String.valueOf(dataSnapshot.child(key).child("content").getValue());
-                    String dpchoice = String.valueOf(dataSnapshot.child(key).child("dpchoice").getValue());
-                    String spchoice = String.valueOf(dataSnapshot.child(key).child("spchoice").getValue());
-                    String publicationDate = String.valueOf(dataSnapshot.child(key).child("publicationDate").getValue());
-                    String userName = String.valueOf(dataSnapshot.child(key).child("userName").getValue());
+                    LinearLayout layout = (LinearLayout) v2.findViewById(R.id.home_announce_list);
+
                     //sending to put on screen
-                    LinearLayout Aview = new AddViewListAnnounce().addAnnounceUser(getActivity(), title, publicationDate, dpchoice, spchoice, content, userName, userID);
-                    layout.addView(Aview);
-
+                    LinearLayout Aview = Function.takePost(dataSnapshot, key, getActivity(), layout);
+                    final String finalI = dataSnapshot.getRef().getParent().getKey() + " " + dataSnapshot.getKey() + " " +String.valueOf(key);
+                    Aview.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            //switch to Announce Fragment to show the announce published
+                            Intent act = new Intent(v.getContext(), AffichagePostActivity.class);
+                            act.putExtra(EXTRA_ID, finalI);
+                            startActivity(act);
+                        }
+                    });
 
                 }
             }
@@ -69,6 +74,6 @@ public class HomeFragment extends Fragment {
             }
         });}
 
-        return v;
+        return v2;
     }
 }
