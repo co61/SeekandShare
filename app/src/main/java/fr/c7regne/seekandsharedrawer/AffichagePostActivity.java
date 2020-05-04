@@ -42,6 +42,7 @@ public class AffichagePostActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         final String ID = intent.getStringExtra(AnnounceActivity.EXTRA_ID);
+        String[] way = ID.split(" ");
 
         //get information on user
         GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
@@ -57,22 +58,18 @@ public class AffichagePostActivity extends AppCompatActivity {
         final TextView usernameView = (TextView) findViewById(R.id.announce_username);
 
 
+        reff = FirebaseDatabase.getInstance().getReference().child("test").child(way[0]).child(way[1]);
 
-
-        reff = FirebaseDatabase.getInstance().getReference().child("test");
-        reff = FirebaseDatabase.getInstance().getReference().child("Tanguy");
-
-
-        reff.addValueEventListener(new ValueEventListener() {
+        reff.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                String title = String.valueOf(dataSnapshot.child(ID).child("title").getValue());
-                String content = String.valueOf(dataSnapshot.child(ID).child("content").getValue());
-                String dpchoice = String.valueOf(dataSnapshot.child(ID).child("dpchoice").getValue());
-                String spchoice = String.valueOf(dataSnapshot.child(ID).child("spchoice").getValue());
-                String publicationDate = String.valueOf(dataSnapshot.child(ID).child("publicationDate").getValue());
-                String userName = String.valueOf(dataSnapshot.child(ID).child("userName").getValue());
+                DataSnapshot keyContext = dataSnapshot.child(ID.split(" ")[2]);
+                String title = String.valueOf(keyContext.child("title").getValue());
+                String content = String.valueOf(keyContext.child("content").getValue());
+                String dpchoice = String.valueOf(keyContext.child("dpchoice").getValue());
+                String spchoice = String.valueOf(keyContext.child("spchoice").getValue());
+                String publicationDate = String.valueOf(keyContext.child("publicationDate").getValue());
+                String userName = String.valueOf(keyContext.child("userName").getValue());
 
                 titleView.setText(title);
                 dateView.setText(publicationDate);
@@ -80,17 +77,18 @@ public class AffichagePostActivity extends AppCompatActivity {
                 SpView.setText(spchoice);
                 contentView.setText(content);
                 usernameView.setText(userName);
-            }
 
+            }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });
 
+
         final ImageView addfavoritebtn = (ImageView) findViewById(R.id.add_favorite_btn);
         refffavorite = FirebaseDatabase.getInstance().getReference().child("Favorite");
-        refffavorite.addValueEventListener(new ValueEventListener() {
+        refffavorite.addListenerForSingleValueEvent(new ValueEventListener() {
             boolean exists = false;
 
             @Override
@@ -121,18 +119,14 @@ public class AffichagePostActivity extends AppCompatActivity {
             }
         });
 
-
         addfavoritebtn.setOnClickListener(new View.OnClickListener() {
             @Override
-
             public void onClick(View v) {
                final boolean[] check = {false};
-                refffavorite.addValueEventListener(new ValueEventListener() {
+                refffavorite.addListenerForSingleValueEvent(new ValueEventListener() {
                     boolean exists = false;
-
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
                         for (DataSnapshot child : dataSnapshot.child(currentUserId).getChildren()) {
                             Log.i("childkey", child.getKey());
                             Log.i("ID", ID);
@@ -148,24 +142,15 @@ public class AffichagePostActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "Ajouté aux favoris", Toast.LENGTH_SHORT).show();
                             addfavoritebtn.setImageResource(R.drawable.ic_favorite_full);
                             check[0] = true;
-
                         }
                         if (exists && !check[0]) {
                             addfavoritebtn.setImageResource(R.drawable.ic_favorite_border);
                             refffavorite.child(currentUserId).child(ID).setValue(null);
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    check[0] = true;
-                                }
-                            }, 500);
+                            check[0] = true;
                         }
-
                     }
-
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
-
                     }
                 });
             }
@@ -183,6 +168,7 @@ public class AffichagePostActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 
     //if click onretrun android button then go back to home
     @Override

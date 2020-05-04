@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -26,7 +27,6 @@ public class AnnounceActivity extends AppCompatActivity {
 
     public static final String EXTRA_ID="fr.c7regne.seekandsharedrawer";
 
-    DatabaseReference reff;
     String  currentUserId;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -44,8 +44,7 @@ public class AnnounceActivity extends AppCompatActivity {
         if (signInAccount != null) {
             currentUserId = signInAccount.getId();
         }
-        //reed children posts count
-        reff = FirebaseDatabase.getInstance().getReference().child("test");
+
         DatabaseReference[] tabReff = Function.Parcours();
 
         for (DatabaseReference data : tabReff) {
@@ -64,8 +63,7 @@ public class AnnounceActivity extends AppCompatActivity {
 
                             LinearLayout layout = (LinearLayout) findViewById(R.id.linearlayout_announce_list);
                             LinearLayout Aview = Function.takePost(dataSnapshot, key, AnnounceActivity.this, layout);
-                            final String finalI = String.valueOf(key);
-
+                            final String finalI = dataSnapshot.getRef().getParent().getKey() + " " + dataSnapshot.getKey() + " " +String.valueOf(key);
                             Aview.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
@@ -77,7 +75,7 @@ public class AnnounceActivity extends AppCompatActivity {
                                 }
                             });
                         }
-
+                    }
                 }
 
                 @Override

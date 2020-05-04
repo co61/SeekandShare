@@ -141,15 +141,15 @@ public class PubAnnounceFragment extends Fragment implements View.OnClickListene
 
 
             if (inputTitle.equals("")) {
-                title_announce.setError("Erreur");
+                title_announce.setError("Il manque un titre");
                 title_announce.requestFocus();
             }
             if (inputPlace.equals("")) {
-                title_announce.setError("Erreur");
-                title_announce.requestFocus();
+                place_announce.setError("Il manque un lieu");
+                place_announce.requestFocus();
             }
             if (inputContent.equals("") || inputContent.length() <= 50) {
-                content_announce.setError("Erreur");
+                content_announce.setError("Il manque du contenu");
                 content_announce.requestFocus();
             }
             Toast.makeText(getActivity(), getString(R.string.error_post_msg), LENGTH_SHORT).show();
@@ -162,18 +162,11 @@ public class PubAnnounceFragment extends Fragment implements View.OnClickListene
             postsave = new PostSaveStruct(userId, userName, inputTitle, inputContent, inputPlace,radioButton2.getText().toString(), radioButton1.getText().toString(), fullDate);
             reff.child(userId+"-"+inputTitle).setValue(postsave);
 
-
-
-
-
-
-
-
             //confirm to the user that the announce is published
             StyleableToast.makeText(getActivity(), getString(R.string.post_published), LENGTH_SHORT, R.style.publishedToast).show();
 
             //switch to Announce Fragment to show the announce published
-            Intent act = new Intent(getActivity(), AnnounceActivity.class);
+            Intent act = new Intent(getContext(), AnnounceActivity.class);
             startActivity(act);
 
         }
