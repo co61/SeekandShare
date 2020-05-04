@@ -41,7 +41,6 @@
 
         <activity android:name=".AffichagePostActivity"/>
 
-
     </application>
 
 </manifest>

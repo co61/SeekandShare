@@ -30,10 +30,6 @@ public class AddFavorite extends AppCompatActivity {
         reff = FirebaseDatabase.getInstance().getReference().child("Favorite");
 
 
-
-
-
-
     }
 
 }

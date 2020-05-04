@@ -39,7 +39,7 @@ public class SignInActivity extends AppCompatActivity {
 
 
     private final int duration = 1900;
-    Animation topAnim, bottomAnim;
+    Animation topAnim;
     ImageView cloud1, cloud2, cloud3;
 
     @Override
