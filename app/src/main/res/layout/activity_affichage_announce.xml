@@ -10,15 +10,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
-        android:background="@color/ic_launcher_background"
+        android:background="@drawable/corner"
         android:orientation="vertical"
-        android:padding="10dp">
+        android:padding="10dp"
+        android:elevation="8dp">
 
         <TextView
             android:id="@+id/announce_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/white"
             android:text="Title"
             android:textColor="@color/black"
             android:textSize="24sp" />

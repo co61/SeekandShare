@@ -157,8 +157,6 @@ public class SignInActivity extends AppCompatActivity {
 
                         } else {
                             Toast.makeText(SignInActivity.this, "Sorry auth failed.", Toast.LENGTH_SHORT).show();
-
-
                         }
 
 
