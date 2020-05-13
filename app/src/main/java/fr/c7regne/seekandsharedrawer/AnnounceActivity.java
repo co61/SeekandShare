@@ -33,9 +33,14 @@ public class AnnounceActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+
+        Log.i("test4","test4");
         super.onCreate(savedInstanceState);
+
+        Log.i("test4","test4");
         setContentView(R.layout.activity_announce);
 
+        Log.i("test4","test4");
         //change title action Bar
         getSupportActionBar().setTitle("Mes annonces");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -46,9 +51,10 @@ public class AnnounceActivity extends AppCompatActivity {
             currentUserId = signInAccount.getId();
         }
         //reed children posts count
-        reff = FirebaseDatabase.getInstance().getReference().child("test");
+        Log.i("test4.5","test4.5");
         DatabaseReference[] tabReff = Function.Parcours();
 
+        Log.i("test5","test5");
         for (DatabaseReference data : tabReff) {
             data.addValueEventListener(new ValueEventListener() {
 
