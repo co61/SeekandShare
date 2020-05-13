@@ -27,7 +27,6 @@ public class AnnounceActivity extends AppCompatActivity {
 
     public static final String EXTRA_ID="fr.c7regne.seekandsharedrawer";
 
-    DatabaseReference reff;
     String  currentUserId;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -50,8 +49,10 @@ public class AnnounceActivity extends AppCompatActivity {
         if (signInAccount != null) {
             currentUserId = signInAccount.getId();
         }
+
         //reed children posts count
         Log.i("test4.5","test4.5");
+
         DatabaseReference[] tabReff = Function.Parcours();
 
         Log.i("test5","test5");

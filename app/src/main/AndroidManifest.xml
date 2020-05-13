@@ -48,7 +48,6 @@
             android:name="preloaded_fonts"
             android:resource="@font/aclonica" />
 
-
     </application>
 
 </manifest>
