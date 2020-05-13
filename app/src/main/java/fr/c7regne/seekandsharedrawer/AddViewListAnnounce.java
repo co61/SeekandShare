@@ -25,6 +25,8 @@ import com.google.firebase.database.ValueEventListener;
 public class AddViewListAnnounce extends AppCompatActivity {
 
 
+    private final int textColor = Color.BLACK;
+
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @SuppressLint({"ResourceAsColor", "SetTextI18n"})
     public LinearLayout addAnnounceUser(final Context activity, String Title, String Date, String DP, String SP, String Content, String UserName, String UserId) {
@@ -36,11 +38,12 @@ public class AddViewListAnnounce extends AppCompatActivity {
         int margin = dpToPx(15, activity.getApplicationContext());
         layoutParams.setMargins(margin, margin, margin, margin);
         newLL.setLayoutParams(layoutParams);
-        newLL.setBackgroundResource(R.color.grey);
+        newLL.setBackgroundResource(R.drawable.corner);
         newLL.setOrientation(LinearLayout.VERTICAL);
         int padding = dpToPx(10, activity.getApplicationContext());
         newLL.setPadding(padding, padding, padding, padding);
-
+        newLL.setElevation(6);
+        newLL.setTranslationZ(10);
 
         //title
         TextView textViewTitle = new TextView(activity);
@@ -49,7 +52,7 @@ public class AddViewListAnnounce extends AppCompatActivity {
         textViewTitle.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         textViewTitle.setText(Title);
         textViewTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, spToPx(9, activity.getApplicationContext()));
-        textViewTitle.setTextColor(Color.YELLOW);
+        textViewTitle.setTextColor(textColor);
 
 
         //linearlayout orientation horizontal for textview DP SP
@@ -68,14 +71,14 @@ public class AddViewListAnnounce extends AppCompatActivity {
         textViewDP.setLayoutParams(textViewContentParams2);
         textViewDP.setText(DP);
         textViewDP.setTextSize(TypedValue.COMPLEX_UNIT_SP, spToPx(4, activity.getApplicationContext()));
-        textViewDP.setTextColor(Color.YELLOW);
+        textViewDP.setTextColor(textColor);
 
         //SP
         TextView textViewSP = new TextView(activity);
         textViewSP.setLayoutParams(textViewContentParams2);
         textViewSP.setText(SP);
         textViewSP.setTextSize(TypedValue.COMPLEX_UNIT_SP, spToPx(4, activity.getApplicationContext()));
-        textViewSP.setTextColor(Color.YELLOW);
+        textViewSP.setTextColor(textColor);
         //fin linearLayout
         LLHoriz.addView(textViewDP);
         LLHoriz.addView(textViewSP);
@@ -89,7 +92,7 @@ public class AddViewListAnnounce extends AppCompatActivity {
         textViewContent.setLayoutParams(textViewContentParams);
         textViewContent.setText(Content);
         textViewContent.setTextSize(TypedValue.COMPLEX_UNIT_SP, spToPx(6, activity.getApplicationContext()));
-        textViewContent.setTextColor(Color.YELLOW);
+        textViewContent.setTextColor(textColor);
 
         //linearlayout orientation horizontal for textview DP SP
         LinearLayout LLHoriz2 = new LinearLayout(activity);
@@ -106,7 +109,7 @@ public class AddViewListAnnounce extends AppCompatActivity {
         textViewDate.setText(Date);
         textViewDate.setTextSize(TypedValue.COMPLEX_UNIT_SP, spToPx(4, activity.getApplicationContext()));
         textViewDate.setPadding(0, 0, 0, dpToPx(2, activity.getApplicationContext()));
-        textViewDate.setTextColor(Color.YELLOW);
+        textViewDate.setTextColor(textColor);
 
         //PublisherName
         TextView textViewPublisherName = new TextView(activity);
@@ -114,7 +117,7 @@ public class AddViewListAnnounce extends AppCompatActivity {
         textViewPublisherName.setText(UserName);
         textViewPublisherName.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_END);
         textViewPublisherName.setTextSize(TypedValue.COMPLEX_UNIT_SP, spToPx(4, activity.getApplicationContext()));
-        textViewPublisherName.setTextColor(Color.YELLOW);
+        textViewPublisherName.setTextColor(textColor);
         //fin linearLayout
 
 
