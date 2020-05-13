@@ -24,12 +24,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class AffichagePostActivity extends AppCompatActivity {
+public class AffichagePostActivity extends AppCompatActivity implements DeleteConfirm.DeleteConfirmListener {
 
     DatabaseReference reff;
     DatabaseReference refffavorite;
     String currentUserId;
-
+    String ID;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,8 +40,21 @@ public class AffichagePostActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Mes annonces");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        Bundle extras=getIntent().getExtras();
+        String parentActivity = extras.getString("ParentActivity");
+        Log.i("Atcivity parent ","test"+String.valueOf(parentActivity));
+
+        ImageView edit=(ImageView)findViewById(R.id.edit_announce_btn);
+        ImageView delete=(ImageView)findViewById(R.id.delete_announce_btn);
+        Log.i("Atcivity parent ","aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        if(String.valueOf(parentActivity).equals("AnnounceActivity")){
+            Log.i("Atcivity parent ","bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
+            edit.setVisibility(View.VISIBLE);
+            delete.setVisibility(View.VISIBLE);
+        }
+
         Intent intent = getIntent();
-        final String ID = intent.getStringExtra(AnnounceActivity.EXTRA_ID);
+        ID = intent.getStringExtra(AnnounceActivity.EXTRA_ID);
         String[] way = ID.split(" ");
 
         //get information on user
@@ -157,7 +170,18 @@ public class AffichagePostActivity extends AppCompatActivity {
         });
         //new AddFavorite().addToFavorite(AffichagePostActivity.this,ID, addfavoritebtn);
 
+        if(String.valueOf(parentActivity).equals("AnnounceActivity")){
+            Log.i("Atcivity parent ","bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
+            edit.setVisibility(View.VISIBLE);
+            delete.setVisibility(View.VISIBLE);
+            delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    openDialog();
 
+                }
+            });
+        }
     }
 
     @Override
@@ -176,6 +200,17 @@ public class AffichagePostActivity extends AppCompatActivity {
         finish();
     }
 
+    public void openDialog(){
+        DeleteConfirm confirmPop = new DeleteConfirm();
+        confirmPop.show(getSupportFragmentManager(),"DeleteConfirm");
+    }
+
+    @Override
+    public void onYesClikcked() {
+        Log.i("test","test");
+        reff.child(ID.split(" ")[2]).setValue(null);
+        finish();
+    }
 
     public static int dpToPx(float dp, Context context) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, context.getResources().getDisplayMetrics());
@@ -184,6 +219,7 @@ public class AffichagePostActivity extends AppCompatActivity {
     public static int spToPx(float sp, Context context) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, context.getResources().getDisplayMetrics());
     }
+
 
 
 }

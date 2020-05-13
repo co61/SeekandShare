@@ -42,7 +42,7 @@ public class HomeFragment extends Fragment {
         DatabaseReference[] tabReff = Function.Parcours();
 
         for (DatabaseReference data : tabReff) {
-        data.addValueEventListener(new ValueEventListener() {
+        data.addListenerForSingleValueEvent(new ValueEventListener() {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

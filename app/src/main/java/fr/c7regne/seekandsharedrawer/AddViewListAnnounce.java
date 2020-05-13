@@ -1,6 +1,7 @@
 package fr.c7regne.seekandsharedrawer;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 
 import android.graphics.Color;
@@ -27,7 +28,7 @@ public class AddViewListAnnounce extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @SuppressLint({"ResourceAsColor", "SetTextI18n"})
-    public LinearLayout addAnnounceUser(final Context activity, String Title, String Date, String DP, String SP, String Content, String UserName, String UserId) {
+    public LinearLayout addAnnounceUser(final Activity activity, String Title, String Date, String DP, String SP, String Content, String UserName, String UserId) {
 
 
         //linearlayout à empiler
