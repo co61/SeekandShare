@@ -43,8 +43,10 @@ public class AddViewListAnnounce extends AppCompatActivity {
         newLL.setOrientation(LinearLayout.VERTICAL);
         int padding = dpToPx(10, activity.getApplicationContext());
         newLL.setPadding(padding, padding, padding, padding);
-        newLL.setElevation(6);
-        newLL.setTranslationZ(10);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            newLL.setElevation(6);
+            newLL.setTranslationZ(10);
+        }
 
         //title
         TextView textViewTitle = new TextView(activity);
@@ -85,11 +87,9 @@ public class AddViewListAnnounce extends AppCompatActivity {
         LLHoriz.addView(textViewSP);
 
         //Content
-
         TextView textViewContent = new TextView(activity);
         LinearLayout.LayoutParams textViewContentParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dpToPx(54, activity.getApplicationContext()));
-        textViewContent.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-
+        //textViewContent.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         textViewContent.setLayoutParams(textViewContentParams);
         textViewContent.setText(Content);
         textViewContent.setTextSize(TypedValue.COMPLEX_UNIT_SP, spToPx(6, activity.getApplicationContext()));
