@@ -19,7 +19,7 @@ public class Function {
 
     public static DatabaseReference[] Parcours(){
 
-        DatabaseReference reff = FirebaseDatabase.getInstance().getReference().child("test");
+        DatabaseReference reff = FirebaseDatabase.getInstance().getReference().child("Posts");
         DatabaseReference[] tabReff = new DatabaseReference[4];
         tabReff[0] = reff.child("Prêt").child("Proposition");
         tabReff[1] = reff.child("Prêt").child("Demande");
