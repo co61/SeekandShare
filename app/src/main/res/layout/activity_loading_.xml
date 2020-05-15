@@ -48,20 +48,20 @@
             android:autoSizeMaxTextSize="35dp"
             android:autoSizeTextType="uniform"
             android:fontFamily="@font/aclonica"
-            android:text="@string/loading_text1"
+            android:text="CPO 2020 ENIB"
             android:textAlignment="center" />
 
         <TextView
             android:id="@+id/loading_text_view2"
-            android:fontFamily="@font/aclonica"
-            android:text="@string/loading_text2"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.15"
-            android:textAlignment="center"
-            android:autoSizeTextType="uniform"
             android:layout_gravity="center_horizontal"
-            android:autoSizeMaxTextSize="20dp"/>
+            android:layout_weight="0.15"
+            android:autoSizeMaxTextSize="20dp"
+            android:autoSizeTextType="uniform"
+            android:fontFamily="@font/aclonica"
+            android:text="Corentin, Tanguy et Lénaël"
+            android:textAlignment="center" />
 
     </LinearLayout>
 
