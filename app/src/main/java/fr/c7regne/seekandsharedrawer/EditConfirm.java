@@ -10,15 +10,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
-public class DeleteConfirm extends AppCompatDialogFragment {
-    private DeleteConfirmListener listener;
+public class EditConfirm extends AppCompatDialogFragment {
+    private EditConfirmListener listener;
 
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
-        builder.setTitle("Supprimer")
-                .setMessage("Voulez-vous vraiment supprimer votre annonce ?")
+        builder.setTitle("Editer")
+                .setMessage("Voulez-vous vraiment éditer votre annonce ?")
                 .setNegativeButton("Non", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -28,21 +28,21 @@ public class DeleteConfirm extends AppCompatDialogFragment {
                 .setPositiveButton("Oui", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        listener.onYesDeleteClikcked();
+                        listener.onYesEditClikcked();
                     }
                 });
         return builder.create();
     }
 
-    public interface DeleteConfirmListener{
-        void onYesDeleteClikcked();
+    public interface EditConfirmListener{
+        void onYesEditClikcked();
     }
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         try {
-            listener = (DeleteConfirmListener)context;
+            listener = (EditConfirmListener)context;
         }catch (ClassCastException e){
             throw new ClassCastException(context.toString()+"must implements DeleteConfirmListener");
         }

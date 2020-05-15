@@ -24,7 +24,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class AffichagePostActivity extends AppCompatActivity implements DeleteConfirm.DeleteConfirmListener {
+public class AffichagePostActivity extends AppCompatActivity implements DeleteConfirm.DeleteConfirmListener, EditConfirm.EditConfirmListener {
 
     DatabaseReference reff;
     DatabaseReference refffavorite;
@@ -53,8 +53,7 @@ public class AffichagePostActivity extends AppCompatActivity implements DeleteCo
             delete.setVisibility(View.VISIBLE);
         }
 
-        Intent intent = getIntent();
-        ID = intent.getStringExtra(AnnounceActivity.EXTRA_ID);
+        ID = getIntent().getStringExtra(AnnounceActivity.EXTRA_ID);
         String[] way = ID.split(" ");
 
         //get information on user
@@ -177,8 +176,13 @@ public class AffichagePostActivity extends AppCompatActivity implements DeleteCo
             delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    openDialog();
-
+                    openDialog("delete");
+                }
+            });
+            edit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    openDialog("edit");
                 }
             });
         }
@@ -200,26 +204,33 @@ public class AffichagePostActivity extends AppCompatActivity implements DeleteCo
         finish();
     }
 
-    public void openDialog(){
-        DeleteConfirm confirmPop = new DeleteConfirm();
-        confirmPop.show(getSupportFragmentManager(),"DeleteConfirm");
+    public void openDialog(String arg){
+        if(arg=="delete") {
+            DeleteConfirm confirmDelete = new DeleteConfirm();
+            confirmDelete.show(getSupportFragmentManager(), "DeleteConfirm");
+        }
+        if(arg=="edit") {
+            EditConfirm confirmEdit = new EditConfirm();
+            confirmEdit.show(getSupportFragmentManager(), "EditConfirm");
+        }
     }
 
     @Override
-    public void onYesClikcked() {
-        Log.i("test","test");
+    public void onYesDeleteClikcked() {
+
         reff.child(ID.split(" ")[2]).setValue(null);
         finish();
     }
 
-    public static int dpToPx(float dp, Context context) {
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, context.getResources().getDisplayMetrics());
+
+    @Override
+    public void onYesEditClikcked() {
+        Bundle bundle=new Bundle();
+        bundle.putString("ID",ID);
+        Intent act = new Intent(getApplicationContext(), EditAnnounceActivity.class);
+        act.putExtras(bundle);
+        startActivity(act);
+        finish();
     }
-
-    public static int spToPx(float sp, Context context) {
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, context.getResources().getDisplayMetrics());
-    }
-
-
 
 }
