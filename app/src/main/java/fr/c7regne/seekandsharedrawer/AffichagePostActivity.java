@@ -177,6 +177,7 @@ public class AffichagePostActivity extends AppCompatActivity implements DeleteCo
                 @Override
                 public void onClick(View v) {
                     openDialog("delete");
+
                 }
             });
             edit.setOnClickListener(new View.OnClickListener() {
@@ -206,6 +207,7 @@ public class AffichagePostActivity extends AppCompatActivity implements DeleteCo
 
     public void openDialog(String arg){
         if(arg=="delete") {
+
             DeleteConfirm confirmDelete = new DeleteConfirm();
             confirmDelete.show(getSupportFragmentManager(), "DeleteConfirm");
         }
@@ -217,9 +219,34 @@ public class AffichagePostActivity extends AppCompatActivity implements DeleteCo
 
     @Override
     public void onYesDeleteClikcked() {
+        Log.i("raa","pet");
+
         reff.child(way[2]).setValue(null);
         refffavorite = FirebaseDatabase.getInstance().getReference().child("Favorite");
-        refffavorite.child(currentUserId).child(ID).setValue(null);
+        Log.i("peut etre","pet");
+        refffavorite.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot child : dataSnapshot.getChildren()){
+
+                    Log.i("enfant",String.valueOf(child));
+                    for (DataSnapshot idchild : child.getChildren()) {
+                        Toast.makeText(getApplicationContext(),String.valueOf(idchild.getKey()),Toast.LENGTH_SHORT).show();
+                        if (idchild.getKey().equals(ID)) {
+
+                            refffavorite.child(child.getKey()).child(ID).setValue(null);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
         finish();
     }
 
