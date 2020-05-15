@@ -51,7 +51,7 @@ public class SearchActivity extends AppCompatActivity {
             currentUserId = signInAccount.getId();
         }
         //reed children posts count
-        reff=FirebaseDatabase.getInstance().getReference().child("test").child(input[0]).child(input[1]);
+        reff=FirebaseDatabase.getInstance().getReference().child("Posts").child(input[0]).child(input[1]);
         reff.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -77,14 +77,17 @@ public class SearchActivity extends AppCompatActivity {
                         LinearLayout layout = (LinearLayout) findViewById(R.id.linearlayout_search_list);
                         //take info of the post in a LinearLayout
                         LinearLayout Aview = Function.takePost(dataSnapshot, key, SearchActivity.this, layout);
-                        final String finalI = dataSnapshot.getRef().getParent().getKey() + " " + dataSnapshot.getKey() + " " +String.valueOf(key);
+                        final String finalI = dataSnapshot.getRef().getParent().getKey() + "~" + dataSnapshot.getKey() + "~" +String.valueOf(key);
 
                         Aview.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 //switch to Announce Fragment to show the announce published
-                                Intent act = new Intent(v.getContext(), AffichagePostActivity.class);
-                                act.putExtra(EXTRA_ID, finalI);
+                                Intent act = new Intent(getApplicationContext(), AffichagePostActivity.class);
+                                Bundle bundle=new Bundle();
+                                bundle.putString("ParentActivity","SearchActivity");
+                                bundle.putString("ID",finalI);
+                                act.putExtras(bundle);
                                 startActivity(act);
                             }
                         });
@@ -118,14 +121,6 @@ public class SearchActivity extends AppCompatActivity {
 
     }
 
-
-    public static int dpToPx(float dp, Context context) {
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, context.getResources().getDisplayMetrics());
-    }
-
-    public static int spToPx(float sp, Context context) {
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, context.getResources().getDisplayMetrics());
-    }
 
 
 

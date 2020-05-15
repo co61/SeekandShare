@@ -75,16 +75,17 @@ public class AnnounceActivity extends AppCompatActivity {
 
                             LinearLayout layout = (LinearLayout) findViewById(R.id.linearlayout_announce_list);
                             LinearLayout Aview = Function.takePost(dataSnapshot, key, AnnounceActivity.this, layout);
-                            final String finalI = dataSnapshot.getRef().getParent().getKey() + " " + dataSnapshot.getKey() + " " +String.valueOf(key);
+                            final String finalI = dataSnapshot.getRef().getParent().getKey() + "~" + dataSnapshot.getKey() + "~" +String.valueOf(key);
                             Aview.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     //switch to Announce Fragment to show the announce published
                                     Bundle bundle=new Bundle();
                                     bundle.putString("ParentActivity","AnnounceActivity");
+                                    bundle.putString("ID",finalI);
                                     Intent act = new Intent(v.getContext(), AffichagePostActivity.class);
                                     act.putExtras(bundle);
-                                    act.putExtra(EXTRA_ID, finalI);
+                                    //act.putExtra(EXTRA_ID, finalI);
                                     startActivity(act);
 
                                 }

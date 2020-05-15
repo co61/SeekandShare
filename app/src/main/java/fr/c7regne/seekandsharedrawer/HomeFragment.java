@@ -33,6 +33,7 @@ public class HomeFragment extends Fragment {
     String currentUserId;
 
 
+
     @Nullable
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -54,13 +55,16 @@ public class HomeFragment extends Fragment {
 
                     //sending to put on screen
                     LinearLayout Aview = Function.takePost(dataSnapshot, key, getActivity(), layout);
-                    final String finalI = dataSnapshot.getRef().getParent().getKey() + " " + dataSnapshot.getKey() + " " +String.valueOf(key);
+                    final String finalI = dataSnapshot.getRef().getParent().getKey() + "~" + dataSnapshot.getKey() + "~" +String.valueOf(key);
                     Aview.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             //switch to Announce Fragment to show the announce published
                             Intent act = new Intent(v.getContext(), AffichagePostActivity.class);
-                            act.putExtra(EXTRA_ID, finalI);
+                            Bundle bundle=new Bundle();
+                            bundle.putString("ParentActivity","Homefragment");
+                            bundle.putString("ID",finalI);
+                            act.putExtras(bundle);
                             startActivity(act);
                         }
                     });
