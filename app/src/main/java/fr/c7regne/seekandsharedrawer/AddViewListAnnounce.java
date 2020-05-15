@@ -26,7 +26,6 @@ import com.google.firebase.database.ValueEventListener;
 
 public class AddViewListAnnounce extends AppCompatActivity {
 
-    private ProgressBar spinner;
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @SuppressLint({"ResourceAsColor", "SetTextI18n"})
     public LinearLayout addAnnounceUser(final Context activity, String Title, String Date, String DP, String SP, String Content, String UserName, String UserId) {

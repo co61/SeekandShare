@@ -8,21 +8,18 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
-import java.util.Set;
 
-import static android.widget.Toast.LENGTH_SHORT;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout mDrawerLayout;
-    private BottomNavigationView bottomNav;
     Fragment selectedFragment;
     Fragment previousFragment;
 
@@ -37,8 +34,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         selectedFragment = new HomeFragment();
         previousFragment = new HomeFragment();
+
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -47,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mDrawerLayout = findViewById(R.id.drawer);
 
         //bottom nav
-        bottomNav = findViewById(R.id.bottom_bar_navigation);
+        BottomNavigationView bottomNav = findViewById(R.id.bottom_bar_navigation);
 
         bottomNav.setOnNavigationItemSelectedListener(navlistener);
         //nav view on left side(side menu)
@@ -63,10 +62,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             //navigationView.setCheckedItem(R.id.nav_home);
         }
 
-
     }
-
-     //open the menu on the right when toolbar click
+    //open the menu on the right when toolbar click
     @Override
     public void onBackPressed() {
         if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
