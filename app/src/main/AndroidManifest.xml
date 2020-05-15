@@ -40,6 +40,8 @@
         <activity
             android:name=".SearchActivity"
             android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".EditAnnounceActivity"/>
 
         <activity android:name=".AffichagePostActivity" />
 

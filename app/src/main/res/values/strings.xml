@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SeekandShareDrawer</string>
+    <string name="app_name">SeekandShare</string>
     <string name="open">Ouvrir</string>
     <string name="close">Fermer</string>
     <string name="search_data">Votre sélection</string>

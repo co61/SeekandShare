@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 
@@ -29,19 +30,15 @@ public class AnnounceActivity extends AppCompatActivity {
 
     String  currentUserId;
 
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
 
-        Log.i("test4","test4");
         super.onCreate(savedInstanceState);
 
-        Log.i("test4","test4");
         setContentView(R.layout.activity_announce);
 
-        Log.i("test4","test4");
         //change title action Bar
-        getSupportActionBar().setTitle("Mes annonces");
+        getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //get information on user
@@ -50,15 +47,21 @@ public class AnnounceActivity extends AppCompatActivity {
             currentUserId = signInAccount.getId();
         }
 
-        //reed children posts count
-        Log.i("test4.5","test4.5");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        View layoutremove=(View) findViewById(R.id.linearlayout_announce_list);
+        ((ViewGroup) layoutremove).removeAllViews();
+    //reed children posts count
 
         DatabaseReference[] tabReff = Function.Parcours();
 
-        Log.i("test5","test5");
         for (DatabaseReference data : tabReff) {
             data.addValueEventListener(new ValueEventListener() {
 
+                @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -72,13 +75,17 @@ public class AnnounceActivity extends AppCompatActivity {
 
                             LinearLayout layout = (LinearLayout) findViewById(R.id.linearlayout_announce_list);
                             LinearLayout Aview = Function.takePost(dataSnapshot, key, AnnounceActivity.this, layout);
-                            final String finalI = dataSnapshot.getRef().getParent().getKey() + " " + dataSnapshot.getKey() + " " +String.valueOf(key);
+                            final String finalI = dataSnapshot.getRef().getParent().getKey() + "~" + dataSnapshot.getKey() + "~" +String.valueOf(key);
                             Aview.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     //switch to Announce Fragment to show the announce published
+                                    Bundle bundle=new Bundle();
+                                    bundle.putString("ParentActivity","AnnounceActivity");
+                                    bundle.putString("ID",finalI);
                                     Intent act = new Intent(v.getContext(), AffichagePostActivity.class);
-                                    act.putExtra(EXTRA_ID, finalI);
+                                    act.putExtras(bundle);
+                                    //act.putExtra(EXTRA_ID, finalI);
                                     startActivity(act);
 
                                 }

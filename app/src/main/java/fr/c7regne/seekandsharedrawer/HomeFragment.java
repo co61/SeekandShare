@@ -48,9 +48,11 @@ public class HomeFragment extends Fragment {
     private Handler progressBarbHandler = new Handler();
 
 
+
     @Nullable
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
+
         v2 = inflater.inflate(R.layout.fragment_home, container, false);
 
         progressBar = new ProgressDialog(v2.getContext());
@@ -75,6 +77,10 @@ public class HomeFragment extends Fragment {
                     progressBarbHandler.post(new Runnable() {
                         public void run() {
                             progressBar.setProgress(progressBarStatus);
+
+        final View v2 = inflater.inflate(R.layout.fragment_home, container, false);
+
+
                         }
                     });
                 }
@@ -117,7 +123,10 @@ public class HomeFragment extends Fragment {
                             public void onClick(View v) {
                                 //switch to Announce Fragment to show the announce published
                                 Intent act = new Intent(v.getContext(), AffichagePostActivity.class);
-                                act.putExtra(EXTRA_ID, finalI);
+                                Bundle bundle=new Bundle();
+                                bundle.putString("ParentActivity","Homefragment");
+                                bundle.putString("ID",finalI);
+                                act.putExtras(bundle);
                                 startActivity(act);
                             }
                         });

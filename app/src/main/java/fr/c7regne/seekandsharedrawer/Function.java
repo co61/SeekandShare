@@ -1,5 +1,6 @@
 package fr.c7regne.seekandsharedrawer;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -18,7 +19,7 @@ public class Function {
 
     public static DatabaseReference[] Parcours(){
 
-        DatabaseReference reff = FirebaseDatabase.getInstance().getReference().child("test");
+        DatabaseReference reff = FirebaseDatabase.getInstance().getReference().child("Posts");
         DatabaseReference[] tabReff = new DatabaseReference[4];
         tabReff[0] = reff.child("Prêt").child("Proposition");
         tabReff[1] = reff.child("Prêt").child("Demande");
@@ -29,7 +30,7 @@ public class Function {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
-    public static LinearLayout takePost(DataSnapshot dataSnapshot, String key, Context context, LinearLayout layout){
+    public static LinearLayout takePost(DataSnapshot dataSnapshot, String key, Activity context, LinearLayout layout){
 
         DataSnapshot keyContent  = dataSnapshot.child(key);
         String title = String.valueOf(keyContent.child("title").getValue());

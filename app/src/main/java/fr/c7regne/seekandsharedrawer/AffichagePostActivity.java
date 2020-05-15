@@ -24,12 +24,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class AffichagePostActivity extends AppCompatActivity {
+public class AffichagePostActivity extends AppCompatActivity implements DeleteConfirm.DeleteConfirmListener, EditConfirm.EditConfirmListener {
 
     DatabaseReference reff;
     DatabaseReference refffavorite;
     String currentUserId;
-
+    String ID;
+    String[] way;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,18 +38,29 @@ public class AffichagePostActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_affichage_announce);
         //change title action Bar
-        getSupportActionBar().setTitle("Mes annonces");
+        getSupportActionBar().setTitle("Mon annonce");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Intent intent = getIntent();
-        final String ID = intent.getStringExtra(AnnounceActivity.EXTRA_ID);
-        String[] way = ID.split(" ");
+        Bundle extras=getIntent().getExtras();
+        String parentActivity = extras.getString("ParentActivity");
+
+        ID = getIntent().getExtras().getString("ID");
+        way = ID.split("~");
 
         //get information on user
         GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
         if (signInAccount != null) {
             currentUserId = signInAccount.getId();
         }
+
+        ImageView edit=(ImageView)findViewById(R.id.edit_announce_btn);
+        ImageView delete=(ImageView)findViewById(R.id.delete_announce_btn);
+        if(String.valueOf(parentActivity).equals("AnnounceActivity")){
+            edit.setVisibility(View.VISIBLE);
+            delete.setVisibility(View.VISIBLE);
+        }
+
+
 
         final TextView titleView = (TextView) findViewById(R.id.announce_title);
         final TextView dateView = (TextView) findViewById(R.id.announce_date);
@@ -58,12 +70,12 @@ public class AffichagePostActivity extends AppCompatActivity {
         final TextView usernameView = (TextView) findViewById(R.id.announce_username);
 
 
-        reff = FirebaseDatabase.getInstance().getReference().child("test").child(way[0]).child(way[1]);
+        reff = FirebaseDatabase.getInstance().getReference().child("Posts").child(way[0]).child(way[1]);
 
         reff.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                DataSnapshot keyContext = dataSnapshot.child(ID.split(" ")[2]);
+                DataSnapshot keyContext = dataSnapshot.child(way[2]);
                 String title = String.valueOf(keyContext.child("title").getValue());
                 String content = String.valueOf(keyContext.child("content").getValue());
                 String dpchoice = String.valueOf(keyContext.child("dpchoice").getValue());
@@ -157,7 +169,24 @@ public class AffichagePostActivity extends AppCompatActivity {
         });
         //new AddFavorite().addToFavorite(AffichagePostActivity.this,ID, addfavoritebtn);
 
+        if(String.valueOf(parentActivity).equals("AnnounceActivity")){
+            Log.i("Atcivity parent ","bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
+            edit.setVisibility(View.VISIBLE);
+            delete.setVisibility(View.VISIBLE);
+            delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    openDialog("delete");
 
+                }
+            });
+            edit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    openDialog("edit");
+                }
+            });
+        }
     }
 
     @Override
@@ -176,14 +205,60 @@ public class AffichagePostActivity extends AppCompatActivity {
         finish();
     }
 
+    public void openDialog(String arg){
+        if(arg=="delete") {
 
-    public static int dpToPx(float dp, Context context) {
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, context.getResources().getDisplayMetrics());
+            DeleteConfirm confirmDelete = new DeleteConfirm();
+            confirmDelete.show(getSupportFragmentManager(), "DeleteConfirm");
+        }
+        if(arg=="edit") {
+            EditConfirm confirmEdit = new EditConfirm();
+            confirmEdit.show(getSupportFragmentManager(), "EditConfirm");
+        }
     }
 
-    public static int spToPx(float sp, Context context) {
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, context.getResources().getDisplayMetrics());
+    @Override
+    public void onYesDeleteClikcked() {
+        Log.i("raa","pet");
+
+        reff.child(way[2]).setValue(null);
+        refffavorite = FirebaseDatabase.getInstance().getReference().child("Favorite");
+        Log.i("peut etre","pet");
+        refffavorite.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot child : dataSnapshot.getChildren()){
+
+                    Log.i("enfant",String.valueOf(child));
+                    for (DataSnapshot idchild : child.getChildren()) {
+                        Toast.makeText(getApplicationContext(),String.valueOf(idchild.getKey()),Toast.LENGTH_SHORT).show();
+                        if (idchild.getKey().equals(ID)) {
+
+                            refffavorite.child(child.getKey()).child(ID).setValue(null);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        finish();
     }
 
+
+    @Override
+    public void onYesEditClikcked() {
+        Bundle bundle=new Bundle();
+        bundle.putString("ID",ID);
+        Intent act = new Intent(getApplicationContext(), EditAnnounceActivity.class);
+        act.putExtras(bundle);
+        startActivity(act);
+        finish();
+    }
 
 }
