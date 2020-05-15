@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/backgroundsearch">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/yellowBackground"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/edit_title_txt"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/corner"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+                android:text="Titre"
+                android:textCursorDrawable="@color/black"
+                android:textSize="25sp" />
+
+            <TextView
+                android:id="@+id/edit_place_txt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/corner"
+                android:hint="Ville..."
+                android:inputType="text"
+                android:paddingLeft="10dp"
+                android:textCursorDrawable="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/edit_content_txt"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/corner"
+                android:gravity="start"
+                android:hint="Décrivez votre annonce..."
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+                android:textAlignment="viewStart"
+                android:textCursorDrawable="@color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/edit_count_txt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:textAlignment="textEnd"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:padding="10dp"
+                android:background="@color/yellowBackground"
+                android:text="@string/caract_number"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="horizontal"
+                android:layout_gravity="center_horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RadioGroup
+                        android:id="@+id/edit_DP_radioGroup"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <RadioButton
+                            android:id="@+id/edit_demande_radio"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="true"
+                            android:text="Demande" />
+
+                        <RadioButton
+                            android:id="@+id/edit_propostion_radio"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Proposition" />
+
+                    </RadioGroup>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RadioGroup
+                        android:id="@+id/edit_SP_radioGroup"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <RadioButton
+                            android:id="@+id/edit_service_radio"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Service" />
+
+                        <RadioButton
+                            android:id="@+id/edit_pret_radio"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="true"
+                            android:text="Prêt" />
+
+                        />
+                    </RadioGroup>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/validate_edit_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@color/colorPrimary"
+                android:padding="15dp"
+                android:layout_marginTop="10dp"
+                android:text="Editer mon annonce"
+                android:textColor="@color/white"/>
+
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

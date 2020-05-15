@@ -1,6 +1,7 @@
 package fr.c7regne.seekandsharedrawer;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 
 import android.graphics.Color;
@@ -29,7 +30,7 @@ public class AddViewListAnnounce extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @SuppressLint({"ResourceAsColor", "SetTextI18n"})
-    public LinearLayout addAnnounceUser(final Context activity, String Title, String Date, String DP, String SP, String Content, String UserName, String UserId) {
+    public LinearLayout addAnnounceUser(final Activity activity, String Title, String Date, String DP, String SP, String Content, String UserName, String UserId) {
 
 
         //linearlayout à empiler
@@ -42,8 +43,10 @@ public class AddViewListAnnounce extends AppCompatActivity {
         newLL.setOrientation(LinearLayout.VERTICAL);
         int padding = dpToPx(10, activity.getApplicationContext());
         newLL.setPadding(padding, padding, padding, padding);
-        newLL.setElevation(6);
-        newLL.setTranslationZ(10);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            newLL.setElevation(6);
+            newLL.setTranslationZ(10);
+        }
 
         //title
         TextView textViewTitle = new TextView(activity);
@@ -84,11 +87,9 @@ public class AddViewListAnnounce extends AppCompatActivity {
         LLHoriz.addView(textViewSP);
 
         //Content
-
         TextView textViewContent = new TextView(activity);
         LinearLayout.LayoutParams textViewContentParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dpToPx(54, activity.getApplicationContext()));
-        textViewContent.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-
+        //textViewContent.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         textViewContent.setLayoutParams(textViewContentParams);
         textViewContent.setText(Content);
         textViewContent.setTextSize(TypedValue.COMPLEX_UNIT_SP, spToPx(6, activity.getApplicationContext()));

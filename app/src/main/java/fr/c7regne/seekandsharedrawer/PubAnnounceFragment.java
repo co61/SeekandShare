@@ -123,8 +123,6 @@ public class PubAnnounceFragment extends Fragment implements View.OnClickListene
 
     @Override
     public void onClick(View view) {
-        //Auto increment in database
-
 
         //pass to string text enter by user
         inputTitle = title_announce.getText().toString();
