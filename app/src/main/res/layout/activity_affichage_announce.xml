@@ -84,6 +84,13 @@
                 android:layout_marginLeft="10dp"
                 android:src="@drawable/ic_delete_announce"
                 android:visibility="invisible"/>
+            <ImageView
+                android:id="@+id/message_announce_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/ic_message_announce"
+                android:visibility="visible"/>
 
 
             <TextView
