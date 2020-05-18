@@ -40,7 +40,8 @@ public class MessageActivity extends AppCompatActivity {
     EditText message;
     Button send;
     DatabaseReference reff;
-
+    String userName;
+    String currentUserName;
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -51,12 +52,15 @@ public class MessageActivity extends AppCompatActivity {
         send = (Button) findViewById(R.id.send_button);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(userId.split("~")[1]);
+        userName = userId.split("~")[1];
+        getSupportActionBar().setTitle(userName);
         userId = userId.split("~")[0];
 
         //get information on user
         GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(this);
         if (signInAccount != null) {
+
+            currentUserName = signInAccount.getDisplayName();
             currentUserId = signInAccount.getId();
         }
 
@@ -68,16 +72,19 @@ public class MessageActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
             @Override
             public void onClick(View v) {
+
                 String msg = message.getText().toString();
                 Calendar calendar = Calendar.getInstance();
                 String fullDate = new SimpleDateFormat("EEEE, dd MMMM yyyy, hh:mm:ss").format(calendar.getTime());
 
-                reff = FirebaseDatabase.getInstance().getReference().child("Messages").child(currentUserId).child(userId);
+                reff = FirebaseDatabase.getInstance().getReference().child("Messages").child(currentUserId).child(userId+"~"+userName);
                 MessSaveStruct Mess = new MessSaveStruct(true, msg);
                 reff.child(fullDate).setValue(Mess);
-                reff = FirebaseDatabase.getInstance().getReference().child("Messages").child(userId).child(currentUserId);
+                reff = FirebaseDatabase.getInstance().getReference().child("Messages").child(userId).child(currentUserId+"~"+currentUserName);
                 Mess.setSide(false);
                 reff.child(fullDate).setValue(Mess);
+
+
 
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
@@ -95,7 +102,7 @@ public class MessageActivity extends AppCompatActivity {
     //reed children posts count
 
 
-        reff = FirebaseDatabase.getInstance().getReference().child("Messages").child(currentUserId).child(userId);
+        reff = FirebaseDatabase.getInstance().getReference().child("Messages").child(currentUserId).child(userId+"~"+userName);
 
 
         reff.addValueEventListener(new ValueEventListener() {
@@ -112,7 +119,7 @@ public class MessageActivity extends AppCompatActivity {
 
 
                     LinearLayout layout = (LinearLayout) findViewById(R.id.linearlayout_message_list);
-                    LinearLayout Aview = new AddViewListMessage().addMessageUser(MessageActivity.this, child.child("msg").getValue().toString(), (Boolean) child.child("side").getValue());
+                    LinearLayout Aview = new AddViewListMessage().addMessageUser(MessageActivity.this, child.child("msg").getValue().toString(), (Boolean) child.child("side").getValue(), child.getKey());
                     Log.i("test",child.child("side").getValue().toString());
                     layout.addView(Aview);
                 }
