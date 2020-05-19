@@ -32,7 +32,7 @@ public class HomeFragment extends Fragment {
     private Button publication;
     private DatabaseReference reff;
     String currentUserId;
-    private View v2;
+    private View v;
 
 
     int pStatus = 0;
@@ -48,9 +48,7 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        v2 = inflater.inflate(R.layout.fragment_home, container, false);
-
-
+        v = inflater.inflate(R.layout.fragment_home, container, false);
 
         return v2;
     }
@@ -59,6 +57,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onStart() {
         progressBar = new ProgressDialog(v2.getContext());
+
         progressBar.setCancelable(true);
         progressBar.setMessage("Chargement des annonces");
         progressBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -93,10 +92,12 @@ public class HomeFragment extends Fragment {
                     progressBar.dismiss();
                 }
             }
+
         });
         thread.start();
         View layoutremove = (View) v2.findViewById(R.id.home_announce_list);
         ((ViewGroup) layoutremove).removeAllViews();
+
         DatabaseReference[] tabReff = Function.Parcours();
         super.onStart();
         for (DatabaseReference data : tabReff) {
@@ -126,6 +127,7 @@ public class HomeFragment extends Fragment {
 
 
                         }
+
 
                     }
                     progressBar.setMax(progressBarStatus);
