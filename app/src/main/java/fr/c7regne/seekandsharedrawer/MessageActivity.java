@@ -101,7 +101,6 @@ public class MessageActivity extends AppCompatActivity {
     ((ViewGroup) layoutremove).removeAllViews();
     //reed children posts count
 
-
         reff = FirebaseDatabase.getInstance().getReference().child("Messages").child(currentUserId).child(userId+"~"+userName);
 
 
@@ -116,8 +115,6 @@ public class MessageActivity extends AppCompatActivity {
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
 
                     //get the announce of the current user on the screen
-
-
                     LinearLayout layout = (LinearLayout) findViewById(R.id.linearlayout_message_list);
                     LinearLayout Aview = new AddViewListMessage().addMessageUser(MessageActivity.this, child.child("msg").getValue().toString(), (Boolean) child.child("side").getValue(), child.getKey());
                     Log.i("test",child.child("side").getValue().toString());
@@ -127,11 +124,6 @@ public class MessageActivity extends AppCompatActivity {
 
                 scroll.scrollTo(0, scroll.getBottom());
             }
-
-
-
-
-
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
