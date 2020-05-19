@@ -32,7 +32,7 @@ public class HomeFragment extends Fragment {
     private Button publication;
     private DatabaseReference reff;
     String currentUserId;
-    private View v;
+    private View v2;
 
 
     int pStatus = 0;
@@ -48,7 +48,7 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        v = inflater.inflate(R.layout.fragment_home, container, false);
+        v2 = inflater.inflate(R.layout.fragment_home, container, false);
 
         return v2;
     }
