@@ -26,6 +26,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
@@ -75,10 +76,11 @@ public class MessageActivity extends AppCompatActivity {
 
                 String msg = message.getText().toString();
                 Calendar calendar = Calendar.getInstance();
-                String fullDate = new SimpleDateFormat("EEEE, dd MMMM yyyy, hh:mm:ss").format(calendar.getTime());
+                String fullDate = new SimpleDateFormat("yyyy MM dd kk mm ss").format(calendar.getTime());
+                String Date = new SimpleDateFormat("dd MMMM yyyy - kk:mm").format(calendar.getTime());
 
                 reff = FirebaseDatabase.getInstance().getReference().child("Messages").child(currentUserId).child(userId+"~"+userName);
-                MessSaveStruct Mess = new MessSaveStruct(true, msg);
+                MessSaveStruct Mess = new MessSaveStruct(true, msg, Date);
                 reff.child(fullDate).setValue(Mess);
                 reff = FirebaseDatabase.getInstance().getReference().child("Messages").child(userId).child(currentUserId+"~"+currentUserName);
                 Mess.setSide(false);
@@ -87,8 +89,11 @@ public class MessageActivity extends AppCompatActivity {
 
 
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+
                 imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
                 message.setText(null);
+                scroll = (ScrollView) findViewById(R.id.scroll);
+                scroll.scrollTo(0, scroll.getBottom());
             }
         });
 
@@ -101,7 +106,9 @@ public class MessageActivity extends AppCompatActivity {
     ((ViewGroup) layoutremove).removeAllViews();
     //reed children posts count
 
-        reff = FirebaseDatabase.getInstance().getReference().child("Messages").child(currentUserId).child(userId+"~"+userName);
+
+        Query reff = FirebaseDatabase.getInstance().getReference().child("Messages").child(currentUserId).child(userId+"~"+userName).orderByKey();
+
 
 
         reff.addValueEventListener(new ValueEventListener() {
@@ -116,12 +123,13 @@ public class MessageActivity extends AppCompatActivity {
 
                     //get the announce of the current user on the screen
                     LinearLayout layout = (LinearLayout) findViewById(R.id.linearlayout_message_list);
-                    LinearLayout Aview = new AddViewListMessage().addMessageUser(MessageActivity.this, child.child("msg").getValue().toString(), (Boolean) child.child("side").getValue(), child.getKey());
+                    LinearLayout Aview = new AddViewListMessage().addMessageUser(MessageActivity.this, child.child("msg").getValue().toString(), (Boolean) child.child("side").getValue(), child.child("date").getValue().toString());
                     Log.i("test",child.child("side").getValue().toString());
                     layout.addView(Aview);
                 }
 
 
+                scroll = (ScrollView) findViewById(R.id.scroll);
                 scroll.scrollTo(0, scroll.getBottom());
             }
 

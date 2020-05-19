@@ -195,7 +195,9 @@ public class AffichagePostActivity extends AppCompatActivity implements DeleteCo
             });
         }
 
-        if(currentUserId.equals(ID.split("-")[0])){
+        Log.i("current",currentUserId);
+        Log.i("user", ID);
+        if(currentUserId.equals(ID.split("~")[2].split("-")[0])){
             message.setVisibility(View.INVISIBLE);
         }
 
