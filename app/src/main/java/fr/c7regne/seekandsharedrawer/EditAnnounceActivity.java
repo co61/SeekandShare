@@ -32,13 +32,13 @@ import static android.widget.Toast.LENGTH_SHORT;
 public class EditAnnounceActivity extends AppCompatActivity {
 
     DatabaseReference reff;
-    String currentUserId,userName,fulldate;
+    String currentUserId, userName, fulldate;
     String ID;
     RadioGroup radioGroup1;
     RadioGroup radioGroup2;
     RadioButton radioButton1;
     RadioButton radioButton2;
-    TextView titleView,placeView,caractnb;
+    TextView titleView, placeView, caractnb;
     EditText contentView;
     Button editbutton;
 
@@ -82,7 +82,7 @@ public class EditAnnounceActivity extends AppCompatActivity {
                 String dpchoice = String.valueOf(keyContext.child("dpchoice").getValue());
                 String spchoice = String.valueOf(keyContext.child("spchoice").getValue());
                 String place = String.valueOf(keyContext.child("place").getValue());
-                fulldate =String.valueOf(keyContext.child("publicationDate").getValue());
+                fulldate = String.valueOf(keyContext.child("publicationDate").getValue());
 
                 titleView.setText(title);
                 placeView.setText(place);
@@ -91,7 +91,7 @@ public class EditAnnounceActivity extends AppCompatActivity {
                     r1.setChecked(true);
                     RadioButton r2 = findViewById(R.id.edit_propostion_radio);
                     r2.setChecked(false);
-                }else{
+                } else {
                     RadioButton r1 = findViewById(R.id.edit_demande_radio);
                     r1.setChecked(false);
                     RadioButton r2 = findViewById(R.id.edit_propostion_radio);
@@ -103,7 +103,7 @@ public class EditAnnounceActivity extends AppCompatActivity {
                     r1.setChecked(true);
                     RadioButton r2 = findViewById(R.id.edit_pret_radio);
                     r2.setChecked(false);
-                }else{
+                } else {
                     RadioButton r1 = findViewById(R.id.edit_service_radio);
                     r1.setChecked(false);
                     RadioButton r2 = findViewById(R.id.edit_pret_radio);
@@ -144,7 +144,7 @@ public class EditAnnounceActivity extends AppCompatActivity {
         radioButton1 = findViewById(radioID1);
         int radioID2 = radioGroup2.getCheckedRadioButtonId();
         radioButton2 = findViewById(radioID2);
-        Log.i("text",radioButton1.getText().toString());
+        Log.i("text", radioButton1.getText().toString());
         editbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -158,7 +158,7 @@ public class EditAnnounceActivity extends AppCompatActivity {
                 radioButton1 = findViewById(radioID1);
                 int radioID2 = radioGroup2.getCheckedRadioButtonId();
                 radioButton2 = findViewById(radioID2);
-                Log.i("text",radioButton1.getText().toString());
+                Log.i("text", radioButton1.getText().toString());
 
                 //Save in database if something in EditText
                 if (inputTitle.equals("") || inputContent.equals("") || inputContent.length() <= 50 || inputPlace.equals("")) {
@@ -173,18 +173,18 @@ public class EditAnnounceActivity extends AppCompatActivity {
                     reff = FirebaseDatabase.getInstance().getReference().child("Posts").child(radioButton1.getText().toString()).child(radioButton2.getText().toString());
                     PostSaveStruct postsave;
                     //construction struct to send into database with auto increment depending on number of member in this branch
-                    postsave = new PostSaveStruct(currentUserId, userName, inputTitle, inputContent, inputPlace,radioButton2.getText().toString(), radioButton1.getText().toString(), fulldate);
-                    reff.child(currentUserId+"-"+inputTitle).setValue(postsave);
+                    postsave = new PostSaveStruct(currentUserId, userName, inputTitle, inputContent, inputPlace, radioButton2.getText().toString(), radioButton1.getText().toString(), fulldate);
+                    reff.child(currentUserId + "-" + inputTitle).setValue(postsave);
 
-                    String finalI = radioButton1.getText().toString() + "~" + radioButton2.getText().toString() + "~" +currentUserId+"-"+inputTitle;
+                    String finalI = radioButton1.getText().toString() + "~" + radioButton2.getText().toString() + "~" + currentUserId + "-" + inputTitle;
 
 
                     //confirm to the user that the announce is published
                     StyleableToast.makeText(getApplicationContext(), getString(R.string.post_published), LENGTH_SHORT, R.style.publishedToast).show();
                     //switch to Announce Fragment to show the announce published
-                    Bundle bundle=new Bundle();
-                    bundle.putString("ParentActivity","AnnounceActivity");
-                    bundle.putString("ID",finalI);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("ParentActivity", "AnnounceActivity");
+                    bundle.putString("ID", finalI);
                     Intent act = new Intent(getApplicationContext(), AffichagePostActivity.class);
                     act.putExtras(bundle);
                     startActivity(act);

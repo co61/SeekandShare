@@ -25,19 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class HomeFragment extends Fragment {
 
-
-    private static final String EXTRA_ID = "fr.c7regne.seekandsharedrawer";
-
-    private Button search;
-    private Button publication;
-    private DatabaseReference reff;
-    String currentUserId;
     private View v2;
-
-
-    int pStatus = 0;
-    private Handler handler = new Handler();
-    TextView tv;
 
     private ProgressDialog progressBar;
     private int progressBarStatus = 0;
@@ -47,17 +35,13 @@ public class HomeFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
-
         v2 = inflater.inflate(R.layout.fragment_home, container, false);
-
         return v2;
     }
-
 
     @Override
     public void onStart() {
         progressBar = new ProgressDialog(v2.getContext());
-
         progressBar.setCancelable(true);
         progressBar.setMessage("Chargement des annonces");
         progressBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -101,7 +85,7 @@ public class HomeFragment extends Fragment {
         DatabaseReference[] tabReff = Function.Parcours();
         super.onStart();
         for (DatabaseReference data : tabReff) {
-            data.addListenerForSingleValueEvent(new ValueEventListener() {
+            data.limitToFirst(2).addListenerForSingleValueEvent(new ValueEventListener() {
                 @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -124,11 +108,7 @@ public class HomeFragment extends Fragment {
                                     startActivity(act);
                                 }
                             });
-
-
                         }
-
-
                     }
                     progressBar.setMax(progressBarStatus);
                 }

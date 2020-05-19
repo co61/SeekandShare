@@ -77,10 +77,10 @@ public class FavoriteActivity extends AppCompatActivity {
             }
         });
 
-
+        View layoutremove=(View) findViewById(R.id.dynamic_layout_favorite);
+        ((ViewGroup) layoutremove).removeAllViews();
         reffaff = FirebaseDatabase.getInstance().getReference().child("Posts");
         reffaff.addValueEventListener(new ValueEventListener() {
-
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -119,8 +119,6 @@ public class FavoriteActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
 
-        View layoutremove=(View) findViewById(R.id.dynamic_layout_favorite);
-        ((ViewGroup) layoutremove).removeAllViews();
     }
 
     @Override
