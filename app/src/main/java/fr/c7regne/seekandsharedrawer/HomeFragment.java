@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,7 +37,7 @@ public class HomeFragment extends Fragment {
     private Button publication;
     private DatabaseReference reff;
     String currentUserId;
-    private View v2;
+    private View v;
 
 
     int pStatus = 0;
@@ -53,9 +54,9 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        v2 = inflater.inflate(R.layout.fragment_home, container, false);
+        v = inflater.inflate(R.layout.fragment_home, container, false);
 
-        progressBar = new ProgressDialog(v2.getContext());
+        progressBar = new ProgressDialog(v.getContext());
         progressBar.setCancelable(true);
         progressBar.setMessage("Chargement des annonces");
         progressBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -95,7 +96,7 @@ public class HomeFragment extends Fragment {
                 }
             }
         }).start();
-        return v2;
+        return v;
     }
 
 
@@ -113,11 +114,11 @@ public class HomeFragment extends Fragment {
                     for (DataSnapshot child : dataSnapshot.getChildren()) {
                         String key = child.getKey().toString();
 
-                        LinearLayout layout = (LinearLayout) v2.findViewById(R.id.home_announce_list);
+                        LinearLayout layout = (LinearLayout) v.findViewById(R.id.home_announce_list);
 
                         //sending to put on screen
                         LinearLayout Aview = Function.takePost(dataSnapshot, key, getActivity(), layout);
-                        final String finalI = dataSnapshot.getRef().getParent().getKey() + " " + dataSnapshot.getKey() + " " + String.valueOf(key);
+                        final String finalI = dataSnapshot.getRef().getParent().getKey() + "~" + dataSnapshot.getKey() + "~" + String.valueOf(key);
                         Aview.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
