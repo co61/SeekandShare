@@ -1,19 +1,16 @@
 package fr.c7regne.seekandsharedrawer;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
-
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
-import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.app.ProgressDialog;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,9 +20,7 @@ import androidx.fragment.app.Fragment;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 
 
 public class HomeFragment extends Fragment {
@@ -47,8 +42,7 @@ public class HomeFragment extends Fragment {
     private ProgressDialog progressBar;
     private int progressBarStatus = 0;
     private Handler progressBarbHandler = new Handler();
-
-
+    Thread thread;
 
     @Nullable
     @Override
@@ -56,18 +50,25 @@ public class HomeFragment extends Fragment {
 
         v = inflater.inflate(R.layout.fragment_home, container, false);
 
-        progressBar = new ProgressDialog(v.getContext());
+        return v2;
+    }
+
+
+    @Override
+    public void onStart() {
+        progressBar = new ProgressDialog(v2.getContext());
+
         progressBar.setCancelable(true);
         progressBar.setMessage("Chargement des annonces");
         progressBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressBar.setProgress(0);
-        progressBar.setMax(100);
+        progressBar.setMax(1000);
         progressBar.show();
         progressBarStatus = 0;
 
-        new Thread(new Runnable() {
+        thread=new Thread(new Runnable() {
             public void run() {
-                while (progressBarStatus < 100) {
+                while (progressBarStatus < progressBar.getMax()) {
                     progressBarStatus++;
                     try {
                         Thread.sleep(15);
@@ -78,15 +79,11 @@ public class HomeFragment extends Fragment {
                     progressBarbHandler.post(new Runnable() {
                         public void run() {
                             progressBar.setProgress(progressBarStatus);
-
-        final View v2 = inflater.inflate(R.layout.fragment_home, container, false);
-
-
                         }
                     });
                 }
 
-                if (progressBarStatus >= 100) {
+                if (progressBarStatus >= progressBar.getMax()) {
                     try {
                         Thread.sleep(30);
                     } catch (InterruptedException e) {
@@ -95,13 +92,11 @@ public class HomeFragment extends Fragment {
                     progressBar.dismiss();
                 }
             }
-        }).start();
-        return v;
-    }
 
-
-    @Override
-    public void onStart() {
+        });
+        thread.start();
+        View layoutremove = (View) v2.findViewById(R.id.home_announce_list);
+        ((ViewGroup) layoutremove).removeAllViews();
 
         DatabaseReference[] tabReff = Function.Parcours();
         super.onStart();
@@ -110,29 +105,32 @@ public class HomeFragment extends Fragment {
                 @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
                     for (DataSnapshot child : dataSnapshot.getChildren()) {
-                        String key = child.getKey().toString();
+                        if (isVisible()) {
+                            String key = child.getKey().toString();
+                            LinearLayout layout = (LinearLayout) v2.findViewById(R.id.home_announce_list);
+                            //sending to put on screen
+                            LinearLayout Aview = Function.takePost(dataSnapshot, key, getActivity(), layout);
+                            final String finalI = dataSnapshot.getRef().getParent().getKey() + "~" + dataSnapshot.getKey() + "~" + String.valueOf(key);
+                            Aview.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    //switch to Announce Fragment to show the announce published
+                                    Intent act = new Intent(v.getContext(), AffichagePostActivity.class);
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("ParentActivity", "Homefragment");
+                                    bundle.putString("ID", finalI);
+                                    act.putExtras(bundle);
+                                    startActivity(act);
+                                }
+                            });
 
-                        LinearLayout layout = (LinearLayout) v.findViewById(R.id.home_announce_list);
 
-                        //sending to put on screen
-                        LinearLayout Aview = Function.takePost(dataSnapshot, key, getActivity(), layout);
-                        final String finalI = dataSnapshot.getRef().getParent().getKey() + "~" + dataSnapshot.getKey() + "~" + String.valueOf(key);
-                        Aview.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                //switch to Announce Fragment to show the announce published
-                                Intent act = new Intent(v.getContext(), AffichagePostActivity.class);
-                                Bundle bundle=new Bundle();
-                                bundle.putString("ParentActivity","Homefragment");
-                                bundle.putString("ID",finalI);
-                                act.putExtras(bundle);
-                                startActivity(act);
-                            }
-                        });
+                        }
+
 
                     }
+                    progressBar.setMax(progressBarStatus);
                 }
 
                 @Override
