@@ -160,12 +160,23 @@ public class PubAnnounceFragment extends Fragment implements View.OnClickListene
             postsave = new PostSaveStruct(userId, userName, inputTitle, inputContent, inputPlace,radioButton2.getText().toString(), radioButton1.getText().toString(), fullDate);
             reff.child(userId+"-"+inputTitle).setValue(postsave);
 
-
+            title_announce.setText("Titre...");
+            content_announce.setText("Décrivez votre annonce...");
+            place_announce.setText("Ville...");
+            RadioButton r1 = v.findViewById(R.id.post_demande_radio);
+            r1.setChecked(true);
+            RadioButton r2 = v.findViewById(R.id.post_propostion_radio);
+            r2.setChecked(false);
+            RadioButton r3 = v.findViewById(R.id.post_service_radio);
+            r3.setChecked(false);
+            RadioButton r4 = v.findViewById(R.id.post_pret_radio);
+            r4.setChecked(true);
 
             //confirm to the user that the announce is published
             StyleableToast.makeText(getActivity(), getString(R.string.post_published), LENGTH_SHORT, R.style.publishedToast).show();
-            //switch to Announce Fragment to show the announce published
 
+
+            //switch to Announce Fragment to show the announce published
             Intent act = new Intent(getContext(), AnnounceActivity.class);
             startActivity(act);
 
