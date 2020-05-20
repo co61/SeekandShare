@@ -76,7 +76,7 @@ public class MessageFragment extends Fragment {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 for (DataSnapshot child : dataSnapshot.getChildren()) {
-                                    lastmsg =new MessSaveStruct((Boolean) child.child("side").getValue(),child.child("msg").getValue().toString(),child.child("date").getValue().toString());
+                                    lastmsg =new MessSaveStruct((Boolean) child.child("side").getValue(),child.child("msg").getValue().toString(),child.child("date").getValue().toString(),Boolean.valueOf(child.child("read").getValue().toString()));
 
                                     //sending to put on screen
                                     LinearLayout Aview = new AddViewListConversation().addConversation(getActivity(), key.split("~")[1], lastmsg);
