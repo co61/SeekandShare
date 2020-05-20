@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.util.TypedValue;
 import android.view.View;
@@ -20,14 +21,14 @@ public class AddViewListConversation extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @SuppressLint({"ResourceAsColor", "SetTextI18n"})
-    public LinearLayout addConversation(final Activity activity, String message) {
+    public LinearLayout addConversation(final Activity activity, String message, MessSaveStruct lastmsg) {
 
         //linearlayout à empiler
         LinearLayout newLL = new LinearLayout(activity);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        int margin = dpToPx(15, activity.getApplicationContext());
+        int margin = dpToPx(10, activity.getApplicationContext());
         layoutParams.setMargins(margin, margin, margin, margin);
-        newLL.setBackgroundResource(R.drawable.corner);
+        newLL.setBackgroundResource(R.drawable.cornerleftconv);
         newLL.setLayoutParams(layoutParams);
         newLL.setOrientation(LinearLayout.VERTICAL);
         int padding = dpToPx(10, activity.getApplicationContext());
@@ -46,13 +47,33 @@ public class AddViewListConversation extends AppCompatActivity {
         textViewTitle.setLayoutParams(title_linear);
         textViewTitle.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         textViewTitle.setText(message);
-        textViewTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, spToPx(6, activity.getApplicationContext()));
+        textViewTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, spToPx(7, activity.getApplicationContext()));
         textViewTitle.setTextColor(textColor);
+        textViewTitle.setTypeface(null, Typeface.BOLD);
+
+        //lastmsg
+        TextView Lastmsg = new TextView(activity);
+        LinearLayout.LayoutParams msg_linear = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        Lastmsg.setLayoutParams(msg_linear);
+        String date = lastmsg.getDate().split(" ")[0]+ " " +lastmsg.getDate().split(" ")[1];
+        if(lastmsg.getMsg().length()>30){
+            lastmsg.setMsg(lastmsg.getMsg().subSequence(0,29)+"...");
+        }
+        if(lastmsg.getSide()){
+            Lastmsg.setText("Vous: " + lastmsg.getMsg()+ "      Le " + date);
+        }
+        else{
+
+            Lastmsg.setText(message + ": " + lastmsg.getMsg()+ "      Le " + date);
+        }
+        Lastmsg.setTextSize(TypedValue.COMPLEX_UNIT_SP, spToPx(6, activity.getApplicationContext()));
+        Lastmsg.setTextColor(textColor);
         //fin linearLayout
 
 
         newLL.addView(textViewTitle);
 
+        newLL.addView(Lastmsg);
         //fin LinearLayout
 
         return newLL;
