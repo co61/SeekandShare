@@ -5,30 +5,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/yellowBackground"/>
-    <!--tools:context=".Loading_Activity"
--->
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="300dp">
-        <ImageView
-            android:id="@+id/imageView2"
+    android:background="@color/yellowBackground"
+    tools:context=".Loading_Activity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="-155dp"
-            app:srcCompat="@drawable/clouds_home" />
-        <TextView
-            android:id="@+id/welcome_msg"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="15dp"
-            android:layout_weight="0.97"
-            android:textSize="30dp"
-            android:fontFamily="@font/aclonica"
-            android:text="Bienvenue sur Seek and Share"
-            android:textAlignment="center" />
-</RelativeLayout>
+            android:layout_height="300dp">
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-155dp"
+                app:srcCompat="@drawable/clouds_home" />
+            <TextView
+                android:id="@+id/welcome_msg"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="15dp"
+                android:layout_weight="0.97"
+                android:textSize="30dp"
+                android:fontFamily="@font/aclonica"
+                android:text="Bienvenue sur Seek and Share"
+                android:textAlignment="center" />
+
+        </RelativeLayout>
         <Space
             android:layout_width="wrap_content"
             android:layout_height="0dp"
@@ -42,5 +48,8 @@
             android:orientation="vertical"
             android:layout_marginTop="-90dp"
             />
+
+
+    </LinearLayout>
 
 </ScrollView>

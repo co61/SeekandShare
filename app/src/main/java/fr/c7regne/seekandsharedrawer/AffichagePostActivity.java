@@ -30,6 +30,7 @@ public class AffichagePostActivity extends AppCompatActivity implements DeleteCo
     DatabaseReference refffavorite;
     String currentUserId;
     String ID;
+    String[] way;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,30 +38,30 @@ public class AffichagePostActivity extends AppCompatActivity implements DeleteCo
 
         setContentView(R.layout.activity_affichage_announce);
         //change title action Bar
-        getSupportActionBar().setTitle("Mes annonces");
+        getSupportActionBar().setTitle("Mon annonce");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Bundle extras=getIntent().getExtras();
         String parentActivity = extras.getString("ParentActivity");
-        Log.i("Atcivity parent ","test"+String.valueOf(parentActivity));
 
-        ImageView edit=(ImageView)findViewById(R.id.edit_announce_btn);
-        ImageView delete=(ImageView)findViewById(R.id.delete_announce_btn);
-        Log.i("Atcivity parent ","aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        if(String.valueOf(parentActivity).equals("AnnounceActivity")){
-            Log.i("Atcivity parent ","bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
-            edit.setVisibility(View.VISIBLE);
-            delete.setVisibility(View.VISIBLE);
-        }
-
-        ID = getIntent().getStringExtra(AnnounceActivity.EXTRA_ID);
-        String[] way = ID.split(" ");
+        ID = getIntent().getExtras().getString("ID");
+        way = ID.split("~");
 
         //get information on user
         GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
         if (signInAccount != null) {
             currentUserId = signInAccount.getId();
         }
+
+        ImageView edit=(ImageView)findViewById(R.id.edit_announce_btn);
+        ImageView delete=(ImageView)findViewById(R.id.delete_announce_btn);
+        ImageView message=(ImageView)findViewById(R.id.message_announce_btn);
+        if(String.valueOf(parentActivity).equals("AnnounceActivity")){
+            edit.setVisibility(View.VISIBLE);
+            delete.setVisibility(View.VISIBLE);
+        }
+
+
 
         final TextView titleView = (TextView) findViewById(R.id.announce_title);
         final TextView dateView = (TextView) findViewById(R.id.announce_date);
@@ -70,18 +71,19 @@ public class AffichagePostActivity extends AppCompatActivity implements DeleteCo
         final TextView usernameView = (TextView) findViewById(R.id.announce_username);
 
 
-        reff = FirebaseDatabase.getInstance().getReference().child("test").child(way[0]).child(way[1]);
+        reff = FirebaseDatabase.getInstance().getReference().child("Posts").child(way[0]).child(way[1]);
 
         reff.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                DataSnapshot keyContext = dataSnapshot.child(ID.split(" ")[2]);
+                DataSnapshot keyContext = dataSnapshot.child(way[2]);
                 String title = String.valueOf(keyContext.child("title").getValue());
                 String content = String.valueOf(keyContext.child("content").getValue());
                 String dpchoice = String.valueOf(keyContext.child("dpchoice").getValue());
                 String spchoice = String.valueOf(keyContext.child("spchoice").getValue());
                 String publicationDate = String.valueOf(keyContext.child("publicationDate").getValue());
                 String userName = String.valueOf(keyContext.child("userName").getValue());
+
 
                 titleView.setText(title);
                 dateView.setText(publicationDate);
@@ -131,6 +133,11 @@ public class AffichagePostActivity extends AppCompatActivity implements DeleteCo
             }
         });
 
+
+
+
+
+
         addfavoritebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -177,6 +184,7 @@ public class AffichagePostActivity extends AppCompatActivity implements DeleteCo
                 @Override
                 public void onClick(View v) {
                     openDialog("delete");
+
                 }
             });
             edit.setOnClickListener(new View.OnClickListener() {
@@ -186,6 +194,26 @@ public class AffichagePostActivity extends AppCompatActivity implements DeleteCo
                 }
             });
         }
+
+        Log.i("current",currentUserId);
+        Log.i("user", ID);
+        if(currentUserId.equals(ID.split("~")[2].split("-")[0])){
+            message.setVisibility(View.INVISIBLE);
+        }
+
+        message.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent act = new Intent(v.getContext(), MessageActivity.class);
+                Bundle bundle=new Bundle();
+                String name = usernameView.getText().toString();
+                String userId= ID.split("~")[2].split("-")[0];
+                Log.i("test", ID);
+                bundle.putString("ID",userId+"~"+name);
+                act.putExtras(bundle);
+                startActivity(act);
+            }
+        });
     }
 
     @Override
@@ -206,6 +234,7 @@ public class AffichagePostActivity extends AppCompatActivity implements DeleteCo
 
     public void openDialog(String arg){
         if(arg=="delete") {
+
             DeleteConfirm confirmDelete = new DeleteConfirm();
             confirmDelete.show(getSupportFragmentManager(), "DeleteConfirm");
         }
@@ -217,8 +246,34 @@ public class AffichagePostActivity extends AppCompatActivity implements DeleteCo
 
     @Override
     public void onYesDeleteClikcked() {
+        Log.i("raa","pet");
 
-        reff.child(ID.split(" ")[2]).setValue(null);
+        reff.child(way[2]).setValue(null);
+        refffavorite = FirebaseDatabase.getInstance().getReference().child("Favorite");
+        Log.i("peut etre","pet");
+        refffavorite.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot child : dataSnapshot.getChildren()){
+
+                    Log.i("enfant",String.valueOf(child));
+                    for (DataSnapshot idchild : child.getChildren()) {
+                        Toast.makeText(getApplicationContext(),String.valueOf(idchild.getKey()),Toast.LENGTH_SHORT).show();
+                        if (idchild.getKey().equals(ID)) {
+
+                            refffavorite.child(child.getKey()).child(ID).setValue(null);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
         finish();
     }
 

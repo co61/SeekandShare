@@ -63,8 +63,8 @@ public class FavoriteActivity extends AppCompatActivity {
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     if (child.getKey().equals(currentUserId)) {
                         for (DataSnapshot childfav : child.getChildren()) {
-                            String[] way = childfav.getKey().split(" ");
-                            //wayTabreff.add(FirebaseDatabase.getInstance().getReference().child("test").child(way[0]).child(way[1]).child(way[2]));
+                            String[] way = childfav.getKey().split("~");
+                            //wayTabreff.add(FirebaseDatabase.getInstance().getReference().child("Posts").child(way[0]).child(way[1]).child(way[2]));
                             wayTabreff.add(way);
                         }
                         break;
@@ -77,10 +77,10 @@ public class FavoriteActivity extends AppCompatActivity {
             }
         });
 
-
-        reffaff = FirebaseDatabase.getInstance().getReference().child("test");
+        View layoutremove=(View) findViewById(R.id.dynamic_layout_favorite);
+        ((ViewGroup) layoutremove).removeAllViews();
+        reffaff = FirebaseDatabase.getInstance().getReference().child("Posts");
         reffaff.addValueEventListener(new ValueEventListener() {
-
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -89,13 +89,16 @@ public class FavoriteActivity extends AppCompatActivity {
                     String key = w[2];
                     //get the announce of the current user on the screen
                     LinearLayout Aview = Function.takePost(s, key, FavoriteActivity.this, layout);
-                    final String finalI = s.getRef().getParent().getKey() + " " + s.getKey() + " " + String.valueOf(key);
+                    final String finalI = s.getRef().getParent().getKey() + "~" + s.getKey() + "~" + String.valueOf(key);
                     Aview.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             //switch to Announce Fragment to show the announce published
                             Intent act = new Intent(v.getContext(), AffichagePostActivity.class);
-                            act.putExtra(EXTRA_ID, finalI);
+                            Bundle bundle=new Bundle();
+                            bundle.putString("ParentActivity","FavoriteActivity");
+                            bundle.putString("ID",finalI);
+                            act.putExtras(bundle);
                             startActivity(act);
 
                         }
@@ -116,8 +119,6 @@ public class FavoriteActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
 
-        View layoutremove=(View) findViewById(R.id.dynamic_layout_favorite);
-        ((ViewGroup) layoutremove).removeAllViews();
     }
 
     @Override

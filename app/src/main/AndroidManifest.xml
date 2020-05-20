@@ -2,7 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="fr.c7regne.seekandsharedrawer">
 
-<uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,9 +11,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        
-
 
         <activity
             android:name=".Loading_Activity"
@@ -24,17 +22,23 @@
 
         </activity>
 
-        <activity android:name=".SignInActivity"
-        	android:parentActivityName=".MainActivity"/>
+        <activity
+            android:name=".SignInActivity"
+            android:theme="@style/AppTheme.NoActionBar">
 
-        <activity android:name=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".AnnounceActivity"
-            android:parentActivityName=".MainActivity"/>
-        <activity android:name=".FavoriteActivity"
-            android:parentActivityName=".MainActivity"/>
-        <activity android:name=".SettingsActivity"
-            android:parentActivityName=".MainActivity"/>
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".AnnounceActivity" />
+        <activity
+            android:name=".FavoriteActivity" />
+        <activity
+            android:name=".SettingsActivity" />
+        <activity
+            android:name=".MessageActivity"
+            android:windowSoftInputMode="stateHidden" />
 
         <activity
             android:name=".SearchActivity"
@@ -42,7 +46,8 @@
         <activity
             android:name=".EditAnnounceActivity"/>
 
-        <activity android:name=".AffichagePostActivity"/>
+        <activity android:name=".AffichagePostActivity" />
+
 
     </application>
 

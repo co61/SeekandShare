@@ -1,25 +1,25 @@
 package fr.c7regne.seekandsharedrawer;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Build;
-import android.os.Bundle;
-import android.os.Build;
+import android.os.Handler;
+import android.view.View;
 import android.widget.LinearLayout;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class Function {
+public class Function  {
 
-    public static DatabaseReference[] Parcours(){
+    public static DatabaseReference[] Parcours() {
 
-        DatabaseReference reff = FirebaseDatabase.getInstance().getReference().child("test");
+        DatabaseReference reff = FirebaseDatabase.getInstance().getReference().child("Posts");
         DatabaseReference[] tabReff = new DatabaseReference[4];
         tabReff[0] = reff.child("Prêt").child("Proposition");
         tabReff[1] = reff.child("Prêt").child("Demande");
@@ -30,9 +30,9 @@ public class Function {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
-    public static LinearLayout takePost(DataSnapshot dataSnapshot, String key, Activity context, LinearLayout layout){
+    public static LinearLayout takePost(DataSnapshot dataSnapshot, String key, Activity context, LinearLayout layout) {
 
-        DataSnapshot keyContent  = dataSnapshot.child(key);
+        DataSnapshot keyContent = dataSnapshot.child(key);
         String title = String.valueOf(keyContent.child("title").getValue());
         String content = String.valueOf(keyContent.child("content").getValue());
         String dpchoice = String.valueOf(keyContent.child("dpchoice").getValue());
@@ -45,4 +45,6 @@ public class Function {
         layout.addView(Aview);
         return Aview;
     }
+
+
 }
