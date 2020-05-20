@@ -117,7 +117,7 @@ public class MessageActivity extends AppCompatActivity {
 
 
 
-        reff.addValueEventListener(new ValueEventListener() {
+        reff.limitToLast(20).addValueEventListener(new ValueEventListener() {
 
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
             @Override
@@ -166,8 +166,6 @@ public class MessageActivity extends AppCompatActivity {
     //if click onretrun android button then go back to home
     @Override
     public void onBackPressed() {
-
-        scroll = (ScrollView) findViewById(R.id.scroll);
-        scroll.scrollTo(0, scroll.getChildAt(0).getHeight());
+        finish();
     }
 }
