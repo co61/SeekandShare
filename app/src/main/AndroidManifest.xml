@@ -38,7 +38,7 @@
             android:name=".SettingsActivity" />
         <activity
             android:name=".MessageActivity"
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
 
         <activity
             android:name=".SearchActivity"

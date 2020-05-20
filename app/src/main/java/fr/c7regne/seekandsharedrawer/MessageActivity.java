@@ -43,6 +43,8 @@ public class MessageActivity extends AppCompatActivity {
     DatabaseReference reff;
     String userName;
     String currentUserName;
+
+
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -67,7 +69,10 @@ public class MessageActivity extends AppCompatActivity {
 
         refreshMessage();
 
-        scroll.scrollTo(0, scroll.getBottom());
+
+        scroll = (ScrollView) findViewById(R.id.scroll);
+        scroll.scrollTo(0, scroll.getChildAt(0).getHeight());
+
 
         send.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -93,11 +98,12 @@ public class MessageActivity extends AppCompatActivity {
                 imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
                 message.setText(null);
                 scroll = (ScrollView) findViewById(R.id.scroll);
-                scroll.scrollTo(0, scroll.getBottom());
+                scroll.scrollTo(0, scroll.getChildAt(0).getHeight());
             }
         });
 
-
+        scroll = (ScrollView) findViewById(R.id.scroll);
+        scroll.scrollTo(0, scroll.getChildAt(0).getHeight());
     }
 
 
@@ -116,21 +122,22 @@ public class MessageActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
                 View layoutremove=(View) findViewById(R.id.linearlayout_message_list);
                 ((ViewGroup) layoutremove).removeAllViews();
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
-
                     //get the announce of the current user on the screen
                     LinearLayout layout = (LinearLayout) findViewById(R.id.linearlayout_message_list);
                     LinearLayout Aview = new AddViewListMessage().addMessageUser(MessageActivity.this, child.child("msg").getValue().toString(), (Boolean) child.child("side").getValue(), child.child("date").getValue().toString());
                     Log.i("test",child.child("side").getValue().toString());
                     layout.addView(Aview);
+
+                    scroll = (ScrollView) findViewById(R.id.scroll);
+                    scroll.scrollTo(0, scroll.getChildAt(0).getHeight());
                 }
 
-
                 scroll = (ScrollView) findViewById(R.id.scroll);
-                scroll.scrollTo(0, scroll.getBottom());
+                scroll.scrollTo(0, scroll.getChildAt(0).getHeight());
+
             }
 
             @Override
@@ -138,9 +145,15 @@ public class MessageActivity extends AppCompatActivity {
             }
 
         });
-
+        scroll = (ScrollView) findViewById(R.id.scroll);
+        scroll.scrollTo(0, scroll.getChildAt(0).getHeight());
 }
-
+    @Override
+    protected void onStart() {
+        super.onStart();
+        ScrollView scrollview = (ScrollView) findViewById(R.id.scroll);
+        scrollview.scrollTo(0, scrollview.getChildAt(0).getHeight());
+    }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
@@ -154,6 +167,7 @@ public class MessageActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-        finish();
+        scroll = (ScrollView) findViewById(R.id.scroll);
+        scroll.scrollTo(0, scroll.getChildAt(0).getHeight());
     }
 }
