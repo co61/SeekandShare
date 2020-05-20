@@ -117,7 +117,7 @@ public class MessageActivity extends AppCompatActivity {
 
 
 
-        reff.addValueEventListener(new ValueEventListener() {
+        reff.limitToLast(20).addValueEventListener(new ValueEventListener() {
 
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
             @Override
