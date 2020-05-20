@@ -117,7 +117,9 @@ public class MessageActivity extends AppCompatActivity {
         final DatabaseReference setreff = FirebaseDatabase.getInstance().getReference().child("Messages").child(currentUserId).child(userId+"~"+userName);
 
 
-        qReff.addValueEventListener(new ValueEventListener() {
+
+        qReff.limitToLast(20).addValueEventListener(new ValueEventListener() {
+
 
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
             @Override
