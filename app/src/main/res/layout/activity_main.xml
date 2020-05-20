@@ -32,6 +32,14 @@
             android:layout_below="@+id/toolbar"
             android:layout_above="@+id/bottom_bar_navigation" />
 
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/toolbar"
+            android:layout_above="@+id/bottom_bar_navigation"
+             />
+
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_bar_navigation"
             android:layout_width="match_parent"
