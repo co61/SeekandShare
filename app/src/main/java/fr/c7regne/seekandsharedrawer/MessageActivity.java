@@ -166,8 +166,6 @@ public class MessageActivity extends AppCompatActivity {
     //if click onretrun android button then go back to home
     @Override
     public void onBackPressed() {
-
-        scroll = (ScrollView) findViewById(R.id.scroll);
-        scroll.scrollTo(0, scroll.getChildAt(0).getHeight());
+        finish();
     }
 }
