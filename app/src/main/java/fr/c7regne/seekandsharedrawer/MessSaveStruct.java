@@ -4,12 +4,15 @@ public class MessSaveStruct {
     private Boolean Side;
     private CharSequence Msg;
     private String Date;
+    private boolean read;
 
 
-    public MessSaveStruct(Boolean side, CharSequence msg, String Date) {
+
+    public MessSaveStruct(Boolean side, CharSequence msg, String Date, boolean Read) {
         this.Msg = msg;
         this.Side = side;
         this.Date = Date;
+        this.read = Read;
     }
 
     public CharSequence getMsg() {
@@ -37,6 +40,13 @@ public class MessSaveStruct {
         this.Date = date;
     }
 
+    public boolean isRead() {
+        return read;
+    }
+
+    public void setRead(boolean read) {
+        this.read = read;
+    }
 
 
 }

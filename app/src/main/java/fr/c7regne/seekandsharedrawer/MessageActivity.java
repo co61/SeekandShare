@@ -85,7 +85,7 @@ public class MessageActivity extends AppCompatActivity {
                 String Date = new SimpleDateFormat("dd MMMM yyyy - kk:mm").format(calendar.getTime());
 
                 reff = FirebaseDatabase.getInstance().getReference().child("Messages").child(currentUserId).child(userId+"~"+userName);
-                MessSaveStruct Mess = new MessSaveStruct(true, msg, Date);
+                MessSaveStruct Mess = new MessSaveStruct(true, msg, Date, false);
                 reff.child(fullDate).setValue(Mess);
                 reff = FirebaseDatabase.getInstance().getReference().child("Messages").child(userId).child(currentUserId+"~"+currentUserName);
                 Mess.setSide(false);
@@ -113,11 +113,11 @@ public class MessageActivity extends AppCompatActivity {
     //reed children posts count
 
 
-        Query reff = FirebaseDatabase.getInstance().getReference().child("Messages").child(currentUserId).child(userId+"~"+userName).orderByKey();
+        Query qReff = FirebaseDatabase.getInstance().getReference().child("Messages").child(currentUserId).child(userId+"~"+userName).orderByKey();
+        final DatabaseReference setreff = FirebaseDatabase.getInstance().getReference().child("Messages").child(currentUserId).child(userId+"~"+userName);
 
 
-
-        reff.addValueEventListener(new ValueEventListener() {
+        qReff.addValueEventListener(new ValueEventListener() {
 
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
             @Override
@@ -130,7 +130,7 @@ public class MessageActivity extends AppCompatActivity {
                     LinearLayout Aview = new AddViewListMessage().addMessageUser(MessageActivity.this, child.child("msg").getValue().toString(), (Boolean) child.child("side").getValue(), child.child("date").getValue().toString());
                     Log.i("test",child.child("side").getValue().toString());
                     layout.addView(Aview);
-
+                    setreff.child(child.getKey()).child("read").setValue(true);
                     scroll = (ScrollView) findViewById(R.id.scroll);
                     scroll.scrollTo(0, scroll.getChildAt(0).getHeight());
                 }
@@ -166,8 +166,6 @@ public class MessageActivity extends AppCompatActivity {
     //if click onretrun android button then go back to home
     @Override
     public void onBackPressed() {
-
-        scroll = (ScrollView) findViewById(R.id.scroll);
-        scroll.scrollTo(0, scroll.getChildAt(0).getHeight());
+        finish();
     }
 }

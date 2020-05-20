@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class AddViewListConversation extends AppCompatActivity {
 
+
     private final int textColor = Color.BLACK;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -55,30 +56,38 @@ public class AddViewListConversation extends AppCompatActivity {
         TextView Lastmsg = new TextView(activity);
         LinearLayout.LayoutParams msg_linear = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         Lastmsg.setLayoutParams(msg_linear);
-        String date = lastmsg.getDate().split(" ")[0]+ " " +lastmsg.getDate().split(" ")[1];
+        if(!lastmsg.isRead()) {
+            Lastmsg.setTypeface(null, Typeface.BOLD);
+        }
         if(lastmsg.getMsg().length()>30){
             lastmsg.setMsg(lastmsg.getMsg().subSequence(0,29)+"...");
         }
         if(lastmsg.getSide()){
-            Lastmsg.setText("Vous: " + lastmsg.getMsg()+ "      Le " + date);
+            Lastmsg.setText("Vous: " + lastmsg.getMsg());
         }
         else{
 
-            Lastmsg.setText(message + ": " + lastmsg.getMsg()+ "      Le " + date);
+            Lastmsg.setText(message + ": " + lastmsg.getMsg());
         }
         Lastmsg.setTextSize(TypedValue.COMPLEX_UNIT_SP, spToPx(6, activity.getApplicationContext()));
         Lastmsg.setTextColor(textColor);
+
+        //date lastmsg
+        TextView dateLastmsg = new TextView(activity);
+        Lastmsg.setLayoutParams(msg_linear);
+        String date = lastmsg.getDate().split(" ")[0]+ " " +lastmsg.getDate().split(" ")[1];
+        dateLastmsg.setText("Le "+date);
+        dateLastmsg.setTextSize(TypedValue.COMPLEX_UNIT_SP, spToPx(4, activity.getApplicationContext()));
+        dateLastmsg.setTextColor(textColor);
         //fin linearLayout
 
 
         newLL.addView(textViewTitle);
-
         newLL.addView(Lastmsg);
+        newLL.addView(dateLastmsg);
         //fin LinearLayout
 
         return newLL;
-
-
     }
 
     public static int dpToPx(float dp, Context context) {

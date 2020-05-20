@@ -71,12 +71,12 @@ public class MessageFragment extends Fragment {
                         final LinearLayout layout = (LinearLayout) v.findViewById(R.id.linearlayout_conversation_list);
 
                         Query last = FirebaseDatabase.getInstance().getReference().child("Messages").child(currentUserId).child(key).orderByKey().limitToLast(1);
-                        last.addValueEventListener(new ValueEventListener() {
+                        last.addListenerForSingleValueEvent(new ValueEventListener() {
                             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 for (DataSnapshot child : dataSnapshot.getChildren()) {
-                                    lastmsg =new MessSaveStruct((Boolean) child.child("side").getValue(),child.child("msg").getValue().toString(),child.child("date").getValue().toString());
+                                    lastmsg =new MessSaveStruct((Boolean) child.child("side").getValue(),child.child("msg").getValue().toString(),child.child("date").getValue().toString(),Boolean.valueOf(child.child("read").getValue().toString()));
 
                                     //sending to put on screen
                                     LinearLayout Aview = new AddViewListConversation().addConversation(getActivity(), key.split("~")[1], lastmsg);
