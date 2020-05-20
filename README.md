@@ -2,7 +2,7 @@
 
 ## Introduction
 
-SeekAndShare est un projet étudiant visant à creer une application android: son but est de pouvoir poster des annonces de prêt d'objet ou de proposition de services, tout cela gratuitement. L'application inclu une messagerie pour pouvoir se contacter. 
+SeekAndShare est un projet étudiant visant à creer une application android: son but est de pouvoir poster des annonces de prêt d'objets ou de propositions de services, tout cela gratuitement. L'application inclue une messagerie pour pouvoir se contacter. 
 
 ## Code Samples
 
