@@ -6,105 +6,70 @@
     android:layout_height="match_parent"
     tools:context=".SignInActivity"
     android:orientation="vertical"
-    android:background="@color/white">
+    android:background="@drawable/back">
+
+    <ImageView
+        android:id="@+id/cloud1"
+        android:layout_width="match_parent"
+        android:layout_height="265dp"
+        android:layout_marginTop="-40dp"
+        android:src="@drawable/cloud1" />
+    <ImageView
+        android:id="@+id/cloud2"
+        android:layout_width="match_parent"
+        android:layout_height="265dp"
+        android:layout_marginTop="-60dp"
+        android:src="@drawable/cloud2" />
+    <ImageView
+        android:id="@+id/cloud3"
+        android:layout_width="match_parent"
+        android:layout_height="265dp"
+        android:layout_marginTop="-80dp"
+        android:src="@drawable/cloud3" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="30dp"
         android:orientation="vertical"
-        android:paddingRight="20dp"
         android:paddingLeft="20dp"
-        >
+        android:paddingTop="30dp"
+        android:paddingRight="20dp">
 
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.4"
-            android:layout_gravity="center_horizontal"
-            android:src="@drawable/square_icon_s" />
-
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.1"
-            android:includeFontPadding="false"
-            android:shadowColor="#0E0E0E"
-            android:text="Sign In"
-            android:textAlignment="center"
-            android:textColor="#000000"
-            android:autoSizeTextType="uniform"
-            android:layout_gravity="center_horizontal" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.05"
-            android:includeFontPadding="false"
-            android:shadowColor="#0E0E0E"
-            android:text="Sign-In with Google using Firebase!"
-            android:textAlignment="center"
-            android:textColor="#000000"
-            android:autoSizeMaxTextSize="30dp"
-            android:autoSizeTextType="uniform"
-            android:layout_gravity="center_horizontal" />
 
 
         <Space
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.02"/>
-
+            android:layout_weight="0.38" />
 
         <Button
             android:id="@+id/google_signIn"
-            android:layout_width="match_parent"
+            android:layout_width="210dp"
             android:layout_height="0dp"
-            android:background="@drawable/round_btn"
+            android:layout_gravity="center"
+            android:layout_weight="0.1"
+            android:background="@drawable/google_signin"
             android:elevation="8dp"
-            android:text="Sign In with Google"
-            android:autoSizeMaxTextSize="45dp"
-            android:autoSizeTextType="uniform"
-            android:textColor="#fff"
-            android:layout_weight="0.2"/>
+            android:textColor="#fff" />
 
-
-        <TextView
+        <Space
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="20dp"
-            android:gravity="bottom"
-            android:includeFontPadding="false"
-            android:shadowColor="#0E0E0E"
-            android:text="Bienvenue sur Seek and Share"
-            android:textAlignment="center"
-            android:textColor="#000000"
-            android:autoSizeTextType="uniform"
-            tools:ignore="RtlCompat"
-            android:layout_weight="0.04"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="5dp"
-            android:gravity="bottom"
-            android:includeFontPadding="false"
-            android:shadowColor="#0E0E0E"
-            android:text="Une application pour sauver la planète"
-            android:textAlignment="center"
-            android:textColor="#000000"
-            android:autoSizeTextType="uniform"
-            tools:ignore="RtlCompat"
-            android:layout_weight="0.04"/>
+            android:layout_weight="0.135" />
+
+
         <ImageView
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:src="@drawable/google_icon"
-            android:layout_weight="0.15"
-            />
+            android:layout_weight="0.25"
+            android:paddingTop="20dp"
+            android:paddingBottom="10dp"
+            android:src="@drawable/grand_logo" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.05" />
 
 
     </LinearLayout>

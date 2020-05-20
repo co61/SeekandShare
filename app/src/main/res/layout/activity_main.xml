@@ -37,8 +37,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:background="#DDDDDD"
-            app:menu="@menu/bottommenu" />
+            android:background="@color/colorAccent"
+            app:menu="@menu/bottommenu"
+            />
     </RelativeLayout>
 
 
@@ -49,7 +50,7 @@
         android:layout_gravity="start"
         android:background="@color/cardview_light_background"
         app:headerLayout="@layout/header"
-        app:itemIconTint="@color/colorPrimaryDark"
+        app:itemIconTint="@color/colorAccent"
         app:itemTextColor="@color/colorPrimaryDark"
         app:menu="@menu/menudrawer"
 

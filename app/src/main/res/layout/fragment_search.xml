@@ -1,85 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@android:color/white"
+    android:background="@drawable/backgroundsearch"
     android:orientation="vertical"
     tools:context=".SearchFragment">
 
     <EditText
         android:id="@+id/search_txt"
         android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:layout_margin="10dp"
-        android:background="#E1E1E1"
+        android:layout_height="45dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="50dp"
+        android:background="@drawable/corner"
         android:hint="Entrez votre recherche..."
-        android:textSize="30sp"
         android:inputType="text"
+        android:paddingLeft="10dp"
+        android:textCursorDrawable="@color/black"
+
+        android:textSize="20sp"
         />
     <LinearLayout
         android:layout_margin="10dp"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         >
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="horizontal"
+>
 
             <RadioGroup
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/search_DP_radioGroup">
+                android:id="@+id/search_DP_radioGroup"
+                >
                 <RadioButton
                     android:id="@+id/search_demande_radio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Demande"
-                    />
+                    android:checked="true"
+                    android:layout_gravity="center_horizontal"/>
+
                 <RadioButton
                     android:id="@+id/search_propostion_radio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Proposition"
-                    />
-                <RadioButton
-                    android:id="@+id/search_propanddem_radio"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Les deux"
-                    android:checked="true"
-                    />
+                    android:layout_gravity="center_horizontal"/>
+
             </RadioGroup>
         </LinearLayout>
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            ></Space>
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="horizontal">
             <RadioGroup
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/search_SP_radioGroup">
+
                 <RadioButton
                     android:id="@+id/search_service_radio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:checked="true"
                     android:text="Service"
-                    />
+                    android:layout_gravity="center_horizontal"/>
                 <RadioButton
                     android:id="@+id/search_pret_radio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Prêt"
-                    />
-                <RadioButton
-                    android:id="@+id/search_servpret_radio"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Les deux"
-                    android:checked="true"
-                    />
+                    android:layout_gravity="center_horizontal" />
             </RadioGroup>
         </LinearLayout>
 
@@ -88,18 +92,12 @@
         android:id="@+id/validate_search_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@color/colorPrimary"
+        android:padding="15dp"
         android:text="Rechercher"
-        android:layout_margin="10dp"/>
-
-    <TextView
-        android:id="@+id/search_results"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/search_data"
-        android:layout_margin="10dp"/>
-
-
-
+        android:textColor="@color/white"
+        android:layout_marginTop="50dp"/>
 
 
 </LinearLayout>
