@@ -42,6 +42,21 @@ public class MessageActivity extends AppCompatActivity {
     DatabaseReference reff;
     String userName;
     String currentUserName;
+    Query qReff;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -108,6 +123,7 @@ public class MessageActivity extends AppCompatActivity {
                 scroll.scrollTo(0, scroll.getChildAt(0).getHeight());
             }
         });
+
 
 
     }
