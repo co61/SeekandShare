@@ -4,14 +4,18 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.util.TypedValue;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.lang.reflect.Type;
 
 
 public class AddViewListMessage extends AppCompatActivity {
@@ -20,7 +24,7 @@ public class AddViewListMessage extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @SuppressLint({"ResourceAsColor", "SetTextI18n"})
-    public LinearLayout addMessageUser(final Activity activity, String message, Boolean side, String date) {
+    public LinearLayout addMessageUser(final Activity activity, String message, Boolean side, String date, Boolean recieved, Boolean read) {
 
         //linearlayout à empiler
         LinearLayout newLL = new LinearLayout(activity);
@@ -45,19 +49,15 @@ public class AddViewListMessage extends AppCompatActivity {
             newLL.setTranslationZ(6);
         }
 
-
-
-
-
-
-
-
         //title
         TextView textViewTitle = new TextView(activity);
         LinearLayout.LayoutParams title_linear = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         textViewTitle.setLayoutParams(title_linear);
-        textViewTitle.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        textViewTitle.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
         textViewTitle.setText(message);
+        if(!read){
+            textViewTitle.setTypeface(Typeface.DEFAULT_BOLD);
+        }
         textViewTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, spToPx(6, activity.getApplicationContext()));
         textViewTitle.setTextColor(textColor);
         //fin linearLayout
@@ -69,8 +69,15 @@ public class AddViewListMessage extends AppCompatActivity {
         textViewDate.setTextColor(textColor);
 
         newLL.addView(textViewTitle);
-
         newLL.addView(textViewDate);
+
+        if(!recieved){
+            ImageView img=new ImageView(activity);
+            img.setBackgroundResource(R.drawable.ic_check_send_message);
+            newLL.addView(img);
+        }
+
+
         //fin LinearLayout
 
         return newLL;
