@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -62,38 +61,46 @@ public class MessageFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                View layoutremove = (View) v.findViewById(R.id.linearlayout_conversation_list);
-                ((ViewGroup) layoutremove).removeAllViews();
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     if (isVisible()) {
                         final String key = child.getKey().toString();
-                        Log.i("test", key);
                         final LinearLayout layout = (LinearLayout) v.findViewById(R.id.linearlayout_conversation_list);
-
+                        int nbrLMsg=0;
+                        for(DataSnapshot nbrchild : child.getChildren()){
+                            if(nbrchild.child("read").getValue().toString().equals("false")){
+                                nbrLMsg++;
+                            }
+                        }
                         Query last = FirebaseDatabase.getInstance().getReference().child("Messages").child(currentUserId).child(key).orderByKey().limitToLast(1);
-                        last.addListenerForSingleValueEvent(new ValueEventListener() {
+                        final int finalNbrLMsg = nbrLMsg;
+                        View layoutremove = (View) v.findViewById(R.id.linearlayout_conversation_list);
+                        ((ViewGroup) layoutremove).removeAllViews();
+                        last.addValueEventListener(new ValueEventListener() {
                             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                for (DataSnapshot child : dataSnapshot.getChildren()) {
-                                    lastmsg =new MessSaveStruct((Boolean) child.child("side").getValue(),child.child("msg").getValue().toString(),child.child("date").getValue().toString(),Boolean.valueOf(child.child("read").getValue().toString()));
+                                if (isVisible()) {
 
-                                    //sending to put on screen
-                                    LinearLayout Aview = new AddViewListConversation().addConversation(getActivity(), key.split("~")[1], lastmsg);
-                                    final String finalI = key;
-                                    layout.addView(Aview);
-                                    Log.i("test", finalI);
+                                    for (DataSnapshot child : dataSnapshot.getChildren()) {
+                                        lastmsg = new MessSaveStruct((Boolean) child.child("side").getValue(), child.child("msg").getValue().toString(),
+                                                child.child("date").getValue().toString(), Boolean.valueOf(child.child("read").getValue().toString()));
+                                        //sending to put on screen
+                                        LinearLayout Aview = new AddViewListConversation().addConversation(getActivity(), key.split("~")[1], finalNbrLMsg, lastmsg);
+                                        final String finalI = key;
+                                        layout.addView(Aview);
 
-                                    Aview.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            Intent act = new Intent(v.getContext(), MessageActivity.class);
-                                            Bundle bundle = new Bundle();
-                                            bundle.putString("ID", finalI);
-                                            act.putExtras(bundle);
-                                            startActivity(act);
-                                        }
-                                    });
+
+                                        Aview.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                Intent act = new Intent(v.getContext(), MessageActivity.class);
+                                                Bundle bundle = new Bundle();
+                                                bundle.putString("ID", finalI);
+                                                act.putExtras(bundle);
+                                                startActivity(act);
+                                            }
+                                        });
+                                    }
                                 }
                             }
 
@@ -114,4 +121,6 @@ public class MessageFragment extends Fragment {
         });
 
     }
+
+
 }
