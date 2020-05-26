@@ -29,11 +29,11 @@ public class AffichagePostActivity extends AppCompatActivity implements DeleteCo
      * Get back on AnnounceActivity when back pressed
      */
 
-    DatabaseReference reff;
-    DatabaseReference refffavorite;
-    String currentUserId;
-    String ID;
-    String[] way;
+    private DatabaseReference reff;
+    private DatabaseReference refffavorite;
+    private String currentUserId;
+    private String ID;
+    private String[] way;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

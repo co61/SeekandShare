@@ -26,7 +26,7 @@ public class AnnounceActivity extends AppCompatActivity {
      * when a posts is clicked, it open a new activity where the announce is displayed.
      */
 
-    String currentUserId;
+    private String currentUserId;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

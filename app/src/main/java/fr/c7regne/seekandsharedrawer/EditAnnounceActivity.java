@@ -35,16 +35,16 @@ public class EditAnnounceActivity extends AppCompatActivity {
      * Get back to the announce when back pressed
      */
 
-    DatabaseReference reff;
-    String currentUserId, userName, fulldate;
-    String ID;
-    RadioGroup radioGroup1;
-    RadioGroup radioGroup2;
-    RadioButton radioButton1;
-    RadioButton radioButton2;
-    TextView titleView, placeView, caractnb;
-    EditText contentView;
-    Button editbutton;
+    private DatabaseReference reff;
+    private String currentUserId, userName, fulldate;
+    private String ID;
+    private RadioGroup radioGroup1;
+    private RadioGroup radioGroup2;
+    private RadioButton radioButton1;
+    private RadioButton radioButton2;
+    private TextView titleView, placeView, caractnb;
+    private EditText contentView;
+    private Button editbutton;
 
 
     @Override
