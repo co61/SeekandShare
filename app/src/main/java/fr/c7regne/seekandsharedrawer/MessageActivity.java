@@ -1,10 +1,9 @@
 package fr.c7regne.seekandsharedrawer;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.BoringLayout;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -43,6 +42,21 @@ public class MessageActivity extends AppCompatActivity {
     DatabaseReference reff;
     String userName;
     String currentUserName;
+    Query qReff;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,6 +67,7 @@ public class MessageActivity extends AppCompatActivity {
         scroll = (ScrollView) findViewById(R.id.scroll);
         message = (EditText) findViewById(R.id.message_field);
         send = (Button) findViewById(R.id.send_button);
+        scroll = (ScrollView) findViewById(R.id.scroll);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         userName = userId.split("~")[1];
@@ -68,10 +83,18 @@ public class MessageActivity extends AppCompatActivity {
         }
 
         refreshMessage();
-
+/*
 
         scroll = (ScrollView) findViewById(R.id.scroll);
         scroll.scrollTo(0, scroll.getChildAt(0).getHeight());
+        */
+
+        scroll.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                scroll.scrollTo(0, scroll.getChildAt(0).getHeight());
+            }
+        });
 
 
         send.setOnClickListener(new View.OnClickListener() {
@@ -84,59 +107,75 @@ public class MessageActivity extends AppCompatActivity {
                 String fullDate = new SimpleDateFormat("yyyy MM dd kk mm ss").format(calendar.getTime());
                 String Date = new SimpleDateFormat("dd MMMM yyyy - kk:mm").format(calendar.getTime());
 
-                reff = FirebaseDatabase.getInstance().getReference().child("Messages").child(currentUserId).child(userId+"~"+userName);
-                MessSaveStruct Mess = new MessSaveStruct(true, msg, Date);
+                reff = FirebaseDatabase.getInstance().getReference().child("Messages").child(currentUserId).child(userId + "~" + userName);
+                MessSaveStruct Mess = new MessSaveStruct(true, msg, Date, false);
                 reff.child(fullDate).setValue(Mess);
-                reff = FirebaseDatabase.getInstance().getReference().child("Messages").child(userId).child(currentUserId+"~"+currentUserName);
+                reff = FirebaseDatabase.getInstance().getReference().child("Messages").child(userId).child(currentUserId + "~" + currentUserName);
                 Mess.setSide(false);
                 reff.child(fullDate).setValue(Mess);
-
 
 
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
                 imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
                 message.setText(null);
-                scroll = (ScrollView) findViewById(R.id.scroll);
+
                 scroll.scrollTo(0, scroll.getChildAt(0).getHeight());
             }
         });
 
-        scroll = (ScrollView) findViewById(R.id.scroll);
-        scroll.scrollTo(0, scroll.getChildAt(0).getHeight());
+
+
     }
 
-
-    protected void refreshMessage(){
-        View layoutremove=(View) findViewById(R.id.linearlayout_message_list);
-    ((ViewGroup) layoutremove).removeAllViews();
-    //reed children posts count
-
-
-        Query reff = FirebaseDatabase.getInstance().getReference().child("Messages").child(currentUserId).child(userId+"~"+userName).orderByKey();
-
+    ValueEventListener listener;
+    Query qReff;
+    DatabaseReference setreff,reffSender;
+    protected void refreshMessage() {
+        View layoutremove = (View) findViewById(R.id.linearlayout_message_list);
+        ((ViewGroup) layoutremove).removeAllViews();
+        //reed children posts count
 
 
-        reff.addValueEventListener(new ValueEventListener() {
+        qReff = FirebaseDatabase.getInstance().getReference().child("Messages").child(currentUserId).child(userId + "~" + userName).orderByKey();
+        setreff = FirebaseDatabase.getInstance().getReference().child("Messages").child(currentUserId).child(userId + "~" + userName);
+        reffSender= FirebaseDatabase.getInstance().getReference().child("Message").child(userId).child(currentUserId+"~"+currentUserName);
 
+        listener=setreff.orderByKey().limitToLast(20).addValueEventListener(new ValueEventListener() {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                View layoutremove=(View) findViewById(R.id.linearlayout_message_list);
+                View layoutremove = (View) findViewById(R.id.linearlayout_message_list);
                 ((ViewGroup) layoutremove).removeAllViews();
-                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                for (final DataSnapshot child : dataSnapshot.getChildren()) {
                     //get the announce of the current user on the screen
                     LinearLayout layout = (LinearLayout) findViewById(R.id.linearlayout_message_list);
-                    LinearLayout Aview = new AddViewListMessage().addMessageUser(MessageActivity.this, child.child("msg").getValue().toString(), (Boolean) child.child("side").getValue(), child.child("date").getValue().toString());
-                    Log.i("test",child.child("side").getValue().toString());
-                    layout.addView(Aview);
+                    final boolean read=Boolean.valueOf(child.child("read").getValue().toString());
+                    final boolean[] recieved = {false};
 
-                    scroll = (ScrollView) findViewById(R.id.scroll);
-                    scroll.scrollTo(0, scroll.getChildAt(0).getHeight());
+                   /* reffSender.child(String.valueOf(child)).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            Log.i("test","testttttttttttttttttt");
+                            Log.i("test",dataSnapshot.child("read").getValue().toString());
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });*/
+
+                    LinearLayout Aview = new AddViewListMessage()
+                            .addMessageUser(MessageActivity.this, child.child("msg").getValue().toString(), (Boolean) child.child("side").getValue(), child.child("date").getValue().toString(), recieved[0],read);
+                    //Log.i("test", child.child("side").getValue().toString());
+                    layout.addView(Aview);
+                    setreff.child(child.getKey()).child("read").setValue(true);
+
                 }
 
-                scroll = (ScrollView) findViewById(R.id.scroll);
-                scroll.scrollTo(0, scroll.getChildAt(0).getHeight());
+
 
             }
 
@@ -145,19 +184,22 @@ public class MessageActivity extends AppCompatActivity {
             }
 
         });
-        scroll = (ScrollView) findViewById(R.id.scroll);
-        scroll.scrollTo(0, scroll.getChildAt(0).getHeight());
-}
+
+
+    }
+
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onResume() {
+        super.onResume();
+        Log.i("OnResume","yes");
         ScrollView scrollview = (ScrollView) findViewById(R.id.scroll);
         scrollview.scrollTo(0, scrollview.getChildAt(0).getHeight());
     }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        if(item.getItemId()==android.R.id.home){
+        if (item.getItemId() == android.R.id.home) {
             finish();
         }
         return super.onOptionsItemSelected(item);
@@ -166,6 +208,10 @@ public class MessageActivity extends AppCompatActivity {
     //if click onretrun android button then go back to home
     @Override
     public void onBackPressed() {
+
+        if (qReff != null && listener != null) {
+            setreff.removeEventListener(listener);
+        }
         finish();
     }
 }
