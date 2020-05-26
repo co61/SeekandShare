@@ -30,17 +30,21 @@ import com.muddzdev.styleabletoast.StyleableToast;
 import static android.widget.Toast.LENGTH_SHORT;
 
 public class EditAnnounceActivity extends AppCompatActivity {
+    /***
+     * Display a view where the user can modify the content and the attribute (Proposition, Demande, Service, Prêt)
+     * Get back to the announce when back pressed
+     */
 
-    DatabaseReference reff;
-    String currentUserId, userName, fulldate;
-    String ID;
-    RadioGroup radioGroup1;
-    RadioGroup radioGroup2;
-    RadioButton radioButton1;
-    RadioButton radioButton2;
-    TextView titleView, placeView, caractnb;
-    EditText contentView;
-    Button editbutton;
+    private DatabaseReference reff;
+    private String currentUserId, userName, fulldate;
+    private String ID;
+    private RadioGroup radioGroup1;
+    private RadioGroup radioGroup2;
+    private RadioButton radioButton1;
+    private RadioButton radioButton2;
+    private TextView titleView, placeView, caractnb;
+    private EditText contentView;
+    private Button editbutton;
 
 
     @Override
@@ -52,6 +56,7 @@ public class EditAnnounceActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Editer mon annonce");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        //get ID to read the right announce in database Posts
         Bundle extras = getIntent().getExtras();
         ID = extras.getString("ID");
 
@@ -62,6 +67,7 @@ public class EditAnnounceActivity extends AppCompatActivity {
             userName = signInAccount.getDisplayName();
         }
 
+        // get the element in the view
         titleView = (TextView) findViewById(R.id.edit_title_txt);
         placeView = (TextView) findViewById(R.id.edit_place_txt);
         radioGroup1 = (RadioGroup) findViewById(R.id.edit_SP_radioGroup);
@@ -71,8 +77,9 @@ public class EditAnnounceActivity extends AppCompatActivity {
         editbutton = (Button) findViewById(R.id.validate_edit_button);
         final String[] way = ID.split("~");
 
+        //get the information of the announce and display it in the view
+        //user can next modify the content
         reff = FirebaseDatabase.getInstance().getReference().child("Posts").child(way[0]).child(way[1]);
-
         reff.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -82,10 +89,11 @@ public class EditAnnounceActivity extends AppCompatActivity {
                 String dpchoice = String.valueOf(keyContext.child("dpchoice").getValue());
                 String spchoice = String.valueOf(keyContext.child("spchoice").getValue());
                 String place = String.valueOf(keyContext.child("place").getValue());
-                fulldate = String.valueOf(keyContext.child("publicationDate").getValue());
 
+                fulldate = String.valueOf(keyContext.child("publicationDate").getValue());
                 titleView.setText(title);
                 placeView.setText(place);
+
                 if (dpchoice.equals("Demande")) {
                     RadioButton r1 = findViewById(R.id.edit_demande_radio);
                     r1.setChecked(true);
@@ -109,6 +117,7 @@ public class EditAnnounceActivity extends AppCompatActivity {
                     RadioButton r2 = findViewById(R.id.edit_pret_radio);
                     r2.setChecked(true);
                 }
+
                 contentView.setText(content);
 
             }
@@ -140,6 +149,7 @@ public class EditAnnounceActivity extends AppCompatActivity {
             }
         });
 
+        //when edit announce is press database will erase the announce and create another
         int radioID1 = radioGroup1.getCheckedRadioButtonId();
         radioButton1 = findViewById(radioID1);
         int radioID2 = radioGroup2.getCheckedRadioButtonId();
@@ -158,7 +168,6 @@ public class EditAnnounceActivity extends AppCompatActivity {
                 radioButton1 = findViewById(radioID1);
                 int radioID2 = radioGroup2.getCheckedRadioButtonId();
                 radioButton2 = findViewById(radioID2);
-                Log.i("text", radioButton1.getText().toString());
 
                 //Save in database if something in EditText
                 if (inputTitle.equals("") || inputContent.equals("") || inputContent.length() <= 50 || inputPlace.equals("")) {
@@ -178,7 +187,6 @@ public class EditAnnounceActivity extends AppCompatActivity {
 
                     String finalI = radioButton1.getText().toString() + "~" + radioButton2.getText().toString() + "~" + currentUserId + "-" + inputTitle;
 
-
                     //confirm to the user that the announce is published
                     StyleableToast.makeText(getApplicationContext(), getString(R.string.post_published), LENGTH_SHORT, R.style.publishedToast).show();
                     //switch to Announce Fragment to show the announce published
@@ -195,6 +203,7 @@ public class EditAnnounceActivity extends AppCompatActivity {
         });
 
     }
+
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {

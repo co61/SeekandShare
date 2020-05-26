@@ -160,9 +160,9 @@ public class PubAnnounceFragment extends Fragment implements View.OnClickListene
             postsave = new PostSaveStruct(userId, userName, inputTitle, inputContent, inputPlace,radioButton2.getText().toString(), radioButton1.getText().toString(), fullDate);
             reff.child(userId+"-"+inputTitle).setValue(postsave);
 
-            title_announce.setText("Titre...");
-            content_announce.setText("Décrivez votre annonce...");
-            place_announce.setText("Ville...");
+            title_announce.setText(null);
+            content_announce.setText(null);
+            place_announce.setText(null);
             RadioButton r1 = v.findViewById(R.id.post_demande_radio);
             r1.setChecked(true);
             RadioButton r2 = v.findViewById(R.id.post_propostion_radio);

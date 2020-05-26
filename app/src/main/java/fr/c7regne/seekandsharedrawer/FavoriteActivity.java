@@ -25,8 +25,7 @@ import java.util.ArrayList;
 
 public class FavoriteActivity extends AppCompatActivity {
 
-    public static final String EXTRA_ID = "fr.c7regne.seekandsharedrawer";
-    LinearLayout layout;
+    private LinearLayout layout;
     private DatabaseReference reff;
     private DatabaseReference reffaff;
     private String currentUserId;

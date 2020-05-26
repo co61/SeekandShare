@@ -50,6 +50,7 @@ public class MessageActivity extends AppCompatActivity {
 
 
 
+
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
@@ -145,9 +146,12 @@ public class MessageActivity extends AppCompatActivity {
                     LinearLayout layout = (LinearLayout) findViewById(R.id.linearlayout_message_list);
                     final boolean read=Boolean.valueOf(child.child("read").getValue().toString());
 
+
                     //Add the message to the layout
                     LinearLayout Aview = new AddViewListMessage()
+
                             .addMessageUser(MessageActivity.this, child.child("msg").getValue().toString(), (Boolean) child.child("side").getValue(), child.child("date").getValue().toString(), read);
+
                     layout.addView(Aview);
                     setreff.child(child.getKey()).child("read").setValue(true);
 
