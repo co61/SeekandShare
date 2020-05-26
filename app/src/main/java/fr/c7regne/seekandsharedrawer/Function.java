@@ -1,16 +1,9 @@
 package fr.c7regne.seekandsharedrawer;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.os.Build;
-import android.os.Handler;
-import android.view.View;
 import android.widget.LinearLayout;
-
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -18,7 +11,9 @@ import com.google.firebase.database.FirebaseDatabase;
 public class Function  {
 
     public static DatabaseReference[] Parcours() {
-
+        /***
+         * read the different category of posts database and return a table of DatabaseRefference
+         */
         DatabaseReference reff = FirebaseDatabase.getInstance().getReference().child("Posts");
         DatabaseReference[] tabReff = new DatabaseReference[4];
         tabReff[0] = reff.child("Prêt").child("Proposition");
@@ -31,7 +26,11 @@ public class Function  {
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     public static LinearLayout takePost(DataSnapshot dataSnapshot, String key, Activity context, LinearLayout layout) {
-
+        /**
+         * Reed the element of the announce in database datasnapshot give in parameter with the key
+         * Call addAnnounceUser to display the announce on the view give in parameter
+         * Return the view for action needed on it
+         */
         DataSnapshot keyContent = dataSnapshot.child(key);
         String title = String.valueOf(keyContent.child("title").getValue());
         String content = String.valueOf(keyContent.child("content").getValue());

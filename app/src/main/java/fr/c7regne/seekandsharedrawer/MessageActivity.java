@@ -129,7 +129,6 @@ public class MessageActivity extends AppCompatActivity {
     }
 
     ValueEventListener listener;
-    Query qReff;
     DatabaseReference setreff,reffSender;
     protected void refreshMessage() {
         View layoutremove = (View) findViewById(R.id.linearlayout_message_list);
@@ -151,24 +150,10 @@ public class MessageActivity extends AppCompatActivity {
                     //get the announce of the current user on the screen
                     LinearLayout layout = (LinearLayout) findViewById(R.id.linearlayout_message_list);
                     final boolean read=Boolean.valueOf(child.child("read").getValue().toString());
-                    final boolean[] recieved = {false};
 
-                   /* reffSender.child(String.valueOf(child)).addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            Log.i("test","testttttttttttttttttt");
-                            Log.i("test",dataSnapshot.child("read").getValue().toString());
-
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });*/
 
                     LinearLayout Aview = new AddViewListMessage()
-                            .addMessageUser(MessageActivity.this, child.child("msg").getValue().toString(), (Boolean) child.child("side").getValue(), child.child("date").getValue().toString(), recieved[0],read);
+                            .addMessageUser(MessageActivity.this, child.child("msg").getValue().toString(), (Boolean) child.child("side").getValue(), child.child("date").getValue().toString(),read);
                     //Log.i("test", child.child("side").getValue().toString());
                     layout.addView(Aview);
                     setreff.child(child.getKey()).child("read").setValue(true);

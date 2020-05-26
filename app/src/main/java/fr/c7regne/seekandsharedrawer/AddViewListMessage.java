@@ -24,7 +24,7 @@ public class AddViewListMessage extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @SuppressLint({"ResourceAsColor", "SetTextI18n"})
-    public LinearLayout addMessageUser(final Activity activity, String message, Boolean side, String date, Boolean recieved, Boolean read) {
+    public LinearLayout addMessageUser(final Activity activity, String message, Boolean side, String date, Boolean read) {
 
         //linearlayout à empiler
         LinearLayout newLL = new LinearLayout(activity);
@@ -70,13 +70,6 @@ public class AddViewListMessage extends AppCompatActivity {
 
         newLL.addView(textViewTitle);
         newLL.addView(textViewDate);
-
-        if(!recieved){
-            ImageView img=new ImageView(activity);
-            img.setBackgroundResource(R.drawable.ic_check_send_message);
-            newLL.addView(img);
-        }
-
 
         //fin LinearLayout
 

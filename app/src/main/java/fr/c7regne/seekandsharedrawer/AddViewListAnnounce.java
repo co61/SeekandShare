@@ -6,26 +6,21 @@ import android.content.Context;
 
 import android.graphics.Color;
 import android.os.Build;
-import android.util.Log;
 import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.ProgressBar;
-
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 
 
 public class AddViewListAnnounce extends AppCompatActivity {
+    /***
+     * This class create a linear view for a quick viw of the post that the user can read
+     * We display here the title, the content, the date, the city, the publisher name
+     */
 
     private final int textColor = Color.BLACK;
 
@@ -33,7 +28,7 @@ public class AddViewListAnnounce extends AppCompatActivity {
     @SuppressLint({"ResourceAsColor", "SetTextI18n"})
     public LinearLayout addAnnounceUser(final Activity activity, String Title, String Date, String DP, String SP, String Content, String UserName, String UserId) {
 
-        //linearlayout à empiler
+        //principal linearlayout
         LinearLayout newLL = new LinearLayout(activity);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         int margin = dpToPx(15, activity.getApplicationContext());
@@ -48,7 +43,7 @@ public class AddViewListAnnounce extends AppCompatActivity {
             newLL.setTranslationZ(10);
         }
 
-        //title
+        //title textview
         TextView textViewTitle = new TextView(activity);
         LinearLayout.LayoutParams title_linear = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         textViewTitle.setLayoutParams(title_linear);
@@ -65,18 +60,16 @@ public class AddViewListAnnounce extends AppCompatActivity {
         LLHoriz.setOrientation(LinearLayout.VERTICAL);
         LLHoriz.setOrientation(LinearLayout.HORIZONTAL);
 
-        //DP
-
+        //DP textview
         TextView textViewDP = new TextView(activity);
         LinearLayout.LayoutParams textViewContentParams2 = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT);
         textViewContentParams2.weight = (float) 0.5;
-
         textViewDP.setLayoutParams(textViewContentParams2);
         textViewDP.setText(DP);
         textViewDP.setTextSize(TypedValue.COMPLEX_UNIT_SP, spToPx(4, activity.getApplicationContext()));
         textViewDP.setTextColor(textColor);
 
-        //SP
+        //SP textview
         TextView textViewSP = new TextView(activity);
         textViewSP.setLayoutParams(textViewContentParams2);
         textViewSP.setText(SP);
@@ -86,23 +79,22 @@ public class AddViewListAnnounce extends AppCompatActivity {
         LLHoriz.addView(textViewDP);
         LLHoriz.addView(textViewSP);
 
-        //Content
+        //Content textview
         TextView textViewContent = new TextView(activity);
         LinearLayout.LayoutParams textViewContentParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dpToPx(54, activity.getApplicationContext()));
-        //textViewContent.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         textViewContent.setLayoutParams(textViewContentParams);
         textViewContent.setText(Content);
         textViewContent.setTextSize(TypedValue.COMPLEX_UNIT_SP, spToPx(6, activity.getApplicationContext()));
         textViewContent.setTextColor(textColor);
 
-        //linearlayout orientation horizontal for textview DP SP
+        //linearlayout orientation horizontal for textview date and publisher name
         LinearLayout LLHoriz2 = new LinearLayout(activity);
         LinearLayout.LayoutParams layoutParams3 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         LLHoriz.setLayoutParams(layoutParams3);
         LLHoriz.setOrientation(LinearLayout.VERTICAL);
         LLHoriz.setOrientation(LinearLayout.HORIZONTAL);
 
-        //Date
+        //Date textview
         TextView textViewDate = new TextView(activity);
         LinearLayout.LayoutParams textViewDate2 = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT);
         textViewDate2.weight = (float) 0.5;
@@ -119,14 +111,13 @@ public class AddViewListAnnounce extends AppCompatActivity {
         textViewPublisherName.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_END);
         textViewPublisherName.setTextSize(TypedValue.COMPLEX_UNIT_SP, spToPx(4, activity.getApplicationContext()));
         textViewPublisherName.setTextColor(textColor);
-        //fin linearLayout
 
-
-        //fin linearLayout
+        //adding element to view
         LLHoriz2.addView(textViewDate);
         LLHoriz2.addView(textViewPublisherName);
+        //end linearLayout
 
-        //fin LinearLayout
+        //adding element to view
         newLL.addView(textViewTitle);
         newLL.addView(LLHoriz);
         newLL.addView(textViewContent);
@@ -134,8 +125,6 @@ public class AddViewListAnnounce extends AppCompatActivity {
 
 
         return newLL;
-
-
     }
 
     public static int dpToPx(float dp, Context context) {
