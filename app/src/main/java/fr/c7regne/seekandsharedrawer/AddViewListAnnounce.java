@@ -26,7 +26,7 @@ public class AddViewListAnnounce extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @SuppressLint({"ResourceAsColor", "SetTextI18n"})
-    public LinearLayout addAnnounceUser(final Activity activity, String Title, String Date, String DP, String SP, String Content, String UserName, String UserId) {
+    public LinearLayout addAnnounceUser(final Activity activity, String Title, String Date, String City, String DP, String SP, String Content, String UserName, String UserId) {
 
         //principal linearlayout
         LinearLayout newLL = new LinearLayout(activity);
@@ -97,12 +97,22 @@ public class AddViewListAnnounce extends AppCompatActivity {
         //Date textview
         TextView textViewDate = new TextView(activity);
         LinearLayout.LayoutParams textViewDate2 = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT);
-        textViewDate2.weight = (float) 0.5;
+        textViewDate2.weight = (float) 0.4;
         textViewDate.setLayoutParams(textViewDate2);
         textViewDate.setText(Date);
         textViewDate.setTextSize(TypedValue.COMPLEX_UNIT_SP, spToPx(4, activity.getApplicationContext()));
         textViewDate.setPadding(0, 0, 0, dpToPx(2, activity.getApplicationContext()));
         textViewDate.setTextColor(textColor);
+
+        //Date textview
+        TextView textViewPlace = new TextView(activity);
+        LinearLayout.LayoutParams textViewplace2 = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT);
+        textViewplace2.weight = (float) 0.3;
+        textViewPlace.setLayoutParams(textViewplace2);
+        textViewPlace.setText(City);
+        textViewPlace.setTextSize(TypedValue.COMPLEX_UNIT_SP, spToPx(4, activity.getApplicationContext()));
+        textViewPlace.setPadding(0, 0, 0, dpToPx(2, activity.getApplicationContext()));
+        textViewPlace.setTextColor(textColor);
 
         //PublisherName
         TextView textViewPublisherName = new TextView(activity);
@@ -114,6 +124,7 @@ public class AddViewListAnnounce extends AppCompatActivity {
 
         //adding element to view
         LLHoriz2.addView(textViewDate);
+        LLHoriz2.addView(textViewPlace);
         LLHoriz2.addView(textViewPublisherName);
         //end linearLayout
 

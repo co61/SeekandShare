@@ -37,10 +37,11 @@ public class Function  {
         String dpchoice = String.valueOf(keyContent.child("dpchoice").getValue());
         String spchoice = String.valueOf(keyContent.child("spchoice").getValue());
         String publicationDate = String.valueOf(keyContent.child("publicationDate").getValue());
+        String city = String.valueOf(keyContent.child("place").getValue());
         String userName = String.valueOf(keyContent.child("userName").getValue());
         String userID = String.valueOf(keyContent.child("userId").getValue());
         //sending to put on screen
-        LinearLayout Aview = new AddViewListAnnounce().addAnnounceUser(context, title, publicationDate, dpchoice, spchoice, content, userName, userID);
+        LinearLayout Aview = new AddViewListAnnounce().addAnnounceUser(context, title, publicationDate,city, dpchoice, spchoice, content, userName, userID);
         layout.addView(Aview);
         return Aview;
     }

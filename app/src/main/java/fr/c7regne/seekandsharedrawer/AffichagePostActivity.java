@@ -67,6 +67,7 @@ public class AffichagePostActivity extends AppCompatActivity implements DeleteCo
         }
         final TextView titleView = (TextView) findViewById(R.id.announce_title);
         final TextView dateView = (TextView) findViewById(R.id.announce_date);
+        final TextView placeView = (TextView) findViewById(R.id.announce_place);
         final TextView DpView = (TextView) findViewById(R.id.announce_DP);
         final TextView SpView = (TextView) findViewById(R.id.announce_SP);
         final TextView contentView = (TextView) findViewById(R.id.announce_content);
@@ -84,11 +85,13 @@ public class AffichagePostActivity extends AppCompatActivity implements DeleteCo
                 String dpchoice = String.valueOf(keyContext.child("dpchoice").getValue());
                 String spchoice = String.valueOf(keyContext.child("spchoice").getValue());
                 String publicationDate = String.valueOf(keyContext.child("publicationDate").getValue());
+                String city = String.valueOf(keyContext.child("place").getValue());
                 String userName = String.valueOf(keyContext.child("userName").getValue());
 
 
                 titleView.setText(title);
                 dateView.setText(publicationDate);
+                placeView.setText(city);
                 DpView.setText(dpchoice);
                 SpView.setText(spchoice);
                 contentView.setText(content);
