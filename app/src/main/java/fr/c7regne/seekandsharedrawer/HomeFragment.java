@@ -30,7 +30,7 @@ public class HomeFragment extends Fragment {
     private ProgressDialog progressBar;
     private int progressBarStatus = 0;
     private Handler progressBarbHandler = new Handler();
-    Thread thread;
+    private Thread thread;
 
     @Nullable
     @Override

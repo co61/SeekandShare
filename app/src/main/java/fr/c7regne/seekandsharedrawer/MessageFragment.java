@@ -62,6 +62,8 @@ public class MessageFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
+                    View layoutremove = (View) v.findViewById(R.id.linearlayout_conversation_list);
+                    ((ViewGroup) layoutremove).removeAllViews();
                     if (isVisible()) {
                         final String key = child.getKey().toString();
                         final LinearLayout layout = (LinearLayout) v.findViewById(R.id.linearlayout_conversation_list);
@@ -73,9 +75,8 @@ public class MessageFragment extends Fragment {
                         }
                         Query last = FirebaseDatabase.getInstance().getReference().child("Messages").child(currentUserId).child(key).orderByKey().limitToLast(1);
                         final int finalNbrLMsg = nbrLMsg;
-                        View layoutremove = (View) v.findViewById(R.id.linearlayout_conversation_list);
-                        ((ViewGroup) layoutremove).removeAllViews();
-                        last.addValueEventListener(new ValueEventListener() {
+
+                        last.addListenerForSingleValueEvent(new ValueEventListener() {
                             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
