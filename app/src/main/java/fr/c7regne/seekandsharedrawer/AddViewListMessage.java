@@ -19,14 +19,18 @@ import java.lang.reflect.Type;
 
 
 public class AddViewListMessage extends AppCompatActivity {
-
+    /***
+     * Add message in linearLayout in the activity given in argument
+     * Show the message and the date on right if currentUser
+     * on the left if its the other user
+     */
     private final int textColor = Color.BLACK;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @SuppressLint({"ResourceAsColor", "SetTextI18n"})
-    public LinearLayout addMessageUser(final Activity activity, String message, Boolean side, String date, Boolean recieved, Boolean read) {
+    public LinearLayout addMessageUser(final Activity activity, String message, Boolean side, String date,  Boolean read) {
 
-        //linearlayout à empiler
+        //create the LinearLayout with chosen parameters
         LinearLayout newLL = new LinearLayout(activity);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         int margin = dpToPx(15, activity.getApplicationContext());
@@ -49,7 +53,7 @@ public class AddViewListMessage extends AppCompatActivity {
             newLL.setTranslationZ(6);
         }
 
-        //title
+        //create the message format
         TextView textViewTitle = new TextView(activity);
         LinearLayout.LayoutParams title_linear = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         textViewTitle.setLayoutParams(title_linear);
@@ -60,26 +64,19 @@ public class AddViewListMessage extends AppCompatActivity {
         }
         textViewTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, spToPx(6, activity.getApplicationContext()));
         textViewTitle.setTextColor(textColor);
-        //fin linearLayout
 
+        //Create the Date
         TextView textViewDate = new TextView(activity);
         textViewDate.setText(date);
         textViewDate.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_END);
         textViewDate.setTextSize(TypedValue.COMPLEX_UNIT_SP, spToPx(4, activity.getApplicationContext()));
         textViewDate.setTextColor(textColor);
 
+        //add the message and the date to the layout
         newLL.addView(textViewTitle);
         newLL.addView(textViewDate);
 
-        if(!recieved){
-            ImageView img=new ImageView(activity);
-            img.setBackgroundResource(R.drawable.ic_check_send_message);
-            newLL.addView(img);
-        }
-
-
-        //fin LinearLayout
-
+        //return the created Layout
         return newLL;
 
 

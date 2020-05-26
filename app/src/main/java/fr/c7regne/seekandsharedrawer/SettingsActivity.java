@@ -35,11 +35,15 @@ import static android.widget.Toast.LENGTH_SHORT;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    TextView name,email,count_announce;
-    Button logout, contact, send;
-    String currentUserId;
-    EditText contact_txt;
-    int count;
+    /***
+     * Settings of the current user Name and Email
+     * Contact to assistance
+     */
+    private TextView name,email,count_announce;
+    private Button logout, contact, send;
+    private String currentUserId;
+    private EditText contact_txt;
+    private int count;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +51,7 @@ public class SettingsActivity extends AppCompatActivity {
         //change title action Bar and back arrow
         getSupportActionBar().setTitle("Paramètres");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        //load layout element
+        //get layout element
         logout=findViewById(R.id.logout_button);
         name = findViewById(R.id.account_name_txt);
         email = findViewById(R.id.account_email_txt);
@@ -55,7 +59,7 @@ public class SettingsActivity extends AppCompatActivity {
         count_announce = findViewById(R.id.count_announce);
         contact_txt = findViewById(R.id.contact_txt);
         contact = findViewById(R.id.contact_btn);
-        //display google account information about user
+        //get google account information about user
         GoogleSignInAccount signInAccount= GoogleSignIn.getLastSignedInAccount(this);
         if(signInAccount != null){
             name.setText(signInAccount.getDisplayName());
@@ -74,6 +78,7 @@ public class SettingsActivity extends AppCompatActivity {
                 finish();
             }
         });
+        //if user want to contact assistance display the field to send
         contact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,17 +87,20 @@ public class SettingsActivity extends AppCompatActivity {
                 Log.i("test",String.valueOf(contact_txt.getHeight()));
             }
         });
+        //send the message of the user in assistance in FireBase DataBase
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Hide the field
                 contact_txt.setVisibility(View.INVISIBLE);
                 send.setVisibility(View.INVISIBLE);
+                //get message with the date of it and send it to database
                 String msg = contact_txt.getText().toString();
-
                 Calendar calendar = Calendar.getInstance();;
                 String Date = new SimpleDateFormat("yyyy MM dd kk mm ss").format(calendar.getTime());
                 FirebaseDatabase.getInstance().getReference().child("Assistance").child(currentUserId +"~"+name.getText().toString()).child(Date).setValue(msg);
 
+                //close keyboard
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
                 contact_txt.setText(null);
@@ -101,7 +109,7 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
-
+        //Count the total number announce of the currentUser
         DatabaseReference[] tabReff = Function.Parcours();
         count = 0;
         for (DatabaseReference data : tabReff) {
@@ -114,14 +122,13 @@ public class SettingsActivity extends AppCompatActivity {
                     for (DataSnapshot child : dataSnapshot.getChildren()) {
                         String key = child.getKey().toString();
                         String userID = String.valueOf(dataSnapshot.child(key).child("userId").getValue());
-                        //get the announce of the current user on the screen
+                        //if the ID announce correspond to the currentUserId, add 1 to the count
                         if (currentUserId.equals(userID)) {
                         count++;
                         }
 
                     }
-
-
+                    //display the count on the screen
                     count_announce.setText(""+count);
                 }
 
@@ -142,7 +149,7 @@ public class SettingsActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-    //if click onretrun android button then go back to home
+    //if click on retunn android button then go back to home
     @Override
     public void onBackPressed() {
         finish();
