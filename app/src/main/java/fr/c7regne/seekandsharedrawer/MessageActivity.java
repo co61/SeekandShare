@@ -43,6 +43,21 @@ public class MessageActivity extends AppCompatActivity {
     DatabaseReference reff;
     String userName;
     String currentUserName;
+    Query qReff;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -113,7 +128,7 @@ public class MessageActivity extends AppCompatActivity {
     //reed children posts count
 
 
-        Query qReff = FirebaseDatabase.getInstance().getReference().child("Messages").child(currentUserId).child(userId+"~"+userName).orderByKey();
+        qReff = FirebaseDatabase.getInstance().getReference().child("Messages").child(currentUserId).child(userId+"~"+userName).orderByKey();
         final DatabaseReference setreff = FirebaseDatabase.getInstance().getReference().child("Messages").child(currentUserId).child(userId+"~"+userName);
 
 

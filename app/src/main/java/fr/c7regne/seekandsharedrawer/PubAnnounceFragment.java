@@ -78,7 +78,7 @@ public class PubAnnounceFragment extends Fragment implements View.OnClickListene
         caractnb = (TextView) v.findViewById(R.id.caractnb);
         calendar = Calendar.getInstance();
         ///date = DateFormat.getDateInstance(DateFormat.LONG).format(calendar.getTime());
-        fullDate = new SimpleDateFormat("EEEE, dd MMMM yyyy, hh:mm:ss").format(calendar.getTime());
+        fullDate = new SimpleDateFormat("dd MMMM yyyy, kk:mm").format(calendar.getTime());
         //hour = new SimpleDateFormat("hh:mm:ss").format(calendar.getTime());
 
 
