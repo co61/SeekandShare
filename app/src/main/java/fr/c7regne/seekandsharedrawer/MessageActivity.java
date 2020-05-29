@@ -129,7 +129,6 @@ public class MessageActivity extends AppCompatActivity {
     }
 
     ValueEventListener listener;
-    Query qReff;
     DatabaseReference setreff,reffSender;
     protected void refreshMessage() {
         View layoutremove = (View) findViewById(R.id.linearlayout_message_list);

@@ -1,3 +1,5 @@
+/** HomeFragment is the main fragment of the app, so this class determines what should it show **/
+
 package fr.c7regne.seekandsharedrawer;
 
 import android.app.ProgressDialog;
@@ -8,9 +10,7 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -32,6 +32,7 @@ public class HomeFragment extends Fragment {
     private Handler progressBarbHandler = new Handler();
     Thread thread;
 
+    //firstly, we create the view
     @Nullable
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -39,8 +40,10 @@ public class HomeFragment extends Fragment {
         return v2;
     }
 
+    //at the start of this view, we set a popup with a progresscircle when we acquire the last posts to show them
     @Override
     public void onStart() {
+        //so we set this progressbar as a rotating spinner until we stop it
         progressBar = new ProgressDialog(v2.getContext());
         progressBar.setCancelable(true);
         progressBar.setMessage("Chargement des annonces");
@@ -52,6 +55,7 @@ public class HomeFragment extends Fragment {
 
         thread=new Thread(new Runnable() {
             public void run() {
+                //until the progressbar reaches its maximum, we spin it
                 while (progressBarStatus < progressBar.getMax()) {
                     progressBarStatus++;
                     try {
@@ -66,7 +70,7 @@ public class HomeFragment extends Fragment {
                         }
                     });
                 }
-
+                //when the progressbar reaches its maximum, we can stop it as well as stopping to show it
                 if (progressBarStatus >= progressBar.getMax()) {
                     try {
                         Thread.sleep(30);
@@ -82,6 +86,7 @@ public class HomeFragment extends Fragment {
         View layoutremove = (View) v2.findViewById(R.id.home_announce_list);
         ((ViewGroup) layoutremove).removeAllViews();
 
+        // during this unknown time, we load all the new posts from the database
         DatabaseReference[] tabReff = Function.Parcours();
         super.onStart();
         for (DatabaseReference data : tabReff) {
@@ -99,7 +104,7 @@ public class HomeFragment extends Fragment {
                             Aview.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    //switch to Announce Fragment to show the announce published
+                                    //switch to Announce Fragment to show the announce published bigger
                                     Intent act = new Intent(v.getContext(), AffichagePostActivity.class);
                                     Bundle bundle = new Bundle();
                                     bundle.putString("ParentActivity", "Homefragment");
@@ -110,9 +115,9 @@ public class HomeFragment extends Fragment {
                             });
                         }
                     }
+                    //we set the progressbar maximum at its current state because we have loaded all the new posts
                     progressBar.setMax(progressBarStatus);
                 }
-
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
                 }

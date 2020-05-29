@@ -1,3 +1,5 @@
+/*** LoadingActivity launches a loading screen at the start of the application ***/
+
 package fr.c7regne.seekandsharedrawer;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,36 +13,36 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
 
-public class Loading_Activity extends AppCompatActivity {
+public class LoadingActivity extends AppCompatActivity {
 
     Animation rotateAnimation;
     ImageView imageView;
     private final int duration = 1900;
-    Animation topAnim, bottomAnim;
-    ImageView grandlogo;
-    TextView slogan, noms;
+    Animation bottomAnim;
+    TextView slogan,name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //launches the view in full screen
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_loading_);
 
-        //anime le logo
+        //animate the screen
+        //with a rotating logo
         imageView=(ImageView)findViewById(R.id.imageView);
         rotateAnimation();
-        topAnim = AnimationUtils.loadAnimation(this,R.anim.top_animation);
+        //and a text coming from the bottom of the screen
         bottomAnim = AnimationUtils.loadAnimation(this,R.anim.bottom_animation);
 
         slogan = findViewById(R.id.loading_text_view1);
-        noms= findViewById(R.id.loading_text_view2);
+        name= findViewById(R.id.loading_text_view2);
 
         slogan.setAnimation(bottomAnim);
-        noms.setAnimation(bottomAnim);
+        name.setAnimation(bottomAnim);
 
-        //redirige vers la page principale MainActivity
+        //When it's done (after the duration set by us, here 1900ms), launches the SignInActivity
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -51,7 +53,7 @@ public class Loading_Activity extends AppCompatActivity {
             }
         }, duration );
     }
-
+    //used to rotate the logo
     private void rotateAnimation() {
         rotateAnimation= AnimationUtils.loadAnimation(this, R.anim.rotate);
         imageView.startAnimation(rotateAnimation);
