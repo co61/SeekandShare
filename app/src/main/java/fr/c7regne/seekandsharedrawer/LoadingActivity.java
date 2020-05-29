@@ -22,6 +22,7 @@ public class LoadingActivity extends AppCompatActivity {
     private Animation bottomAnim;
     private TextView slogan,name;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

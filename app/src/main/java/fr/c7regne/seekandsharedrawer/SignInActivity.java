@@ -37,9 +37,8 @@ public class SignInActivity extends AppCompatActivity {
     private final static int RC_SIGN_IN = 123;
     private FirebaseAuth mAuth;
     private Button signbutton;
-
-    Animation topAnim;
-    ImageView cloud1, cloud2, cloud3;
+    private Animation topAnim;
+    private ImageView cloud1, cloud2, cloud3;
 
     @Override
     protected void onStart() {

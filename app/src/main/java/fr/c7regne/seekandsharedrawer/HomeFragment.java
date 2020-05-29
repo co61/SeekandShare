@@ -53,7 +53,7 @@ public class HomeFragment extends Fragment {
         progressBar.show();
         progressBarStatus = 0;
 
-        thread=new Thread(new Runnable() {
+        thread = new Thread(new Runnable() {
             public void run() {
                 //until the progressbar reaches its maximum, we spin it
                 while (progressBarStatus < progressBar.getMax()) {
@@ -83,6 +83,9 @@ public class HomeFragment extends Fragment {
 
         });
         thread.start();
+
+
+
         View layoutremove = (View) v2.findViewById(R.id.home_announce_list);
         ((ViewGroup) layoutremove).removeAllViews();
 
@@ -124,6 +127,7 @@ public class HomeFragment extends Fragment {
             });
         }
     }
+
 
 }
 
