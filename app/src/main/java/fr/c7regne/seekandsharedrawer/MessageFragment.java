@@ -46,10 +46,8 @@ public class MessageFragment extends Fragment {
             ///userEmail = signInAccount.getEmail();
             currentUserId = signInAccount.getId();
         }
-
         return v;
     }
-
 
     @Override
     public void onStart() {
@@ -58,7 +56,6 @@ public class MessageFragment extends Fragment {
 
         //get conversation of currentUser
         reff = FirebaseDatabase.getInstance().getReference().child("Messages").child(currentUserId);
-
         reff.addListenerForSingleValueEvent(new ValueEventListener() {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
             @Override

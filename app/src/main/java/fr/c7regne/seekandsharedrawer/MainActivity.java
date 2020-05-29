@@ -1,3 +1,5 @@
+/*** MainActivity deals with how the application should act and react when used in the main screens ***/
+
 package fr.c7regne.seekandsharedrawer;
 
 import androidx.annotation.NonNull;
@@ -8,11 +10,8 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
-
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -23,20 +22,20 @@ import androidx.viewpager.widget.ViewPager;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout mDrawerLayout;
-    Fragment selectedFragment;
-    Fragment previousFragment;
+    private Fragment selectedFragment;
+    private Fragment previousFragment;
 
-    MenuItem selectedItemId;
-    MenuItem previousSelectedItemId;
+    private MenuItem selectedItemId;
+    private MenuItem previousSelectedItemId;
 
-    Intent launchIntent;
+    private Intent launchIntent;
 
-    private ViewPager viewPager;
-    HomeFragment homeFragment;
-    SearchFragment searchFragment;
-    PubAnnounceFragment postFragment;
-    MessageFragment messageFragment;
-    BottomNavigationView bottomNavigationView;
+    private ViewPager viewPager; //ViewPager is a pattern used to swipe horizontally between fragments
+    private HomeFragment homeFragment;
+    private SearchFragment searchFragment;
+    private PubAnnounceFragment postFragment;
+    private MessageFragment messageFragment;
+    private BottomNavigationView bottomNavigationView;
 
 
     @Override
@@ -47,23 +46,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         selectedFragment = new HomeFragment();
         previousFragment = new HomeFragment();
 
-        //initialize viewPager
+        //initialize the swipe
         viewPager = (ViewPager) findViewById(R.id.viewpager);
 
-        //initialize bottomNavigationView
+        //initialize the bottom navigation bar
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_bar_navigation);
+        //watch if an item is selected on this bar and set the current view to it
+        bottomNavigationView.setOnNavigationItemSelectedListener(navlistener);
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
 
-        //initialize Top toolbar
+        //initialize the Top toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle("SeekandShare");
 
-        //initialize left Drawer Layout
+        //initialize the left Drawer Layout
         mDrawerLayout = findViewById(R.id.drawer);
 
-        bottomNavigationView.setOnNavigationItemSelectedListener(navlistener);
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
         //open (or close) menu when action on the toggle button
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.open, R.string.close);
         mDrawerLayout.addDrawerListener(toggle);
@@ -76,11 +76,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
             public void onPageSelected(int position) {
                 if ( previousSelectedItemId != null) {
                     previousSelectedItemId.setChecked(false);
@@ -89,21 +84,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 {
                     bottomNavigationView.getMenu().getItem(0).setChecked(false);
                 }
-                Log.d("page", "onPageSelected: "+position);
                 bottomNavigationView.getMenu().getItem(position).setChecked(true);
                 previousSelectedItemId = bottomNavigationView.getMenu().getItem(position);
-
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {
+            }
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
             }
         });
 
         setupViewPager(viewPager);
     }
 
-    //create the differents Fragments to switch between
+    //create the different Fragments to switch between
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         homeFragment=new HomeFragment();
@@ -119,10 +115,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
 
-
-
-
-    //open the menu on the left when toolbar click
+    //open or close the menu on the left when the toolbar is clicked
     @Override
     public void onBackPressed() {
         if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
@@ -149,7 +142,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     previousFragment = selectedFragment;
                     previousSelectedItemId=selectedItemId;
                     selectedItemId=menuItem;
-                    //switching fragment
+                    //switching fragment depending on the item selected on the bottom bar
                     switch (menuItem.getItemId()) {
                         case R.id.nav_home:
                             viewPager.setCurrentItem(0);
@@ -163,15 +156,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         case R.id.nav_message:
                             viewPager.setCurrentItem(3);
                             break;
-
                     }
-
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
                     return true;
                 }
             };
 
-    //switch between the different fragment when an item is click on side menu
+    //switch between the different fragments when an item is clicked on the left side menu
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         //saving previous state for onback pressed
