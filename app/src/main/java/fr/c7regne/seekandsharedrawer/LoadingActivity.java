@@ -16,11 +16,11 @@ import android.widget.TextView;
 
 public class LoadingActivity extends AppCompatActivity {
 
-    Animation rotateAnimation;
-    ImageView imageView;
+    private Animation rotateAnimation;
+    private ImageView imageView;
     private final int duration = 1900;
-    Animation bottomAnim;
-    TextView slogan,name;
+    private Animation bottomAnim;
+    private TextView slogan,name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

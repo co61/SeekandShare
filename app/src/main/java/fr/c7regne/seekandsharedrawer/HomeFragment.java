@@ -104,7 +104,7 @@ public class HomeFragment extends Fragment {
                             Aview.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    //switch to Announce Fragment to show the announce published bigger
+                                    //switch to Announce Fragment to show the announce published bigger on click
                                     Intent act = new Intent(v.getContext(), AffichagePostActivity.class);
                                     Bundle bundle = new Bundle();
                                     bundle.putString("ParentActivity", "Homefragment");

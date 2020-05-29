@@ -22,20 +22,20 @@ import androidx.viewpager.widget.ViewPager;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout mDrawerLayout;
-    Fragment selectedFragment;
-    Fragment previousFragment;
+    private Fragment selectedFragment;
+    private Fragment previousFragment;
 
-    MenuItem selectedItemId;
-    MenuItem previousSelectedItemId;
+    private MenuItem selectedItemId;
+    private MenuItem previousSelectedItemId;
 
-    Intent launchIntent;
+    private Intent launchIntent;
 
     private ViewPager viewPager; //ViewPager is a pattern used to swipe horizontally between fragments
-    HomeFragment homeFragment;
-    SearchFragment searchFragment;
-    PubAnnounceFragment postFragment;
-    MessageFragment messageFragment;
-    BottomNavigationView bottomNavigationView;
+    private HomeFragment homeFragment;
+    private SearchFragment searchFragment;
+    private PubAnnounceFragment postFragment;
+    private MessageFragment messageFragment;
+    private BottomNavigationView bottomNavigationView;
 
 
     @Override
