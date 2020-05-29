@@ -43,25 +43,25 @@ import static android.widget.Toast.LENGTH_SHORT;
 
 public class PubAnnounceFragment extends Fragment implements View.OnClickListener {
     //ellement
-    EditText content_announce;
-    EditText title_announce,place_announce;
-    Button postButton;
+    private EditText content_announce;
+    private EditText title_announce,place_announce;
+    private Button postButton;
 
     //Radiogroups
-    RadioGroup radioGroup1;
-    RadioGroup radioGroup2;
-    RadioButton radioButton1;
-    RadioButton radioButton2;
+    private RadioGroup radioGroup1;
+    private RadioGroup radioGroup2;
+    private RadioButton radioButton1;
+    private RadioButton radioButton2;
     //database
-    PostSaveStruct postsave;
-    DatabaseReference reff;
-    TextView caractnb;
-    String userName, userEmail, userId;
-    Calendar calendar;
-    String date, hour, fullDate;
+    private PostSaveStruct postsave;
+    private DatabaseReference reff;
+    private TextView caractnb;
+    private String userName, userEmail, userId;
+    private Calendar calendar;
+    private String date, hour, fullDate;
 
 
-    View v;
+    private View v;
 
     @SuppressLint("SimpleDateFormat")
     @Nullable
