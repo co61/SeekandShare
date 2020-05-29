@@ -25,11 +25,16 @@ import com.google.firebase.database.ValueEventListener;
 
 
 public class MessageFragment extends Fragment {
-    View v;
-    String currentUserId;
-    DatabaseReference reff;
+    /***
+     * Show the conversation of the currentUser with other user in the panel message in main activity
+     *
+     */
 
-    MessSaveStruct lastmsg;
+    private View v;
+    private String currentUserId;
+    private DatabaseReference reff;
+
+    private MessSaveStruct lastmsg;
 
     @Nullable
     @Override
@@ -43,8 +48,6 @@ public class MessageFragment extends Fragment {
         }
 
         return v;
-
-
     }
 
 
@@ -53,7 +56,7 @@ public class MessageFragment extends Fragment {
 
         super.onStart();
 
-        Log.i("test", "test");
+        //get conversation of currentUser
         reff = FirebaseDatabase.getInstance().getReference().child("Messages").child(currentUserId);
 
         reff.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -62,17 +65,21 @@ public class MessageFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
+                    //refresh the layout
                     View layoutremove = (View) v.findViewById(R.id.linearlayout_conversation_list);
                     ((ViewGroup) layoutremove).removeAllViews();
                     if (isVisible()) {
                         final String key = child.getKey().toString();
                         final LinearLayout layout = (LinearLayout) v.findViewById(R.id.linearlayout_conversation_list);
+                        //get number of non-read message
                         int nbrLMsg=0;
                         for(DataSnapshot nbrchild : child.getChildren()){
                             if(nbrchild.child("read").getValue().toString().equals("false")){
                                 nbrLMsg++;
                             }
                         }
+
+                        //get the last msg and on change show it
                         Query last = FirebaseDatabase.getInstance().getReference().child("Messages").child(currentUserId).child(key).orderByKey().limitToLast(1);
                         final int finalNbrLMsg = nbrLMsg;
 
@@ -81,16 +88,15 @@ public class MessageFragment extends Fragment {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 if (isVisible()) {
-
                                     for (DataSnapshot child : dataSnapshot.getChildren()) {
                                         lastmsg = new MessSaveStruct((Boolean) child.child("side").getValue(), child.child("msg").getValue().toString(),
                                                 child.child("date").getValue().toString(), Boolean.valueOf(child.child("read").getValue().toString()));
-                                        //sending to put on screen
+                                        //add the conversation to the layout
                                         LinearLayout Aview = new AddViewListConversation().addConversation(getActivity(), key.split("~")[1], finalNbrLMsg, lastmsg);
                                         final String finalI = key;
                                         layout.addView(Aview);
 
-
+                                        //open the conversation on click and give the ID to the MessageActivity
                                         Aview.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
