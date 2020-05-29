@@ -19,7 +19,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 
 public class AddViewListConversation extends AppCompatActivity {
-
+    /***
+     * Add a conversation to the MessageFragment
+     * with name, last message and date
+     *
+     */
 
     private final int textColor = Color.BLACK;
 
@@ -27,7 +31,7 @@ public class AddViewListConversation extends AppCompatActivity {
     @SuppressLint({"ResourceAsColor", "SetTextI18n"})
     public LinearLayout addConversation(final Activity activity, String message, int nbrMsg, MessSaveStruct lastmsg) {
 
-        //linearlayout à empiler
+        //create the new LinearLayout with chosen parameter
         LinearLayout newLL = new LinearLayout(activity);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         int margin = dpToPx(10, activity.getApplicationContext());
@@ -39,7 +43,7 @@ public class AddViewListConversation extends AppCompatActivity {
         newLL.setPadding(padding, padding, padding, padding);
 
 
-        //title
+        //name of the other user
         TextView textViewTitle = new TextView(activity);
         LinearLayout.LayoutParams title_linear = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         textViewTitle.setLayoutParams(title_linear);
@@ -49,20 +53,21 @@ public class AddViewListConversation extends AppCompatActivity {
         textViewTitle.setTextColor(textColor);
         textViewTitle.setTypeface(null, Typeface.BOLD);
 
-        //lastmsg
+        //display the last message of the conversation
         TextView Lastmsg = new TextView(activity);
         LinearLayout.LayoutParams msg_linear = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         Lastmsg.setLayoutParams(msg_linear);
         if (!lastmsg.isRead()) {
             Lastmsg.setTypeface(null, Typeface.BOLD);
         }
+        //cut the message if too long
         if (lastmsg.getMsg().length() > 30) {
             lastmsg.setMsg(lastmsg.getMsg().subSequence(0, 29) + "...");
         }
+        //display "vous:" if currentUser or the name of the other user
         if (lastmsg.getSide()) {
             Lastmsg.setText("Vous: " + lastmsg.getMsg());
         } else {
-
             Lastmsg.setText(message + ": " + lastmsg.getMsg());
         }
         Lastmsg.setTextSize(TypedValue.COMPLEX_UNIT_SP, spToPx(6, activity.getApplicationContext()));
@@ -70,11 +75,10 @@ public class AddViewListConversation extends AppCompatActivity {
 
         LinearLayout hLL = new LinearLayout(activity);
         LinearLayout.LayoutParams layoutParams2 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        //layoutParams2.setMargins(0 ,0 ,0 ,0);
         hLL.setLayoutParams(layoutParams2);
         hLL.setOrientation(LinearLayout.HORIZONTAL);
 
-        //date lastmsg
+        //add the date of the last message
         TextView dateLastmsg = new TextView(activity);
         LinearLayout.LayoutParams msg_linear_date = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         dateLastmsg.setLayoutParams(msg_linear_date);
@@ -114,12 +118,12 @@ public class AddViewListConversation extends AppCompatActivity {
 
 
 
-
+        //add different parameter(view) to the Conversation Layout
         newLL.addView(textViewTitle);
         newLL.addView(Lastmsg);
         newLL.addView(hLL);
-        //fin LinearLayout
 
+        //return the conversation layout
         return newLL;
     }
 

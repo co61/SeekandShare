@@ -1,6 +1,5 @@
 package fr.c7regne.seekandsharedrawer;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -8,9 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 
-import androidx.annotation.FontRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -24,10 +21,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 public class AnnounceActivity extends AppCompatActivity {
+    /**
+     * Display the list of posts published by the current user
+     * when a posts is clicked, it open a new activity where the announce is displayed.
+     */
 
-    public static final String EXTRA_ID = "fr.c7regne.seekandsharedrawer";
-
-    String currentUserId;
+    private String currentUserId;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,12 +49,14 @@ public class AnnounceActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        // remove last views to reload the change on the database
         View layoutremove = (View) findViewById(R.id.linearlayout_announce_list);
         ((ViewGroup) layoutremove).removeAllViews();
-        //reed children posts count
 
+        //reed children posts count
         DatabaseReference[] tabReff = Function.Parcours();
 
+        // read the tabReff and display the announce
         for (DatabaseReference data : tabReff) {
             data.addValueEventListener(new ValueEventListener() {
 
@@ -74,13 +75,12 @@ public class AnnounceActivity extends AppCompatActivity {
                                 Aview.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
-                                        //switch to Announce Fragment to show the announce published
+                                        //switch to AffichagePostActivity to show the announce published
                                         Bundle bundle = new Bundle();
                                         bundle.putString("ParentActivity", "AnnounceActivity");
                                         bundle.putString("ID", finalI);
                                         Intent act = new Intent(v.getContext(), AffichagePostActivity.class);
                                         act.putExtras(bundle);
-                                        //act.putExtra(EXTRA_ID, finalI);
                                         startActivity(act);
 
                                     }

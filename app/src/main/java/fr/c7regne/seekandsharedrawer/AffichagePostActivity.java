@@ -1,11 +1,8 @@
 package fr.c7regne.seekandsharedrawer;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -25,12 +22,18 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class AffichagePostActivity extends AppCompatActivity implements DeleteConfirm.DeleteConfirmListener, EditConfirm.EditConfirmListener {
+    /***
+     * Show the post in his totality
+     * Permit to modify it, delete it or add in favorite
+     * Open EditAnnounceActivity when edit is ask by the user
+     * Get back on AnnounceActivity when back pressed
+     */
 
-    DatabaseReference reff;
-    DatabaseReference refffavorite;
-    String currentUserId;
-    String ID;
-    String[] way;
+    private DatabaseReference reff;
+    private DatabaseReference refffavorite;
+    private String currentUserId;
+    private String ID;
+    private String[] way;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,21 +41,23 @@ public class AffichagePostActivity extends AppCompatActivity implements DeleteCo
 
         setContentView(R.layout.activity_affichage_announce);
         //change title action Bar
-        getSupportActionBar().setTitle("Mon annonce");
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Bundle extras=getIntent().getExtras();
         String parentActivity = extras.getString("ParentActivity");
 
+        //get ID to read the right post in the database
         ID = getIntent().getExtras().getString("ID");
         way = ID.split("~");
 
-        //get information on user
+        //get information on the current user
         GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
         if (signInAccount != null) {
             currentUserId = signInAccount.getId();
         }
 
+        //get element of the view and set visible if the parent activity was AnnounceActivity
         ImageView edit=(ImageView)findViewById(R.id.edit_announce_btn);
         ImageView delete=(ImageView)findViewById(R.id.delete_announce_btn);
         ImageView message=(ImageView)findViewById(R.id.message_announce_btn);
@@ -60,17 +65,15 @@ public class AffichagePostActivity extends AppCompatActivity implements DeleteCo
             edit.setVisibility(View.VISIBLE);
             delete.setVisibility(View.VISIBLE);
         }
-
-
-
         final TextView titleView = (TextView) findViewById(R.id.announce_title);
         final TextView dateView = (TextView) findViewById(R.id.announce_date);
+        final TextView placeView = (TextView) findViewById(R.id.announce_place);
         final TextView DpView = (TextView) findViewById(R.id.announce_DP);
         final TextView SpView = (TextView) findViewById(R.id.announce_SP);
         final TextView contentView = (TextView) findViewById(R.id.announce_content);
         final TextView usernameView = (TextView) findViewById(R.id.announce_username);
 
-
+        // get the database reference of the post and read
         reff = FirebaseDatabase.getInstance().getReference().child("Posts").child(way[0]).child(way[1]);
 
         reff.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -82,11 +85,13 @@ public class AffichagePostActivity extends AppCompatActivity implements DeleteCo
                 String dpchoice = String.valueOf(keyContext.child("dpchoice").getValue());
                 String spchoice = String.valueOf(keyContext.child("spchoice").getValue());
                 String publicationDate = String.valueOf(keyContext.child("publicationDate").getValue());
+                String city = String.valueOf(keyContext.child("place").getValue());
                 String userName = String.valueOf(keyContext.child("userName").getValue());
 
 
                 titleView.setText(title);
                 dateView.setText(publicationDate);
+                placeView.setText(city);
                 DpView.setText(dpchoice);
                 SpView.setText(spchoice);
                 contentView.setText(content);
@@ -99,7 +104,8 @@ public class AffichagePostActivity extends AppCompatActivity implements DeleteCo
             }
         });
 
-
+        // check database Favorite if the announce is already in the favorite of the user
+        // if, the favorite image will be in red
         final ImageView addfavoritebtn = (ImageView) findViewById(R.id.add_favorite_btn);
         refffavorite = FirebaseDatabase.getInstance().getReference().child("Favorite");
         refffavorite.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -109,15 +115,11 @@ public class AffichagePostActivity extends AppCompatActivity implements DeleteCo
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 for (DataSnapshot child : dataSnapshot.child(currentUserId).getChildren()) {
-                    Log.i("childkey", child.getKey());
-                    Log.i("ID", ID);
                     if (child.getKey().equals(ID)) {
                         exists = true;
-                        Log.i("exists", "maketrue");
                         break;
                     }
                 }
-                Log.i("exists", String.valueOf(exists));
                 if (exists) {
                     //construction struct to send into database with auto increment depending on number of member in this branch
                     addfavoritebtn.setImageResource(R.drawable.ic_favorite_full);
@@ -134,10 +136,8 @@ public class AffichagePostActivity extends AppCompatActivity implements DeleteCo
         });
 
 
-
-
-
-
+        // if the announce is not already in favorite then on click the announce is add in the database
+        // if there is already in then the announce will be delete from favorite
         addfavoritebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -147,8 +147,6 @@ public class AffichagePostActivity extends AppCompatActivity implements DeleteCo
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for (DataSnapshot child : dataSnapshot.child(currentUserId).getChildren()) {
-                            Log.i("childkey", child.getKey());
-                            Log.i("ID", ID);
                             if (child.getKey().equals(ID)) {
                                 exists = true;
                                 break;
@@ -174,10 +172,8 @@ public class AffichagePostActivity extends AppCompatActivity implements DeleteCo
                 });
             }
         });
-        //new AddFavorite().addToFavorite(AffichagePostActivity.this,ID, addfavoritebtn);
 
         if(String.valueOf(parentActivity).equals("AnnounceActivity")){
-            Log.i("Atcivity parent ","bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
             edit.setVisibility(View.VISIBLE);
             delete.setVisibility(View.VISIBLE);
             delete.setOnClickListener(new View.OnClickListener() {
@@ -195,11 +191,12 @@ public class AffichagePostActivity extends AppCompatActivity implements DeleteCo
             });
         }
 
-        Log.i("current",currentUserId);
-        Log.i("user", ID);
+        // if publisher name and currentuser are the same the message image will not be display
+        // Message image access to the message activity with the user who published the announce
         if(currentUserId.equals(ID.split("~")[2].split("-")[0])){
             message.setVisibility(View.INVISIBLE);
         }
+
 
         message.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -208,7 +205,6 @@ public class AffichagePostActivity extends AppCompatActivity implements DeleteCo
                 Bundle bundle=new Bundle();
                 String name = usernameView.getText().toString();
                 String userId= ID.split("~")[2].split("-")[0];
-                Log.i("test", ID);
                 bundle.putString("ID",userId+"~"+name);
                 act.putExtras(bundle);
                 startActivity(act);
@@ -232,6 +228,7 @@ public class AffichagePostActivity extends AppCompatActivity implements DeleteCo
         finish();
     }
 
+    //ask to confrim
     public void openDialog(String arg){
         if(arg=="delete") {
 
@@ -244,13 +241,12 @@ public class AffichagePostActivity extends AppCompatActivity implements DeleteCo
         }
     }
 
+    //override the fonction when delete confirm ask
     @Override
     public void onYesDeleteClikcked() {
-        Log.i("raa","pet");
 
         reff.child(way[2]).setValue(null);
         refffavorite = FirebaseDatabase.getInstance().getReference().child("Favorite");
-        Log.i("peut etre","pet");
         refffavorite.addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
@@ -258,7 +254,6 @@ public class AffichagePostActivity extends AppCompatActivity implements DeleteCo
 
                 for (DataSnapshot child : dataSnapshot.getChildren()){
 
-                    Log.i("enfant",String.valueOf(child));
                     for (DataSnapshot idchild : child.getChildren()) {
                         Toast.makeText(getApplicationContext(),String.valueOf(idchild.getKey()),Toast.LENGTH_SHORT).show();
                         if (idchild.getKey().equals(ID)) {
@@ -277,7 +272,7 @@ public class AffichagePostActivity extends AppCompatActivity implements DeleteCo
         finish();
     }
 
-
+    //override the fonction when edit confirm ask
     @Override
     public void onYesEditClikcked() {
         Bundle bundle=new Bundle();

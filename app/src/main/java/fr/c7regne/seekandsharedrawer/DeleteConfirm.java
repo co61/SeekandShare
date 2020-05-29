@@ -11,6 +11,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
 public class DeleteConfirm extends AppCompatDialogFragment {
+    /***
+     * Show a pop up to ask if the user realy want to delete the announce
+     * do onClick what is overrite where this class is called
+     */
     private DeleteConfirmListener listener;
 
     @NonNull
