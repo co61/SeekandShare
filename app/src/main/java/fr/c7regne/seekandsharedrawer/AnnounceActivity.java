@@ -36,7 +36,7 @@ public class AnnounceActivity extends AppCompatActivity {
         setContentView(R.layout.activity_announce);
 
         //change title action Bar
-        getSupportActionBar().setTitle("");
+        getSupportActionBar().setTitle("Mes annonces");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //get information on user
