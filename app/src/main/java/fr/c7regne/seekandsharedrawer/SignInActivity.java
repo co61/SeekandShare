@@ -34,13 +34,13 @@ public class SignInActivity extends AppCompatActivity {
     private GoogleSignInClient mGoogleSignInClient;
     private final static int RC_SIGN_IN = 123;
     private FirebaseAuth mAuth;
-    Button signbutton;
+    private Button signbutton;
 
 
 
     private final int duration = 1900;
-    Animation topAnim;
-    ImageView cloud1, cloud2, cloud3;
+    private Animation topAnim;
+    private ImageView cloud1, cloud2, cloud3;
 
     @Override
     protected void onStart() {

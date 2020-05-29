@@ -8,9 +8,7 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -41,6 +39,7 @@ public class HomeFragment extends Fragment {
 
     @Override
     public void onStart() {
+
         progressBar = new ProgressDialog(v2.getContext());
         progressBar.setCancelable(true);
         progressBar.setMessage("Chargement des annonces");
@@ -50,7 +49,7 @@ public class HomeFragment extends Fragment {
         progressBar.show();
         progressBarStatus = 0;
 
-        thread=new Thread(new Runnable() {
+        thread = new Thread(new Runnable() {
             public void run() {
                 while (progressBarStatus < progressBar.getMax()) {
                     progressBarStatus++;
@@ -79,6 +78,9 @@ public class HomeFragment extends Fragment {
 
         });
         thread.start();
+
+
+
         View layoutremove = (View) v2.findViewById(R.id.home_announce_list);
         ((ViewGroup) layoutremove).removeAllViews();
 
@@ -119,6 +121,7 @@ public class HomeFragment extends Fragment {
             });
         }
     }
+
 
 }
 

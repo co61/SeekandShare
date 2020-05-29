@@ -11,16 +11,14 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
 
 public class Loading_Activity extends AppCompatActivity {
 
-    Animation rotateAnimation;
-    ImageView imageView;
+    private Animation rotateAnimation;
+    private ImageView imageView;
     private final int duration = 1900;
-    Animation topAnim, bottomAnim;
-    ImageView grandlogo;
-    TextView slogan, noms;
+    private Animation topAnim, bottomAnim;
+    private TextView slogan, noms;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
