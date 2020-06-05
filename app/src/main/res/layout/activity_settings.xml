@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
+    android:background="@color/yellowBackground"
     android:orientation="vertical"
     tools:context=".SettingsActivity">
 
@@ -11,32 +11,41 @@
         android:padding="3dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_margin="10dp">
+
+    <LinearLayout
+        android:padding="3dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="10dp"
+        android:background="@drawable/corner">
 
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal">
+            android:layout_margin="5dp"
+            android:orientation="vertical">
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:layout_weight="0.3"
-                android:text="Name"
-                android:textSize="20sp" />
+                android:text="Nom"
+                android:textSize="18sp"
+                android:textColor="@color/black"/>
 
             <TextView
                 android:id="@+id/account_name_txt"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:layout_weight="0.7"
                 android:text=""
-                android:textSize="20sp" />
+                android:textSize="15sp" />
 
 
         </LinearLayout>
@@ -44,38 +53,118 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal">
+            android:layout_margin="5dp"
+            android:orientation="vertical">
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:layout_weight="0.3"
                 android:text="Email"
-                android:textSize="20sp" />
+                android:textSize="18sp"
+                android:textColor="@color/black"/>
 
             <TextView
                 android:id="@+id/account_email_txt"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:layout_weight="0.7"
                 android:text=""
-                android:textSize="20sp" />
+                android:textSize="15sp" />
 
 
         </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:padding="3dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="10dp"
+        android:background="@drawable/corner">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="Nombre d'annonces:     "
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/count_announce"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text=""
+                android:textSize="18sp" />
 
 
+        </LinearLayout>
+    </LinearLayout>
 
-
-        <Button
-            android:id="@+id/logout_button"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="Logout" />
+            android:orientation="horizontal"
+
+            android:gravity="center">
+        <Button
+            android:id="@+id/contact_btn"
+            android:text="Nous contacter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:background="@color/colorPrimary"
+            android:padding="15dp"
+            android:layout_margin="10dp"
+            android:clickable="true"
+            android:textColor="@color/white"
+            android:layout_gravity="center"/>
+        <Button
+            android:id="@+id/logout_button"
+            android:text="Déconnexion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:background="@color/colorPrimary"
+            android:padding="15dp"
+            android:layout_margin="10dp"
+            android:textColor="@color/white"
+
+            android:layout_gravity="center"/>
     </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <EditText
+                android:id="@+id/contact_txt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/corner"
+                android:visibility="invisible"
+                android:padding="10dp">
+            </EditText>
+            <Button
+                android:id="@+id/send_settings_button"
+                android:text="Envoyer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@color/colorPrimary"
+                android:padding="15dp"
+                android:layout_margin="10dp"
+                android:clickable="true"
+                android:textColor="@color/white"
+                android:visibility="invisible"/>
+        </LinearLayout>
+</LinearLayout>
 
 </ScrollView>

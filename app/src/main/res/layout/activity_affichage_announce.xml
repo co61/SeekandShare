@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_grey"
+    tools:context=".AnnounceActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="15dp"
+        android:paddingTop="15dp"
+        >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:background="@drawable/corner"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:elevation="8dp">
+
+        <TextView
+            android:id="@+id/announce_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Title"
+            android:textColor="@color/black"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/announce_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bottom_border_grey"
+            android:paddingBottom="2dp"
+            android:text="Date"
+            android:textSize="12sp" />
+        <TextView
+            android:id="@+id/announce_place"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bottom_border_grey"
+            android:paddingBottom="2dp"
+            android:text="City"
+            android:textSize="12sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bottom_border_grey"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/announce_DP"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="DP" />
+
+            <TextView
+                android:id="@+id/announce_SP"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="SP" />
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/announce_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="content"
+            android:minHeight="300dp"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <ImageView
+                android:id="@+id/add_favorite_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_favorite_border"/>
+            <ImageView
+                android:id="@+id/edit_announce_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/ic_edit_announce"
+                android:visibility="invisible"/>
+            <ImageView
+                android:id="@+id/delete_announce_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/ic_delete_announce"
+                android:visibility="invisible"/>
+            <ImageView
+                android:id="@+id/message_announce_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/ic_message_announce"
+                android:visibility="visible"/>
+
+
+            <TextView
+                android:id="@+id/announce_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:text="username"
+                android:textAlignment="viewEnd"
+                />
+        </LinearLayout>
+
+
+    </LinearLayout>
+    </LinearLayout>
+</ScrollView>

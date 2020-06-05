@@ -1,105 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:background="@android:color/white"
-    android:orientation="vertical"
+    android:background="@drawable/backgroundsearch"
     tools:context=".SearchFragment">
 
-    <EditText
-        android:id="@+id/search_txt"
-        android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:layout_margin="10dp"
-        android:background="#E1E1E1"
-        android:hint="Entrez votre recherche..."
-        android:textSize="30sp"
-        android:inputType="text"
-        />
     <LinearLayout
-        android:layout_margin="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/search_txt"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="50dp"
+            android:background="@drawable/corner"
+            android:hint="Entrez votre recherche..."
+            android:inputType="text"
+            android:paddingLeft="10dp"
+            android:textCursorDrawable="@color/black"
+            android:textSize="20sp" />
+
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
             android:orientation="vertical">
 
-            <RadioGroup
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/search_DP_radioGroup">
-                <RadioButton
-                    android:id="@+id/search_demande_radio"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Demande"
-                    />
-                <RadioButton
-                    android:id="@+id/search_propostion_radio"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Proposition"
-                    />
-                <RadioButton
-                    android:id="@+id/search_propanddem_radio"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Les deux"
-                    android:checked="true"
-                    />
-            </RadioGroup>
+                android:orientation="horizontal">
+
+                <RadioGroup
+                    android:id="@+id/search_DP_radioGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RadioButton
+                        android:id="@+id/search_demande_radio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:checked="true"
+                        android:text="Demande" />
+
+                    <RadioButton
+                        android:id="@+id/search_propostion_radio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="Proposition" />
+
+                </RadioGroup>
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="30dp"></Space>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioGroup
+                    android:id="@+id/search_SP_radioGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RadioButton
+                        android:id="@+id/search_service_radio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:checked="true"
+                        android:text="Service" />
+
+                    <RadioButton
+                        android:id="@+id/search_pret_radio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="Prêt" />
+                </RadioGroup>
+            </LinearLayout>
+
         </LinearLayout>
-        <LinearLayout
+
+        <Button
+            android:id="@+id/validate_search_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <RadioGroup
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/search_SP_radioGroup">
-                <RadioButton
-                    android:id="@+id/search_service_radio"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Service"
-                    />
-                <RadioButton
-                    android:id="@+id/search_pret_radio"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Prêt"
-                    />
-                <RadioButton
-                    android:id="@+id/search_servpret_radio"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Les deux"
-                    android:checked="true"
-                    />
-            </RadioGroup>
-        </LinearLayout>
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:background="@color/colorPrimary"
+            android:padding="15dp"
+            android:text="Rechercher"
+            android:textColor="@color/white" />
 
     </LinearLayout>
-    <Button
-        android:id="@+id/validate_search_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Rechercher"
-        android:layout_margin="10dp"/>
-
-    <TextView
-        android:id="@+id/search_results"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/search_data"
-        android:layout_margin="10dp"/>
-
-
-
-
-
-</LinearLayout>
+</ScrollView>
